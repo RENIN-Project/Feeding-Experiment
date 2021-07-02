@@ -1,0 +1,657 @@
+---
+title: "FE_Publication_Eukaryota_Biomass"
+output:
+  html_document:
+    df_print: paged
+---
+
+
+```{r}
+library(ROBITaxonomy)
+library(ROBITools)
+library(vegan)
+library(ade4)
+library(ggplot2)
+library(tidyverse)
+library(zoo)
+library(viridisLite)
+library(viridis)
+library(ggpubr)
+library(grid)
+library(gridExtra) 
+
+# The palette with grey:
+cbPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+
+# The palette with black:
+cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+```
+
+--------------------------------------------------------------------------
+```{r}
+taxo = read.taxonomy("Data/ncbi20210212")
+```
+
+# The Read contingency table
+```{r}
+reads = read.csv("Data/Faeces/FE.Euka.samples.reads.csv",
+                 header = TRUE,
+                 row.names = 1)
+reads = as.matrix(reads)
+reads = decostand(reads,method = "total")
+```
+
+# The sample description table
+```{r}
+samples = read.csv("Data/Faeces/FE.Euka.samples.samples.csv",
+                 header = TRUE,
+                 row.names = 1)
+```
+
+# The MOTU description table
+```{r}
+motus = read.csv("Data/Faeces/FE.Euka.samples.motus.csv",
+                 header = TRUE,
+                 row.names = 1)
+```
+
+# Create an object, where you merge the three tables
+```{r}
+Euka01 = metabarcoding.data(reads = reads,
+                          samples = samples,
+                          motus = motus)
+```
+
+--------------------------------------------------------------------------
+
+```{r}
+motus.hist = colMeans(reads(Euka01))
+Euka01@motus$mean_ref_freq = motus.hist
+Euka01 = Euka01[,order(motus.hist,decreasing = TRUE)]
+```
+
+```{r}
+motus(Euka01)[1:20,c("scientific_name","mean_ref_freq", "rank")]
+```
+
+--------------------------------------------------------------------------
+# Loading of metadata
+
+
+```{r}
+library(readr)
+samples.metadata_biomass <- read_delim("Data/metadata.csv", ";", 
+    escape_double = FALSE, trim_ws = TRUE)
+```
+
+```{r}
+samples.metadata_biomass = left_join(Euka01@samples,samples.metadata_biomass,by="sample_id") %>%
+                           select(-name, -replicate)
+```
+
+
+```{r}
+Euka01@samples = samples.metadata_biomass
+rownames(Euka01@samples) = as.character(Euka01@samples$sample_id)
+```
+
+Timeshift to synchronize time 0 to 21.00, 23.january 2018
+
+```{r}
+Euka01@samples[Euka01@samples$Animal_ID=="X","times_from_birch"] = 
+  Euka01@samples[Euka01@samples$Animal_ID=="X","times_from_birch"] + 6
+
+Euka01@samples[Euka01@samples$Animal_ID=="Y","times_from_birch"] = 
+  Euka01@samples[Euka01@samples$Animal_ID=="Y","times_from_birch"] + 3
+
+Euka01@samples[Euka01@samples$Animal_ID=="Z","times_from_birch"] = 
+  Euka01@samples[Euka01@samples$Animal_ID=="Z","times_from_birch"] + 4
+```
+
+```{r}
+Animal_id <- rep("Unknown", nrow(Euka01))
+Animal_id[which(samples(Euka01)$animal_id == "X")] <- "9/10"
+Animal_id[which(samples(Euka01)$animal_id == "Y")] <- "10/10"
+Animal_id[which(samples(Euka01)$animal_id == "Z")] <- "12/10"
+Euka01@samples$animal_id <- factor(Animal_id,
+  levels = c("9/10", "10/10", "12/10")
+)
+```
+
+
+```{r}
+Euka01@samples$Fed_biomass =  factor(as.character(Euka01@samples$Fed_biomass), 
+                                   levels=c("20","500","2000"))
+```
+
+--------------------------------------------------------------------------
+
+```{r}
+Animal = Euka01@samples$animal_id
+```
+
+```{r}
+Lecanoromycetes.taxid = ecofind(taxo,"^Lecanoromycetes$")
+is.a.Lecanoromycetes = is.subcladeof(taxonomy = taxo,Euka01@motus$taxid,Lecanoromycetes.taxid)
+is.a.Lecanoromycetes[is.na(is.a.Lecanoromycetes)]=FALSE
+sum(is.a.Lecanoromycetes,na.rm = TRUE)
+
+Euka01@motus[is.a.Lecanoromycetes,c("scientific_name","mean_ref_freq")]
+
+Lecanoromycetes = Euka01@reads[,is.a.Lecanoromycetes]
+```
+
+--------------------------------------------------------------------------
+
+
+
+```{r warning=FALSE,message=FALSE}
+data_euka01 = cbind(as.data.frame(Euka01@reads),
+             time = samples(Euka01)$times_from_birch/24,
+             animal_id = samples(Euka01)$animal_id)
+
+start_time=11
+end_time=23
+
+plot1 = ggplot(data = data_euka01, 
+                     aes(x = time,
+                         y = EUKAP2_00000018,
+                         col=animal_id)) +
+ geom_point() + 
+  geom_smooth(data = data_euka01 %>% filter(time >= start_time & time <= end_time),
+              method = lm,show.legend = FALSE) + 
+  scale_color_manual(values=cbbPalette) +
+  stat_summary_bin(fun = mean, geom = "line") +
+  scale_y_log10() + 
+  geom_vline (xintercept = c(0.54,1.54,2.54), colour = cbbPalette[6]) +
+  geom_vline (xintercept = c(5.54,6.54,7.54), colour = cbbPalette[7]) + 
+  geom_vline (xintercept = c(10.54,11.54,12.54), colour = cbbPalette[8]) +
+  geom_vline (xintercept = 26, colour = "black") +
+  guides(color=guide_legend(title="Individual")) +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 15),limits = c(-2,30)) +
+  theme_minimal() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(), 
+        axis.line = element_line(colour = "black")) +
+  labs(y="Proportion of Lecanoromycetidae DNA", 
+       x="Time (days after Betula pubescens was fed)") +
+  labs(x=expression('Time (days after'~italic(Betula)~ ~italic( pubescens)~ 'was fed)'),
+       fill="Var1")
+plot1
+```
+
+```{r}
+ggsave("Euka.Biomass_for_publication_oneline.png", plot = plot1, width = 25, height = 16, units = c("cm"))
+```
+
+## Estimation of half-life time
+
+$$
+\begin{array}
+t1 &= a \times log(x) + b \\
+t2 &= a \times log(x/2) + b
+\end{array}
+$$
+half-life time is $t2-t1$
+
+$$
+\begin{array}
+t1 &= a \times log(x) + b \\
+t2 &= a \times (log(x) - log(2)) + b \\
+t2 &= a \; log(x) -  a \; log(2) + b \\
+\end{array}
+$$
+
+$$
+t2 - t1 = a \; log(x) -  a \; log(2) + b - (a \times log(x) + b)
+$$
+$$
+t2 - t1 = - a \; log(2)
+$$
+
+```{r}
+data_euka01 %>% 
+  filter(time >= start_time & 
+         time <= end_time & 
+           EUKAP2_00000018 > 0 &
+           animal_id=="9/10") %>% 
+  lm(time ~ log(EUKAP2_00000018),data=.) -> lm_9_10
+
+data_euka01 %>% 
+  filter(time >= start_time & 
+         time <= end_time & 
+           EUKAP2_00000018 > 0 &
+           animal_id=="10/10") %>% 
+  lm(time ~ log(EUKAP2_00000018),data=.) -> lm_10_10
+
+data_euka01 %>% 
+  filter(time >= start_time & 
+         time <= end_time & 
+           EUKAP2_00000018 > 0 &
+           animal_id=="12/10") %>% 
+  lm(time ~ log(EUKAP2_00000018),data=.) -> lm_12_10
+
+data_euka01 %>% 
+  filter(time >= start_time & 
+         time <= end_time & 
+           EUKAP2_00000018 > 0) %>% 
+  lm(time ~ log(EUKAP2_00000018),data=.) -> lm_all
+
+half_life <- tibble(animal_id = c("9/10","10/10","12/10","all"),
+                    licken_euka03 = -c(lm_9_10$coefficients[2],
+                                      lm_10_10$coefficients[2],
+                                      lm_12_10$coefficients[2],
+                                      lm_all$coefficients[2]) * log(2) * 24) %>%
+  mutate(ci_licken_euka03 = qnorm(p = c(0.975),
+                                          mean = 0,
+                                          sd = c(summary(lm_9_10)$coefficients[,"Std. Error"][2],
+                                             summary(lm_10_10)$coefficients[,"Std. Error"][2],
+                                             summary(lm_12_10)$coefficients[,"Std. Error"][2],
+                                             summary(lm_all)$coefficients[,"Std. Error"][2])) 
+                                           * log(2) * 24,
+         ci_licken_euka03_inf = licken_euka03 - ci_licken_euka03,
+         ci_licken_euka03_sup = licken_euka03 + ci_licken_euka03)
+
+half_life
+```
+
+
+
+```{r}
+Betulaceae.taxid = ecofind(taxo,"^Betulaceae$")
+is.a.Betulaceae = is.subcladeof(taxonomy = taxo,Euka01@motus$taxid,Betulaceae.taxid)
+is.a.Betulaceae[is.na(is.a.Betulaceae)]=FALSE
+sum(is.a.Betulaceae,na.rm = TRUE)
+
+Euka01@motus[is.a.Betulaceae,c("scientific_name","mean_ref_freq")]
+
+Betulaceae = Euka01@reads[,is.a.Lecanoromycetes]
+```
+
+
+```{r}
+start_time=1
+end_time=9
+
+plot1 = ggplot(data = data_euka01, 
+                     aes(x = time,
+                         y = EUKAP1_00000028,
+                         color = animal_id)) +
+ geom_point() + 
+  geom_smooth(data = data_euka01 %>% filter(time >= start_time & time <= end_time),
+              method = lm,show.legend = FALSE) + 
+  scale_color_manual(values=cbbPalette) +
+  stat_summary_bin(fun = mean, geom = "line") +
+  scale_y_log10() + 
+  geom_vline (xintercept = c(0.54,1.54,2.54), colour = cbbPalette[6]) +
+  geom_vline (xintercept = c(5.54,6.54,7.54), colour = cbbPalette[7]) + 
+  geom_vline (xintercept = c(10.54,11.54,12.54), colour = cbbPalette[8]) +
+  geom_vline (xintercept = 26, colour = "black") +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 15),limits = c(-2,30)) +
+  guides(color=guide_legend(title="Individual")) +
+  theme_minimal() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(), 
+        axis.line = element_line(colour = "black")) +
+  labs(y="Proportion of Betula DNA", 
+       x="Time (days after Betula pubescens was fed)") +
+  labs(x=expression('Time (days after'~italic(Betula)~ ~italic( pubescens)~ 'was fed)'),
+       fill="Var1")
+
+plot1
+```
+
+```{r}
+ggsave("Euka.Biomass_for_publication_lines.png", plot = plot1, width = 25, height = 16, units = c("cm"))
+```
+
+```{r}
+data_euka01 %>% 
+  filter(time >= start_time & 
+         time <= end_time & 
+           EUKAP1_00000028 > 0 &
+           animal_id=="9/10") %>% 
+  lm(time ~ log(EUKAP1_00000028),data=.) -> lm_9_10
+
+data_euka01 %>% 
+  filter(time >= start_time & 
+         time <= end_time & 
+           EUKAP1_00000028 > 0 &
+           animal_id=="10/10") %>% 
+  lm(time ~ log(EUKAP1_00000028),data=.) -> lm_10_10
+
+data_euka01 %>% 
+  filter(time >= start_time & 
+         time <= end_time & 
+           EUKAP1_00000028 > 0 &
+           animal_id=="12/10") %>% 
+  lm(time ~ log(EUKAP1_00000028),data=.) -> lm_12_10
+
+data_euka01 %>% 
+  filter(time >= start_time & 
+         time <= end_time & 
+           EUKAP1_00000028 > 0) %>% 
+  lm(time ~ log(EUKAP1_00000028),data=.) -> lm_all
+
+half_life <- mutate(half_life,
+                    animal_id = c("9/10","10/10","12/10","all"),
+                    betula_euka03 = -c(lm_9_10$coefficients[2],
+                                      lm_10_10$coefficients[2],
+                                      lm_12_10$coefficients[2],
+                                      lm_all$coefficients[2]) * log(2) * 24,
+                    ci_betula_euka03 = qnorm(p = c(0.975),
+                                          mean = 0,
+                                          sd = c(summary(lm_9_10)$coefficients[,"Std. Error"][2],
+                                             summary(lm_10_10)$coefficients[,"Std. Error"][2],
+                                             summary(lm_12_10)$coefficients[,"Std. Error"][2],
+                                             summary(lm_all)$coefficients[,"Std. Error"][2])) 
+                                           * log(2) * 24,
+         ci_betula_euka03_inf = betula_euka03 - ci_betula_euka03,
+         ci_betula_euka03_sup = betula_euka03 + ci_betula_euka03)
+
+half_life
+```
+
+
+```{r}
+plot3 = ggplot(data = as.data.frame(Euka01@reads), 
+                     aes(x = samples(Euka01)$times_from_birch/24,
+                         y = EUKAP2_00000018,
+                         color = Animal)) +
+  geom_point(aes(color = Animal)) +
+  scale_x_continuous(breaks = c(0, 10, 20, 30)) +  
+  xlim(-2,30) + 
+  geom_vline (xintercept = 26, colour = "black") +
+  theme_minimal() +
+  theme(panel.grid.minor = element_blank(),
+        panel.background = element_blank(), 
+        axis.line = element_line(colour = "black")) +
+  labs(y="Proportion of Lecanoromycetidae DNA", 
+       x="Time (days after Betula pubescens was fed)") +
+  labs(x=expression('Time (days after'~italic(Betula)~ ~italic( pubescens)~ 'was fed)'),
+       fill="Var1")
+plot3
+```
+
+```{r}
+ggsave("Euka.Biomass_for_publication_scattercolor.png", plot = plot3, width = 25, height = 16, units = c("cm"))
+```
+
+```{r}
+plot3 = ggplot(data = as.data.frame(Euka01@reads), 
+                     aes(x = samples(Euka01)$times_from_birch/24,
+                         y = EUKAP2_00000018)) +
+  geom_point(aes(shape = Animal), size = 2) +
+    scale_shape_manual(values=c(4, 2, 1))+
+  scale_x_continuous(breaks = c(0, 10, 20, 30)) +  
+  xlim(-2,30) + 
+  geom_vline (xintercept = 26, colour = "black") +
+  theme_minimal() +
+  theme(panel.grid.minor = element_blank(),
+        panel.background = element_blank(), 
+        axis.line = element_line(colour = "black")) +
+  labs(y="Proportion of Lecanoromycetidae DNA", 
+       x="Time (days after Betula pubescens was fed)") +
+  labs(x=expression('Time (days after'~italic(Betula)~ ~italic( pubescens)~ 'was fed)'),
+       fill="Var1")
+plot3
+```
+
+
+```{r}
+plot1 = ggplot(data = as.data.frame(Euka01@reads), 
+                     aes(x = samples(Euka01)$times_from_birch/24,
+                         y = EUKAP2_00000018,
+                         color = Animal)) +
+  scale_x_continuous(breaks = c(0, 10, 20, 30)) +  
+  stat_summary_bin(fun.y = mean, geom = "line") +
+  xlim(-2,30) + 
+  geom_vline (xintercept = 0.54, colour = "lightgrey") +
+  geom_vline (xintercept = 1.54, colour = "lightgrey") +
+  geom_vline (xintercept = 2.54, colour = "lightgrey") +
+  geom_vline (xintercept = 5.54, colour = "lightgrey") + 
+  geom_vline (xintercept = 6.54, colour = "lightgrey") + 
+  geom_vline (xintercept = 7.54, colour = "lightgrey") + 
+  geom_vline (xintercept = 10.54, colour = "lightgrey") +
+  geom_vline (xintercept = 11.54, colour = "lightgrey") +
+  geom_vline (xintercept = 12.54, colour = "lightgrey") +
+  annotate("text", x = 1.60, y = 0.23, label = "20g") + 
+  annotate("text", x = 6.60, y = 0.23, label = "500g") +
+  annotate("text", x = 11.60, y = 0.23, label = "2000g") +
+  geom_vline (xintercept = 26, colour = "black") +
+  theme_minimal() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(), 
+        axis.line = element_line(colour = "black")) +
+  labs(y="Proportion of Lecanoromycetidae DNA", 
+       x="Time (days after Betula pubescens was fed)") +
+  labs(x=expression('Time (days after'~italic(Betula)~ ~italic( pubescens)~ 'was fed)'),
+       fill="Var1")
+plot1
+```
+
+
+```{r}
+plot1 = ggplot(data = as.data.frame(Euka01@reads), 
+                     aes(x = samples(Euka01)$times_from_birch/24,
+                         y = EUKAP2_00000018)) +
+  stat_summary_bin(fun.y = mean, geom = "line") +
+  geom_point(aes(color = Animal)) +
+  xlim(-2,30) + 
+  geom_vline (xintercept = 0.54, colour = "lightgrey") +
+  geom_vline (xintercept = 1.54, colour = "lightgrey") +
+  geom_vline (xintercept = 2.54, colour = "lightgrey") +
+  geom_vline (xintercept = 5.54, colour = "lightgrey") + 
+  geom_vline (xintercept = 6.54, colour = "lightgrey") + 
+  geom_vline (xintercept = 7.54, colour = "lightgrey") + 
+  geom_vline (xintercept = 10.54, colour = "lightgrey") +
+  geom_vline (xintercept = 11.54, colour = "lightgrey") +
+  geom_vline (xintercept = 12.54, colour = "lightgrey") +
+  annotate("text", x = 1.60, y = 0.27, label = "20g") + 
+  annotate("text", x = 6.60, y = 0.27, label = "500g") +
+  annotate("text", x = 11.60, y = 0.27, label = "2000g") +
+  geom_vline (xintercept = 25, colour = "black", linetype = "dotted") +
+  theme_minimal() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(), 
+        axis.line = element_line(colour = "black")) +
+  labs(y="Proportion of lichen DNA", 
+       x="Time (days after B. pubescens was fed)") +
+  labs(x=expression('Time (days after'~italic(B.)~ ~italic( pubescens)~ 'was fed)'),
+       fill="Var1")
+plot1
+```
+
+
+```{r}
+ggsave("Euka.Biomass_for_publication_onelineanddots.png", plot = plot1, width = 25, height = 16, units = c("cm"))
+```
+
+
+
+
+
+```{r warning=FALSE,message=FALSE}
+
+data = cbind(as.data.frame(Euka01@reads),
+             time = samples(Euka01)$times_from_birch/24,
+             animal_id = samples(Euka01)$animal_id,
+             amount = 2000) %>% 
+  mutate(amount = ifelse(time < 10,500,amount)) %>%
+  mutate(amount = ifelse(time < 5,20,amount)) 
+
+start_time=11
+end_time=23
+
+plot1 = ggplot(data = data, 
+                     aes(x = time,
+                         y = EUKAP2_00000018,
+                         col=animal_id)) +
+ geom_smooth(span=0.2) + 
+ geom_point() + 
+  scale_y_log10() + 
+  geom_vline (xintercept = c(0.54,1.54,2.54), colour = cbbPalette[6]) +
+  geom_vline (xintercept = c(5.54,6.54,7.54), colour = cbbPalette[7]) + 
+  geom_vline (xintercept = c(10.54,11.54,12.54), colour = cbbPalette[8]) +
+  geom_vline (xintercept = 26, colour = "black") +
+  guides(color=guide_legend(title="Individual")) +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 15),limits = c(-2,30)) +
+  theme_minimal() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(), 
+        axis.line = element_line(colour = "black")) +
+  labs(y="Proportion of Lecanoromycetidae DNA", 
+       x="Time (days after Betula pubescens was fed)") +
+  labs(x=expression('Time (days after'~italic(Betula)~ ~italic( pubescens)~ 'was fed)'),
+       fill="Var1")
+plot1
+
+data %>% group_by(amount,animal_id) %>% summarise(max_lichen = max(EUKAP2_00000018))  %>%
+  ggplot(aes(x=amount,y=max_lichen)) + geom_point(aes(col=animal_id))
+```
+
+
+
+```{r}
+data  %>% 
+  group_by(animal_id) %>% 
+  mutate(lichen=EUKAP2_00000018,
+         sm = rollapply(EUKAP2_00000018,3,
+                        mean,align="center",
+                        fill=NA)) %>% 
+  select(-starts_with("EUKA")) %>% 
+  group_by(animal_id,amount) %>% 
+  summarise(max_lichen = max(sm,na.rm = TRUE),
+            m2 = max(lichen)) %>%
+  ggplot(aes(x=amount,y=m2)) + 
+  geom_point(aes(col=animal_id)) + 
+  scale_x_log10() + 
+  scale_y_log10() + 
+  geom_smooth(method=lm)
+```
+
+```{r}
+data  %>% 
+  group_by(animal_id) %>% 
+  mutate(lichen=EUKAP2_00000018,
+         sm = rollapply(EUKAP2_00000018,3,
+                        mean,align="center",
+                        fill=NA)) %>% 
+  select(-starts_with("EUKA")) %>% 
+  group_by(animal_id,amount) %>% 
+  summarise(max_lichen = max(sm,na.rm = TRUE),
+            m2 = max(lichen),
+            time = rev(time[which.max(lichen)])[1]) %>%
+  mutate(last_feed = ifelse(amount==20,2.54,ifelse(amount==500,7.54,12.54)),
+         delta = time - last_feed)
+```
+
+```{r}
+data  %>% group_by(animal_id) %>% mutate(lichen=EUKAP2_00000018,sm = rollapply(EUKAP2_00000018,3,mean,align="center",fill=NA)) %>% select(-starts_with("EUKA")) %>% group_by(animal_id,amount) %>% summarise(max_lichen = max(sm,na.rm = TRUE),m2 = max(lichen)) %>%
+  lm(log(amount) ~ log(m2),data = .) -> lm_gram_rra
+summary(lm_gram_rra)
+```
+
+```{r}
+data$lichen_gr <- data$EUKAP2_00000018^coefficients(lm_gram_rra)[2] * exp(coefficients(lm_gram_rra)[1])
+```
+
+```{r}
+data %>% ggplot(aes(x = lichen_gr,
+                         y = EUKAP2_00000018,
+                         col=animal_id)) + geom_point()
+```
+
+
+
+```{r warning=FALSE,message=FALSE}
+start_time=11
+end_time=23
+
+plot1 = ggplot(data = data, 
+                     aes(x = time,
+                         y = lichen_gr,
+                         col=animal_id)) +
+ geom_smooth(span=0.2) + 
+ geom_point() + 
+  scale_y_log10() + 
+  geom_vline (xintercept = c(0.54,1.54,2.54), colour = cbbPalette[6]) +
+  geom_vline (xintercept = c(5.54,6.54,7.54), colour = cbbPalette[7]) + 
+  geom_vline (xintercept = c(10.54,11.54,12.54), colour = cbbPalette[8]) +
+  geom_vline (xintercept = 26, colour = "black") +
+  guides(color=guide_legend(title="Individual")) +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 15),limits = c(-2,30)) +
+  theme_minimal() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(), 
+        axis.line = element_line(colour = "black")) +
+  labs(y="Lichen (g)", 
+       x="Time (days after Betula pubescens was fed)") +
+  labs(x=expression('Time (days after'~italic(Betula)~ ~italic( pubescens)~ 'was fed)'),
+       fill="Var1")
+plot1
+
+data %>% group_by(amount,animal_id) %>% summarise(max_lichen = max(EUKAP2_00000018))  %>%
+  ggplot(aes(x=amount,y=max_lichen)) + geom_point(aes(col=animal_id))
+```
+
+```{r}
+data %>% 
+  filter(time >= start_time & 
+         time <= end_time & 
+           lichen_gr > 0 &
+           animal_id=="9/10") %>% 
+  lm(time ~ log(lichen_gr),data=.) -> lm_9_10
+
+data %>% 
+  filter(time >= start_time & 
+         time <= end_time & 
+           lichen_gr > 0 &
+           animal_id=="10/10") %>% 
+  lm(time ~ log(lichen_gr),data=.) -> lm_10_10
+
+data %>% 
+  filter(time >= start_time & 
+         time <= end_time & 
+           lichen_gr > 0 &
+           animal_id=="12/10") %>% 
+  lm(time ~ log(lichen_gr),data=.) -> lm_12_10
+
+data %>% 
+  filter(time >= start_time & 
+         time <= end_time & 
+           lichen_gr > 0) %>% 
+  lm(time ~ log(lichen_gr),data=.) -> lm_all
+
+half_life <- tibble(animal_id = c("9/10","10/10","12/10","all"),
+                    licken_euka03 = -c(lm_9_10$coefficients[2],
+                                      lm_10_10$coefficients[2],
+                                      lm_12_10$coefficients[2],
+                                      lm_all$coefficients[2]) * log(2) * 24) %>%
+  mutate(ci_licken_euka03 = qnorm(p = c(0.975),
+                                          mean = 0,
+                                          sd = c(summary(lm_9_10)$coefficients[,"Std. Error"][2],
+                                             summary(lm_10_10)$coefficients[,"Std. Error"][2],
+                                             summary(lm_12_10)$coefficients[,"Std. Error"][2],
+                                             summary(lm_all)$coefficients[,"Std. Error"][2])) 
+                                           * log(2) * 24,
+         ci_licken_euka03_inf = licken_euka03 - ci_licken_euka03,
+         ci_licken_euka03_sup = licken_euka03 + ci_licken_euka03)
+
+half_life
+```
+
+$$
+log(RRA) = a \times log(lichen) + b
+$$
+$$
+RRA = e^b \times lichen^a
+$$
+
+
