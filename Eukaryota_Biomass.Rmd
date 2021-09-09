@@ -74,6 +74,12 @@ Euka01 = Euka01[,order(motus.hist,decreasing = TRUE)]
 motus(Euka01)[1:20,c("scientific_name","mean_ref_freq", "rank")]
 ```
 
+
+```{r}
+viridiplantae_taxid <- ecofind(taxo,"^Viridiplantae$")
+Euka01@motus$is_plant <- is.subcladeof(taxo,Euka01@motus$taxid,parent = viridiplantae_taxid)
+```
+
 --------------------------------------------------------------------------
 # Loading of metadata
 
@@ -653,5 +659,358 @@ $$
 $$
 RRA = e^b \times lichen^a
 $$
+
+```{r}
+Euka01_plant <- Euka01[,Euka01@motus$is_plant]
+dim(Euka01_plant)
+```
+
+```{r}
+Euka01_plant@reads %>% 
+  as_tibble() %>% 
+  mutate(sample_id = rownames(Euka01_plant)) %>%
+  pivot_longer(cols = - "sample_id", names_to = "motu_id",values_to = "relfreq") %>%
+  left_join(Euka01_plant@motus, by = c(motu_id = "id")) %>%
+  group_by(sample_id,family_name) %>%
+  summarise(relfreq = sum(relfreq)) %>%
+  ggplot(aes(x=family_name,y=relfreq)) +
+  geom_boxplot() + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+```
+
+```{r, fig.height=6}
+Euka01_plant@reads %>% 
+  as_tibble() %>% 
+  mutate(sample_id = rownames(Euka01_plant)) %>%
+  pivot_longer(cols = - "sample_id", names_to = "motu_id",values_to = "relfreq") %>%
+  left_join(Euka01_plant@motus, by = c(motu_id = "id")) %>%
+  group_by(sample_id,family_name) %>%
+  summarise(relfreq = sum(relfreq)) %>%
+  ungroup() %>%
+  left_join(Euka01_plant@samples, by = "sample_id")  %>%
+  ggplot(aes(x=times_from_birch/24,y=relfreq,col=family_name)) +
+  geom_point(  ) +
+  xlim(-2,30) + 
+  facet_grid(family_name ~ .,scales="free_y") +
+  geom_vline (xintercept = 0.54, colour = "lightgrey") +
+  geom_vline (xintercept = 1.54, colour = "lightgrey") +
+  geom_vline (xintercept = 2.54, colour = "lightgrey") +
+  geom_vline (xintercept = 5.54, colour = "lightgrey") + 
+  geom_vline (xintercept = 6.54, colour = "lightgrey") + 
+  geom_vline (xintercept = 7.54, colour = "lightgrey") + 
+  geom_vline (xintercept = 10.54, colour = "lightgrey") +
+  geom_vline (xintercept = 11.54, colour = "lightgrey") +
+  geom_vline (xintercept = 12.54, colour = "lightgrey") +
+  annotate("text", x = 1.60, y = 0.27, label = "20g") + 
+  annotate("text", x = 6.60, y = 0.27, label = "500g") +
+  annotate("text", x = 11.60, y = 0.27, label = "2000g") +
+  geom_vline (xintercept = 25, colour = "black", linetype = "dotted") 
+```
+
+# Attempt to correct relative frequencies by the average relative frequency of constantes plants
+
+```{r}
+Euka01_plant@reads %>% 
+  as_tibble() %>% 
+  mutate(sample_id = rownames(Euka01_plant)) %>%
+  pivot_longer(cols = - "sample_id", names_to = "motu_id",values_to = "relfreq") %>%
+  left_join(Euka01_plant@motus %>% select(- starts_with("obiclean_status") ), 
+            by = c(motu_id = "id")) %>%   
+  ungroup() %>%
+  left_join(Euka01_plant@samples, by = "sample_id") %>%
+  mutate(times_from_birch = times_from_birch/24,
+         time_group = floor(times_from_birch)) %>%
+  filter(time_group < 26) %>%
+  group_by(family_name) %>%
+  summarise(mean_relfreq = mean(relfreq)) %>%
+  arrange(desc(mean_relfreq)) -> family_means
+  
+  family_means
+```
+```{r}
+Euka01_plant@reads %>% 
+  as_tibble() %>% 
+  mutate(sample_id = rownames(Euka01_plant)) %>%
+  pivot_longer(cols = - "sample_id", names_to = "motu_id",values_to = "relfreq") %>%
+  left_join(Euka01_plant@motus %>% select(- starts_with("obiclean_status") ), 
+            by = c(motu_id = "id")) %>%   
+  ungroup() %>%
+  left_join(Euka01_plant@samples, by = "sample_id") %>%
+  mutate(times_from_birch = times_from_birch/24,
+         time_group = floor(times_from_birch)) %>%
+  filter(time_group < 26) %>%
+  group_by(family_name,animal_id) %>%
+  mutate(mean_relfreq = mean(relfreq)) %>%
+  arrange(desc(mean_relfreq)) %>%
+  group_by(family_name,animal_id,mean_relfreq,time_group) %>%
+  summarise(mean_group = mean(relfreq)) %>%
+  mutate(correction = mean_relfreq/mean_group) %>%
+  ungroup() -> corrections
+corrections
+```
+
+```{r }
+start_time=1
+end_time=9
+
+
+Euka01@reads %>% 
+  as_tibble() %>% 
+  mutate(sample_id = rownames(Euka01)) %>%
+  pivot_longer(cols = - "sample_id", names_to = "motu_id",values_to = "relfreq") %>%
+  left_join(Euka01@motus %>% select(- starts_with("obiclean_status") ), 
+            by = c(motu_id = "id")) %>%   
+  ungroup() %>%
+  left_join(Euka01@samples, by = "sample_id") %>%
+  mutate(times_from_birch = times_from_birch/24,
+         time_group = floor(times_from_birch)) %>%
+  filter(time_group < 26) %>%
+  left_join(corrections %>% 
+              filter(family_name == "Brassicaceae") %>%
+              select(Animal_id = animal_id, time_group,correction)) %>%
+  mutate(cor_relfreq = relfreq * correction) %>% 
+  filter(family_name=="Betulaceae") %>%
+  group_by(sample_id,Animal_id,times_from_birch,time_group) %>%
+  summarise(relfreq=sum(cor_relfreq)) -> corrrected_data_Euka01
+
+
+ggplot(data = corrrected_data_Euka01, 
+                      aes(x = times_from_birch,
+                          y =  relfreq,
+                          color = Animal_id)) +
+  geom_point() + 
+  geom_smooth(data = corrrected_data_Euka01 %>% filter(times_from_birch >= start_time & times_from_birch <= end_time),
+              method = lm,show.legend = FALSE) + 
+  scale_color_manual(values=cbbPalette) +
+  stat_summary_bin(fun = mean, geom = "line") +
+  scale_y_log10() + 
+  geom_vline (xintercept = c(0.54,1.54,2.54), colour = cbbPalette[6]) +
+  geom_vline (xintercept = c(5.54,6.54,7.54), colour = cbbPalette[7]) + 
+  geom_vline (xintercept = c(10.54,11.54,12.54), colour = cbbPalette[8]) +
+  geom_vline (xintercept = 26, colour = "black") +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 15),limits = c(-2,30)) +
+  guides(color=guide_legend(title="Individual")) +
+  theme_minimal() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(), 
+        axis.line = element_line(colour = "black")) +
+  labs(y="Proportion of Betula DNA", 
+       x="Time (days after Betula pubescens was fed)") +
+  labs(x=expression('Time (days after'~italic(Betula)~ ~italic( pubescens)~ 'was fed)'),
+       fill="Var1")
+```
+
+
+```{r}
+corrrected_data_Euka01  %>%
+  filter(times_from_birch >= start_time & 
+         times_from_birch <= end_time & 
+           relfreq > 0 &
+           Animal_id=="9/10") %>% 
+  lm(times_from_birch ~ log(relfreq),data=.) -> lm_9_10
+
+corrrected_data_Euka01 %>% 
+  filter(times_from_birch >= start_time & 
+         times_from_birch <= end_time & 
+           relfreq > 0 &
+           Animal_id=="10/10") %>% 
+  lm(times_from_birch ~ log(relfreq),data=.) -> lm_10_10
+
+corrrected_data_Euka01 %>% 
+  filter(times_from_birch >= start_time & 
+         times_from_birch <= end_time & 
+           relfreq > 0 &
+           Animal_id=="12/10") %>% 
+  lm(times_from_birch ~ log(relfreq),data=.) -> lm_12_10
+
+corrrected_data_Euka01 %>% 
+  filter(times_from_birch >= start_time & 
+         times_from_birch <= end_time & 
+           relfreq > 0) %>% 
+  lm(times_from_birch ~ log(relfreq) + Animal_id,data=.) -> lm_all
+
+half_life <- tibble(animal_id = c("9/10","10/10","12/10","all"),
+                    betula_euka02 = -c(lm_9_10$coefficients[2],
+                                      lm_10_10$coefficients[2],
+                                      lm_12_10$coefficients[2],
+                                      lm_all$coefficients[2]) * log(2) * 24,
+                    ci_betula_euka02 = qnorm(p = c(0.975),
+                                          mean = 0,
+                                          sd = c(summary(lm_9_10)$coefficients[,"Std. Error"][2],
+                                             summary(lm_10_10)$coefficients[,"Std. Error"][2],
+                                             summary(lm_12_10)$coefficients[,"Std. Error"][2],
+                                             summary(lm_all)$coefficients[,"Std. Error"][2])) 
+                                           * log(2) * 24,
+         ci_betula_euka02_inf = betula_euka02 - ci_betula_euka02,
+         ci_betula_euka02_sup = betula_euka02 + ci_betula_euka02)
+
+half_life
+```
+
+## For lickens
+
+```{r }
+start_time=11
+end_time=23
+
+
+Euka01@reads %>% 
+  as_tibble() %>% 
+  mutate(sample_id = rownames(Euka01)) %>%
+  pivot_longer(cols = - "sample_id", names_to = "motu_id",values_to = "relfreq") %>%
+  left_join(Euka01@motus %>% select(- starts_with("obiclean_status") ), 
+            by = c(motu_id = "id")) %>%   
+  ungroup() %>%
+  left_join(Euka01@samples, by = "sample_id") %>%
+  mutate(times_from_birch = times_from_birch/24,
+         time_group = floor(times_from_birch)) %>%
+  filter(time_group < 26) %>%
+  left_join(corrections %>% 
+              filter(family_name == "Brassicaceae") %>%
+              select(Animal_id = animal_id, time_group,correction)) %>%
+  mutate(cor_relfreq = relfreq * correction) %>% 
+  filter(motu_id=="EUKAP2_00000018") %>%
+  group_by(sample_id,Animal_id,times_from_birch,time_group) %>%
+  summarise(relfreq=sum(cor_relfreq)) -> corrrected_data_Euka01
+
+
+ggplot(data = corrrected_data_Euka01, 
+                      aes(x = times_from_birch,
+                          y =  relfreq,
+                          color = Animal_id)) +
+  geom_point() + 
+  geom_smooth(data = corrrected_data_Euka01 %>% filter(times_from_birch >= start_time & times_from_birch <= end_time),
+              method = lm,show.legend = FALSE) + 
+  scale_color_manual(values=cbbPalette) +
+  stat_summary_bin(fun = mean, geom = "line") +
+  scale_y_log10() + 
+  geom_vline (xintercept = c(0.54,1.54,2.54), colour = cbbPalette[6]) +
+  geom_vline (xintercept = c(5.54,6.54,7.54), colour = cbbPalette[7]) + 
+  geom_vline (xintercept = c(10.54,11.54,12.54), colour = cbbPalette[8]) +
+  geom_vline (xintercept = 26, colour = "black") +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 15),limits = c(-2,30)) +
+  guides(color=guide_legend(title="Individual")) +
+  theme_minimal() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(), 
+        axis.line = element_line(colour = "black")) +
+  labs(y="Proportion of Betula DNA", 
+       x="Time (days after Betula pubescens was fed)") +
+  labs(x=expression('Time (days after'~italic(Betula)~ ~italic( pubescens)~ 'was fed)'),
+       fill="Var1")
+```
+
+
+```{r}
+corrrected_data_Euka01  %>%
+  filter(times_from_birch >= start_time & 
+         times_from_birch <= end_time & 
+           relfreq > 0 &
+           Animal_id=="9/10") %>% 
+  lm(times_from_birch ~ log(relfreq),data=.) -> lm_9_10
+
+corrrected_data_Euka01 %>% 
+  filter(times_from_birch >= start_time & 
+         times_from_birch <= end_time & 
+           relfreq > 0 &
+           Animal_id=="10/10") %>% 
+  lm(times_from_birch ~ log(relfreq),data=.) -> lm_10_10
+
+corrrected_data_Euka01 %>% 
+  filter(times_from_birch >= start_time & 
+         times_from_birch <= end_time & 
+           relfreq > 0 & relfreq <= 1,
+           Animal_id=="12/10") %>% 
+  lm(times_from_birch ~ log(relfreq),data=.) -> lm_12_10
+
+corrrected_data_Euka01 %>% 
+  filter(times_from_birch >= start_time & 
+         times_from_birch <= end_time & 
+           relfreq > 0& relfreq <= 1) %>% 
+  lm(times_from_birch ~ log(relfreq) + Animal_id,data=.) -> lm_all
+
+half_life <- tibble(animal_id = c("9/10","10/10","12/10","all"),
+                    lichen_euka02 = -c(lm_9_10$coefficients[2],
+                                      lm_10_10$coefficients[2],
+                                      lm_12_10$coefficients[2],
+                                      lm_all$coefficients[2]) * log(2) * 24,
+                    ci_lichen_euka02 = qnorm(p = c(0.975),
+                                          mean = 0,
+                                          sd = c(summary(lm_9_10)$coefficients[,"Std. Error"][2],
+                                             summary(lm_10_10)$coefficients[,"Std. Error"][2],
+                                             summary(lm_12_10)$coefficients[,"Std. Error"][2],
+                                             summary(lm_all)$coefficients[,"Std. Error"][2])) 
+                                           * log(2) * 24,
+         ci_lichen_euka02_inf = lichen_euka02 - ci_lichen_euka02,
+         ci_lichen_euka02_sup = lichen_euka02 + ci_lichen_euka02)
+
+half_life
+```
+
+### Effect on the relatiionship with the amount of ingested lichens
+
+```{r warning=FALSE,message=FALSE}
+
+data = corrrected_data_Euka01 %>% 
+  mutate(time = times_from_birch,
+         amount = 2000) %>%
+  mutate(amount = ifelse(time < 10,500,amount)) %>%
+  mutate(amount = ifelse(time < 5,20,amount)) 
+
+start_time=11
+end_time=23
+
+plot1 = ggplot(data = data, 
+                     aes(x = time,
+                         y = relfreq,
+                         col=Animal_id)) +
+ geom_smooth(span=0.2) + 
+ geom_point() + 
+  scale_y_log10() + 
+  geom_vline (xintercept = c(0.54,1.54,2.54), colour = cbbPalette[6]) +
+  geom_vline (xintercept = c(5.54,6.54,7.54), colour = cbbPalette[7]) + 
+  geom_vline (xintercept = c(10.54,11.54,12.54), colour = cbbPalette[8]) +
+  geom_vline (xintercept = 26, colour = "black") +
+  guides(color=guide_legend(title="Individual")) +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 15),limits = c(-2,30)) +
+  theme_minimal() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(), 
+        axis.line = element_line(colour = "black")) +
+  labs(y="Proportion of Lecanoromycetidae DNA", 
+       x="Time (days after Betula pubescens was fed)") +
+  labs(x=expression('Time (days after'~italic(Betula)~ ~italic( pubescens)~ 'was fed)'),
+       fill="Var1")
+plot1
+
+data %>% group_by(amount,Animal_id) %>% summarise(max_lichen = max(relfreq, na.rm = TRUE))  %>%
+  ggplot(aes(x=amount,y=max_lichen)) + geom_point(aes(col=Animal_id))
+```
+
+```{r}
+data  %>% 
+  group_by(Animal_id) %>% 
+  mutate(lichen=relfreq) %>% 
+  group_by(Animal_id,amount) %>% 
+  summarise(max_lichen = max(lichen)) %>%
+  ggplot(aes(x=amount,y=max_lichen)) + 
+  geom_point(aes(col=Animal_id)) + 
+  scale_x_log10() + 
+  scale_y_log10() + 
+  geom_smooth(method=lm)
+```
+
+```{r}
+data  %>% group_by(Animal_id) %>% 
+  mutate(lichen=relfreq) %>% 
+  group_by(Animal_id,amount) %>% 
+  summarise(max_lichen = max(lichen)) %>%
+  lm(log(amount) ~ log(max_lichen),data = .) -> lm_gram_rra
+summary(lm_gram_rra)
+```
+
 
 

@@ -1,0 +1,84 @@
+---
+title: "Swab filtering"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r}
+library(ROBITaxonomy)
+library(ROBITools)
+library(vegan)
+library(ade4)
+library(ggplot2)
+library(tidyverse)
+library(zoo)
+library(viridisLite)
+library(viridis)
+library(ggpubr)
+library(grid)
+library(gridExtra) 
+
+# The palette with grey:
+cbPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+
+# The palette with black:
+cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+```
+
+
+```{r}
+taxo = read.taxonomy("Data/ncbi20210212")
+```
+
+# For GH marker
+
+```{r}
+taxo = read.taxonomy("Data/ncbi20210212")
+```
+
+# The Read contingency table
+```{r}
+  reads = read.csv("Data/Food/FE.Spermatophyta_Food.samples.reads.csv",
+                 header = TRUE,
+                 row.names = 1)
+reads = as.matrix(reads)
+reads = decostand(reads,method = "total")
+```
+
+# The sample description table
+```{r}
+samples = read.csv("Data/Food/FE.Spermatophyta_Food.samples.samples.csv",
+                 header = TRUE,
+                 row.names = 1)
+```
+
+# The MOTU description table
+```{r}
+motus = read.csv("Data/Food/FE.Spermatophyta_Food.samples.motus.csv",
+                 header = TRUE,
+                 row.names = 1)
+```
+
+# Create an object, where you merge the three tables
+```{r}
+Food_GH = metabarcoding.data(reads = reads,
+                             samples = samples,
+                             motus = motus)
+```
+
+--------------------------------------------------------------------------
+
+```{r}
+Food_GH@reads %>% 
+  as_tibble() %>% 
+  mutate(sample_id = rownames(Food_GH)) %>%
+  pivot_longer(cols = - "sample_id", names_to = "motu_id",values_to = "relfreq") %>%
+  left_join(Food_GH@motus, by = c(motu_id = "id")) %>%
+  group_by(sample_id,family_name) %>%
+  summarise(relfreq = sum(relfreq)) %>%
+  ggplot(aes(x=family_name,y=relfreq)) +
+  geom_boxplot() + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+```
+

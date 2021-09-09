@@ -1,0 +1,224 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2513
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red25\green25\blue25;\red0\green0\blue0;
+\red252\green33\blue24;\red60\green95\blue255;}
+{\*\expandedcolortbl;;\csgray\c0;\cssrgb\c12941\c12941\c12941;\cssrgb\c0\c0\c0;
+\cssrgb\c100000\c23177\c11601;\cssrgb\c29814\c47883\c100000;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww23360\viewh13780\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 cd 
+\f1\fs22 \cf2 \CocoaLigature0 /cluster/projects/nn9503k/data_20191212/data_20191212_p2/200408_K00253.A.Project_Kamenova-DNA4-2019-12-17/Sample_07-All-SWAB-PM\
+\
+
+\f0\fs24 \cf0 \CocoaLigature1 ###LOAD THE OBITOOLS
+\f1\fs22 \cf2 \CocoaLigature0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\
+\pard\pardeftab720\partightenfactor0
+
+\f0 \cf3 \expnd0\expndtw0\kerning0
+\CocoaLigature1 module load OBITools/1.2.12-foss-2018b-Python-2.7.15\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1 \cf2 \kerning1\expnd0\expndtw0 \CocoaLigature0 \'97
+\f0 \cf3 \expnd0\expndtw0\kerning0
+\CocoaLigature1 \
+\pard\pardeftab720\partightenfactor0
+\cf3 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f1 \cf4 \kerning1\expnd0\expndtw0 \CocoaLigature0 gunzip \cf5 HGK2GBBXY_07-All-SWAB-PM_CAAGCTAG-CGCTATGT_L002_R1_001.fastq.gz\cf4 \
+gunzip \cf5 HGK2GBBXY_07-All-SWAB-PM_CAAGCTAG-CGCTATGT_L002_R2_001.fastq.gz\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf2 \'97\cf5 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf5 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf2 obicount HGK2GBBXY_07-All-SWAB-PM_CAAGCTAG-CGCTATGT_L002_R1_001.fastq\
+3041832 3041832\
+\
+obicount HGK2GBBXY_07-All-SWAB-PM_CAAGCTAG-CGCTATGT_L002_R2_001.fastq\
+3041832 3041832\
+\
+###MERGE FORWARD AND REVERSE PAIR-END READS\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf6 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf2 sbatch SWAB_p2_illuminapairend.sh\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\
+######\cf6 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf6 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf2 #!/bin/sh\
+\
+#SBATCH --account=nn9503k\
+#SBATCH --time=60:00:00\
+#SBATCH --job-name=illuminapairedend\
+#SBATCH --cpus-per-task=1\
+#SBATCH --mem-per-cpu=21G\
+#SBATCH --mail-type=ALL\
+#SBATCH --mail-user=stefaniya.kamenova@ibv.uio.no\
+\
+set -o errexit # Make bash exit on any error\
+set -o nounset # Treat unset variables as errors\
+\
+#set up the job environment\
+module --quiet purge\
+module load StdEnv\
+\
+module load OBITools/1.2.12-foss-2018b-Python-2.7.15\
+\
+# place commands after this line\
+illuminapairedend --score-min=40 -r HGK2GBBXY_07-All-SWAB-PM_CAAGCTAG-CGCTATGT_L002_R1_001.fastq HGK2GBBXY_07-All-SWAB-PM_CAAGCTAG-CGCTATGT_L002_R2_001.fastq > SWAB_p2.paired.fastq\
+\
+\
+######\
+\
+obicount SWAB_p2.paired.fastq\
+3041832 3041832\
+\
+###FILTER OUT PAIRED READS WHOSE ALIGNMENT SCORE IS <50\
+\
+sbatch obigrep_SWAB_50_p2.sh\
+\
+######\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+#!/bin/sh\
+\
+#SBATCH --account=nn9503k\
+#SBATCH --time=2:00:00\
+#SBATCH --job-name=obigrep\
+#SBATCH --cpus-per-task=1\
+#SBATCH --mem-per-cpu=21G\
+#SBATCH --mail-type=ALL\
+#SBATCH --mail-user=stefaniya.kamenova@ibv.uio.no\
+\
+set -o errexit # Make bash exit on any error\
+set -o nounset # Treat unset variables as errors\
+\
+#set up the job environment\
+module --quiet purge\
+module load StdEnv\
+\
+module load OBITools/1.2.12-foss-2018b-Python-2.7.15\
+\
+# place commands after this line\
+obigrep -p 'score>50' SWAB_p2.paired.fastq > SWAB_p2.paired.ali.fastq\
+\
+\
+-\
+\
+obicount SWAB_p2.paired.ali.fastq\
+2748424 2748424\
+\
+---------------------------\
+\
+###ASSIGN SEQUENCES TO SAMPLES USING TAG INFORMATION\
+\
+scp /Users/stefanka/Desktop/REININ/ngsfilter_SWAB_ALL.txt stefanka@saga.sigma2.no:/cluster/projects/nn9503k/data_20191212/data_20191212_p2/200408_K00253.A.Project_Kamenova-DNA4-2019-12-17/Sample_07-All-SWAB-PM\
+\
+\
+###\
+\
+sbatch ngsfilter_SWAB_p2.sh\
+\
+\
+######\
+\
+#!/bin/sh\
+\
+#SBATCH --account=nn9503k\
+#SBATCH --time=24:00:00\
+#SBATCH --job-name=ngsfilter\
+#SBATCH --cpus-per-task=1\
+#SBATCH --mem-per-cpu=21G\
+#SBATCH --mail-type=ALL\
+#SBATCH --mail-user=stefaniya.kamenova@ibv.uio.no\
+\
+set -o errexit # Make bash exit on any error\
+set -o nounset # Treat unset variables as errors\
+\
+#set up the job environment\
+module --quiet purge\
+module load StdEnv\
+\
+module load OBITools/1.2.12-foss-2018b-Python-2.7.15\
+\
+# place commands after this line\
+ngsfilter -t ngsfilter_SWAB_ALL.txt -u unidentified_SWAB_p2_species --fasta-output SWAB_p2.paired.ali.fastq > SWAB_p2.paired.ali.assigned.fasta\
+\
+\
+#######\
+\
+obicount SWAB_p2.paired.ali.assigned.fasta\
+2557663 2557663\
+\
+---------------------------\
+\
+###DISCARD CHIMERAS\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+obigrep -p "forward_tag == reverse_tag" SWAB_p2.paired.ali.assigned.fasta > SWAB_p2.paired.ali.assigned.diag.fasta\
+\
+\
+\'97\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+obicount SWAB_p2.paired.ali.assigned.diag.fasta\
+2334863 2334863\
+\
+---------------------------\
+\
+\
+###DEREPLICATE READS\
+\
+obiuniq -m sample SWAB_p2.paired.ali.assigned.diag.fasta > SWAB_p2.paired.ali.assigned.diag.uniq.fasta\
+\
+\
+\'97\
+\
+obicount SWAB_p2.paired.ali.assigned.diag.uniq.fasta\
+113302 2334863\
+\
+\'97\'97\'97\'97\
+\
+obiannotate -k count -k merged_sample \\\
+  SWAB_p2.paired.ali.assigned.diag.uniq.fasta > $$ ; mv $$ SWAB_p2.paired.ali.assigned.diag.uniq.fasta\
+\
+\
+\
+###REMOVE SINGLETONS AND SHORT SEQUENCES\
+\
+obigrep -l 10 -p 'count>=10' SWAB_p2.paired.ali.assigned.diag.uniq.fasta > SWAB_p2.paired.ali.assigned.diag.uniq.c10.l10.fasta\
+\
+\
+\'97\'97\'97\
+\
+obicount SWAB_p2.paired.ali.assigned.diag.uniq.c10.l10.fasta\
+6191 2167521\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+}

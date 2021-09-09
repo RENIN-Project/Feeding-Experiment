@@ -1,0 +1,312 @@
+---
+title: "GH_EUKA"
+output:
+  html_document:
+    df_print: paged
+---
+
+
+```{r}
+library(ROBITaxonomy)
+library(ROBITools)
+library(vegan)
+library(ade4)
+library(ggplot2)
+library(tidyverse)
+library(permute)
+library(lattice)
+library(viridisLite)
+library(viridis)
+library(ggpubr)
+library(grid)
+library(gridExtra) 
+
+# The palette with grey:
+cbPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+
+# The palette with black:
+cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+```
+
+
+--------------------------------------------------------------------------
+
+```{r}
+taxo = read.taxonomy("Data/ncbi20210212")
+```
+
+--------------------------------------------------------------------------
+
+## GH DATA
+
+# The Read contingency table
+```{r}
+GH_reads = read.csv("Data/Faeces/FE.Spermatophyta.samples.reads.csv",
+                 header = TRUE,
+                 row.names = 1)
+GH_reads = as.matrix(GH_reads)
+```
+
+# The sample description table
+```{r}
+GH_samples = read.csv("Data/Faeces/FE.Spermatophyta.samples.samples.csv",
+                 header = TRUE,
+                 row.names = 1)
+```
+
+# The MOTU description table
+```{r}
+GH_motus = read.csv("Data/Faeces/FE.Spermatophyta.samples.motus.csv",
+                 header = TRUE,
+                 row.names = 1)
+```
+
+# Create an object, where you merge the three tables
+```{r}
+Sper01 = metabarcoding.data(reads = GH_reads,
+                          samples = GH_samples,
+                          motus = GH_motus)
+```
+## EUKA DATA
+
+# The Read contingency table
+```{r}
+Euka_reads = read.csv("Data/Faeces/FE.Euka.samples.reads.csv",
+                 header = TRUE,
+                 row.names = 1)
+Euka_reads = as.matrix(Euka_reads)
+Euka_reads = decostand(Euka_reads,method = "total")
+```
+
+# The sample description table
+```{r}
+Euka_samples = read.csv("Data/Faeces/FE.Euka.samples.samples.csv",
+                 header = TRUE,
+                 row.names = 1)
+```
+
+# The MOTU description table
+```{r}
+Euka_motus = read.csv("Data/Faeces/FE.Euka.samples.motus.csv",
+                 header = TRUE,
+                 row.names = 1)
+```
+
+# Create an object, where you merge the three tables
+
+```{r}
+Euka01 = metabarcoding.data(reads = Euka_reads,
+                          samples = Euka_samples,
+                          motus = Euka_motus)
+```
+
+--------------------------------------------------------------------------
+
+```{r}
+Sper01.motus.hist = colMeans(reads(Sper01))
+Sper01@motus$mean_ref_freq = Sper01.motus.hist
+Sper01 = Sper01[,order(Sper01.motus.hist,decreasing = TRUE)]
+```
+
+```{r}
+motus(Sper01)[1:20,c("scientific_name","mean_ref_freq", "rank")]
+```
+
+```{r}
+Euka01.motus.hist = colMeans(reads(Euka01))
+Euka01@motus$mean_ref_freq = Euka01.motus.hist
+Euka01 = Euka01[,order(Euka01.motus.hist,decreasing = TRUE)]
+```
+
+```{r}
+motus(Euka01)[1:20,c("scientific_name","mean_ref_freq", "rank")]
+```
+
+--------------------------------------------------------------------------
+
+# Loading of GH metadata
+
+```{r}
+samples.metadata = read_csv("Data/Faeces/sampling_dates.csv")
+```
+
+```{r}
+samples.metadata = inner_join(samples.metadata,Sper01@samples,by="sample_id")
+```
+
+```{r}
+rownames(samples.metadata) = as.character(samples.metadata$sample_id)
+samples.metadata = samples.metadata[rownames(Sper01),]
+```
+
+```{r}
+Sper01@samples = as.data.frame(samples.metadata)
+rownames(Sper01@samples) = rownames(as.character(Sper01@samples$sample_id))
+```
+
+
+
+```{r}
+library(readr)
+metadata <- read_delim("Data/metadata.csv", ";", 
+    escape_double = FALSE, trim_ws = TRUE)
+```
+
+# Loading of EUKA metadata
+
+```{r}
+samples.metadata_biomass = metadata
+```
+
+```{r}
+samples.metadata_biomass = inner_join(samples.metadata_biomass,Euka01@samples,by="sample_id")
+```
+
+```{r}
+rownames(samples.metadata_biomass) = samples.metadata_biomass$sample_id
+samples.metadata_biomass = samples.metadata_biomass[rownames(Euka01),]
+```
+
+```{r}
+Euka01@samples = as.data.frame(samples.metadata_biomass)
+rownames(Euka01@samples) = as.character(Euka01@samples$sample_id)
+```
+
+--------------------------------------------------------------------------
+
+Timeshift to synchronize time 0 to 21.00, 23.january 2018
+
+```{r}
+Sper01@samples[Sper01@samples$animal_id=="X","times_from_birch"] = 
+  Sper01@samples[Sper01@samples$animal_id=="X","times_from_birch"] + 6
+
+Sper01@samples[Sper01@samples$animal_id=="Y","times_from_birch"] = 
+  Sper01@samples[Sper01@samples$animal_id=="Y","times_from_birch"] + 3
+
+Sper01@samples[Sper01@samples$animal_id=="Z","times_from_birch"] = 
+  Sper01@samples[Sper01@samples$animal_id=="Z","times_from_birch"] + 4
+```
+
+```{r}
+Euka01@samples[Euka01@samples$Animal_ID=="X","times_from_birch"] = 
+  Euka01@samples[Euka01@samples$Animal_ID=="X","times_from_birch"] + 6
+
+Euka01@samples[Euka01@samples$Animal_ID=="Y","times_from_birch"] = 
+  Euka01@samples[Euka01@samples$Animal_ID=="Y","times_from_birch"] + 3
+
+Euka01@samples[Euka01@samples$Animal_ID=="Y","times_from_birch"] = 
+  Euka01@samples[Euka01@samples$Animal_ID=="Y","times_from_birch"] + 4
+```
+
+--------------------------------------------------------------------------
+
+# Set Animal_ID
+
+```{r}
+Animal_id = rep("Unknown", nrow(samples(Sper01)))
+Animal_id[which(samples(Sper01)$animal_id == "X")] = "9/10"
+Animal_id[which(samples(Sper01)$animal_id == "Y")] = "10/10"
+Animal_id[which(samples(Sper01)$animal_id == "Z")] = "12/10"
+Sper01@samples$Animal_id=factor(Animal_id, levels=c("9/10","10/10","12/10"))
+```
+
+```{r}
+Animal_id = rep("Unknown", nrow(samples(Euka01)))
+Animal_id[which(samples(Euka01)$animal_id == "X")] = "9/10"
+Animal_id[which(samples(Euka01)$animal_id == "Y")] = "10/10"
+Animal_id[which(samples(Euka01)$animal_id == "Z")] = "12/10"
+Euka01@samples$Animal_id=factor(Animal_id)
+```
+
+```{r}
+Euka01@samples$Animal_id =  factor(as.character(Euka01@samples$Animal_id), 
+                                   levels=c("9/10","10/10","12/10"))
+```
+
+```{r}
+Sper01.Animal = Sper01@samples$Animal_id
+```
+
+```{r}
+Euka01.Animal = Euka01@samples$Animal_id
+```
+
+--------------------------------------------------------------------------
+
+# Find Birch
+
+```{r}
+Betula.taxid = ecofind(taxo,"^Fagales$")
+is.a.Betula = is.subcladeof(taxonomy = taxo,Sper01@motus$taxid,Betula.taxid)
+is.a.Betula[is.na(is.a.Betula)]=FALSE
+sum(is.a.Betula,na.rm = TRUE)
+
+Sper01@motus[is.a.Betula,c("scientific_name","mean_ref_freq")]
+
+Betula = Sper01@reads[,is.a.Betula]
+```
+
+# Find Cladonia
+
+```{r}
+Lecanoromycetes.taxid = ecofind(taxo,"^Lecanoromycetes$")
+is.a.Lecanoromycetes = is.subcladeof(taxonomy = taxo,Euka01@motus$taxid,Lecanoromycetes.taxid)
+is.a.Lecanoromycetes[is.na(is.a.Lecanoromycetes)]=FALSE
+sum(is.a.Lecanoromycetes,na.rm = TRUE)
+
+Euka01@motus[is.a.Lecanoromycetes,c("scientific_name","mean_ref_freq")]
+
+Lecanoromycetes = Euka01@reads[,is.a.Lecanoromycetes]
+```
+
+--------------------------------------------------------------------------
+
+
+```{r}
+
+plot1 = ggplot(data = as.data.frame(Euka01@reads), 
+                     aes(x = samples(Euka01)$times_from_birch/24,
+                         y = EUKAP2_00000018)) +
+    stat_summary_bin(data = as.data.frame(Euka01@reads), 
+                     aes(x = samples(Euka01)$times_from_birch/24, 
+                         y = EUKAP2_00000018,
+                         color = "steelblue2"),
+                     fun.y = mean, geom = "line", size = 0.8) +  
+    stat_summary_bin(data = as.data.frame(Sper01@reads),
+             aes(x = samples(Sper01)$times_from_birch/24, 
+                 y = GHP1_00000007 + GHP1_00000030 + GHP1_00000681 + GHP3_00000153 + GHP1_00003018,
+                         color = "forestgreen"),
+                     fun.y = mean, geom = "line", size = 0.8) +
+  xlim(-2,30) + 
+  theme_minimal() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(), 
+        axis.line = element_line(colour = "black")) +
+  geom_vline (xintercept = 0.54, colour = "lightgrey") +
+  geom_vline (xintercept = 1.54, colour = "lightgrey") +
+  geom_vline (xintercept = 2.54, colour = "lightgrey") +
+  geom_vline (xintercept = 5.54, colour = "lightgrey") + 
+  geom_vline (xintercept = 6.54, colour = "lightgrey") + 
+  geom_vline (xintercept = 7.54, colour = "lightgrey") + 
+  geom_vline (xintercept = 10.54, colour = "lightgrey") +
+  geom_vline (xintercept = 11.54, colour = "lightgrey") +
+  geom_vline (xintercept = 12.54, colour = "lightgrey") +
+  annotate("text", x = 1.60, y = 0.79, label = "20g") + 
+  annotate("text", x = 6.60, y = 0.79, label = "500g") +
+  annotate("text", x = 11.60, y = 0.79, label = "2000g") +  
+  geom_vline (xintercept = 0, colour = "black", linetype="dotted") + 
+  annotate("text", x = -1.3, y = 0.79, label = "Birch") + 
+  geom_vline (xintercept = 26, colour = "black", linetype="dotted") +
+  labs(y="Proportion of Betula and Lecanoromycetidae DNA", 
+       x="Time (days after Betula pubescens was fed)") +
+  labs(y=expression('Proportion of'~italic(Betula)~ 'and Lecanoromycetidae DNA'),
+       x=expression('Time (days after'~italic(Betula)~ ~italic( pubescens)~ 'was fed)')) +
+  scale_colour_manual(name="Fed items",
+                      values=c(steelblue2="steelblue2", forestgreen="forestgreen"),
+                      labels = c("Birch", "Lichen"))
+
+plot1
+```
+
+

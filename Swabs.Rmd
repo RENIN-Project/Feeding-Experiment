@@ -1,0 +1,309 @@
+---
+title: "Swab filtering"
+output: html_notebook
+---
+
+```{r}
+library(ROBITaxonomy)
+library(ROBITools)
+library(vegan)
+library(ade4)
+library(ggplot2)
+library(tidyverse)
+library(zoo)
+library(viridisLite)
+library(viridis)
+library(ggpubr)
+library(grid)
+library(gridExtra) 
+
+# The palette with grey:
+cbPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+
+# The palette with black:
+cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+```
+
+
+```{r}
+taxo = read.taxonomy("Data/ncbi20210212")
+```
+# For GH marker
+
+```{r}
+swabs_GH <- import.metabarcoding.data("Data/Swabs/SWAB_merged_GH.paired.ali.assigned.diag.uniq.c10.l10.clean.tag.ann.sort.tab")
+swabs_GH <- swabs_GH[,which(swabs_GH@motus$`best_identity:db_GH` > 0.95)]
+dim(swabs_GH)
+```
+
+```{r}
+category <- rep("sample",nrow(swabs_GH))
+category[str_detect(swabs_GH@samples$sample,"^SWABDNANC")] <- "Ctrl_ext"
+category[str_detect(swabs_GH@samples$sample,"^SWABPCRNC")] <- "Ctrl_pcr"
+
+sample_id <- str_replace(swabs_GH@samples$sample,"_R[1-3]","")
+
+cage_id <- str_replace(sample_id,"_[1-5]","")
+
+swabs_GH@samples$category <- factor(category)
+swabs_GH@samples$sample_id <- factor(sample_id)
+swabs_GH@samples$cage_id <- factor(cage_id)
+```
+
+```{r}
+swabs_GH_obiclean <- extracts.obiclean(swabs_GH)
+```
+
+```{r}
+swabs_GH_head <- swabs_GH_obiclean[,which(apply(swabs_GH_obiclean$obiclean_status,
+                                                MARGIN = 2,
+                                                FUN=function(x) any(x!='i',na.rm = TRUE)))]
+```
+
+```{r}
+tibble(read_per_pcr = rowSums(swabs_GH_head@reads),
+      motus_per_pcr = rowSums(swabs_GH_head@reads > 0),
+      category = swabs_GH_head@samples$category) %>%
+  ggplot(aes(x=read_per_pcr,y=motus_per_pcr,col=category)) +
+  geom_point() +
+  scale_x_log10() +
+  scale_y_log10()
+```
+```{r}
+swabs_GH_head$relfreq <- decostand(swabs_GH_head@reads,method = "total")
+swabs_GH_head$hellinger <- decostand(swabs_GH_head@reads,method = "hellinger")
+
+swabs_GH_head@samples$hill_q1 <- apply(swabs_GH_head$relfreq,MARGIN = 1,function(x) exp(-sum(x * ifelse(x==0,0,log(x)))))
+
+tibble(read_per_pcr = rowSums(swabs_GH_head@reads),
+      hill_q1_per_pcr = swabs_GH_head@samples$hill_q1,
+      category = swabs_GH_head@samples$category) %>%
+  ggplot(aes(x=read_per_pcr,y=hill_q1_per_pcr,col=category)) +
+  geom_point() +
+  scale_x_log10() +
+  scale_y_log10()
+
+```
+```{r}
+max_relfreq <- apply(swabs_GH_head$relfreq,MARGIN = 2,max)
+hist(log10(max_relfreq))
+```
+```{r}
+swabs_GH_norare <- swabs_GH_head[,which(max_relfreq >= 0.01)]
+dim(swabs_GH_norare)
+```
+
+```{r}
+swabs_GH_norare$relfreq <- decostand(swabs_GH_norare@reads,method = "total")
+swabs_GH_norare$hellinger <- decostand(swabs_GH_norare@reads,method = "hellinger")
+
+swabs_GH_norare@samples$hill_q1 <- apply(swabs_GH_norare$relfreq,MARGIN = 1,function(x) exp(-sum(x * ifelse(x==0,0,log(x)))))
+
+tibble(read_per_pcr = rowSums(swabs_GH_norare@reads),
+      hill_q1_per_pcr = swabs_GH_norare@samples$hill_q1,
+      category = swabs_GH_norare@samples$category) %>%
+  ggplot(aes(x=read_per_pcr,y=hill_q1_per_pcr,col=category)) +
+  geom_point() +
+  scale_x_log10() +
+  scale_y_log10() +
+  geom_vline(xintercept = 3500)
+```
+
+
+```{r}
+table(swabs_GH_norare@motus$scientific_name)
+```
+
+```{r}
+Betulaceae = swabs_GH_norare$relfreq[,which(swabs_GH_norare@motus$scientific_name=="Betulaceae")]
+
+Betulaceae[Betulaceae>0]
+```
+# For Euka02 marker
+
+```{r}
+swabs_Euka02 <- import.metabarcoding.data("Data/Swabs/SWAB_merged_EUKA.paired.ali.assigned.diag.uniq.c10.l10.clean.tag.ann.sort.tab")
+swabs_Euka02 <- swabs_Euka02[,which(swabs_Euka02@motus$`best_identity:db_EUKA` > 0.8)]
+dim(swabs_Euka02)
+```
+
+```{r}
+category <- rep("sample",nrow(swabs_Euka02))
+category[str_detect(swabs_Euka02@samples$sample,"^SWABDNANC")] <- "Ctrl_ext"
+category[str_detect(swabs_Euka02@samples$sample,"^SWABPCRNC")] <- "Ctrl_pcr"
+
+sample_id <- str_replace(swabs_Euka02@samples$sample,"_R[1-3]","")
+
+cage_id <- str_replace(sample_id,"_[1-5]","")
+
+swabs_Euka02@samples$category <- factor(category)
+swabs_Euka02@samples$sample_id <- factor(sample_id)
+swabs_Euka02@samples$cage_id <- factor(cage_id)
+```
+
+```{r}
+swabs_Euka02_obiclean <- extracts.obiclean(swabs_Euka02)
+```
+
+```{r}
+swabs_Euka02_head <- swabs_Euka02_obiclean[,which(apply(swabs_Euka02_obiclean$obiclean_status,
+                                                MARGIN = 2,
+                                                FUN=function(x) any(x!='i',na.rm = TRUE)))]
+```
+
+```{r}
+tibble(read_per_pcr = rowSums(swabs_Euka02_head@reads),
+      motus_per_pcr = rowSums(swabs_Euka02_head@reads > 0),
+      category = swabs_Euka02_head@samples$category) %>%
+  ggplot(aes(x=read_per_pcr,y=motus_per_pcr,col=category)) +
+  geom_point() +
+  scale_x_log10() +
+  scale_y_log10()
+```
+```{r}
+swabs_Euka02_head$relfreq <- decostand(swabs_Euka02_head@reads,method = "total")
+swabs_Euka02_head$hellinger <- decostand(swabs_Euka02_head@reads,method = "hellinger")
+
+swabs_Euka02_head@samples$hill_q1 <- apply(swabs_Euka02_head$relfreq,MARGIN = 1,function(x) exp(-sum(x * ifelse(x==0,0,log(x)))))
+
+tibble(read_per_pcr = rowSums(swabs_Euka02_head@reads),
+      hill_q1_per_pcr = swabs_Euka02_head@samples$hill_q1,
+      category = swabs_Euka02_head@samples$category) %>%
+  ggplot(aes(x=read_per_pcr,y=hill_q1_per_pcr,col=category)) +
+  geom_point() +
+  scale_x_log10() +
+  scale_y_log10()
+
+```
+```{r}
+max_relfreq <- apply(swabs_Euka02_head$relfreq,MARGIN = 2,max)
+hist(log10(max_relfreq))
+```
+```{r}
+swabs_Euka02_norare <- swabs_Euka02_head[,which(max_relfreq >= 0.001)]
+dim(swabs_Euka02_norare)
+```
+
+```{r}
+swabs_Euka02_norare$relfreq <- decostand(swabs_Euka02_norare@reads,method = "total")
+swabs_Euka02_norare$hellinger <- decostand(swabs_Euka02_norare@reads,method = "hellinger")
+
+swabs_Euka02_norare@samples$hill_q1 <- apply(swabs_Euka02_norare$relfreq,MARGIN = 1,function(x) exp(-sum(x * ifelse(x==0,0,log(x)))))
+
+tibble(read_per_pcr = rowSums(swabs_Euka02_norare@reads),
+      hill_q1_per_pcr = swabs_Euka02_norare@samples$hill_q1,
+      category = swabs_Euka02_norare@samples$category) %>%
+  ggplot(aes(x=read_per_pcr,y=hill_q1_per_pcr,col=category)) +
+  geom_point() +
+  scale_x_log10() +
+  scale_y_log10() +
+  geom_vline(xintercept = 1000)
+```
+
+
+
+```{r}
+table(swabs_Euka02_norare@motus$scientific_name)
+```
+
+```{r}
+Lecanoromycetidae = swabs_Euka02_norare$relfreq[,which(swabs_Euka02_norare@motus$scientific_name=="Lecanoromycetidae")]
+
+Lecanoromycetidae[Lecanoromycetidae>0]
+```
+
+
+# For Fun marker
+
+```{r}
+swabs_FUN <- import.metabarcoding.data("Data/Swabs/SWAB_merged_FUNGI.paired.ali.assigned.diag.uniq.c10.l10.clean.tag.ann.sort.tab")
+swabs_FUN <- swabs_FUN[,which(swabs_FUN@motus$`best_identity:db_FUNGI` > 0.8)]
+dim(swabs_FUN)
+```
+
+
+```{r}
+category <- rep("sample",nrow(swabs_FUN))
+category[str_detect(swabs_FUN@samples$sample,"^SWABDNANC")] <- "Ctrl_ext"
+category[str_detect(swabs_FUN@samples$sample,"^SWABPCRNC")] <- "Ctrl_pcr"
+
+sample_id <- str_replace(swabs_FUN@samples$sample,"_R[1-3]","")
+
+cage_id <- str_replace(sample_id,"_[1-5]","")
+
+swabs_FUN@samples$category <- factor(category)
+swabs_FUN@samples$sample_id <- factor(sample_id)
+swabs_FUN@samples$cage_id <- factor(cage_id)
+```
+
+```{r}
+swabs_FUN_obiclean <- extracts.obiclean(swabs_FUN)
+```
+
+```{r}
+swabs_FUN_head <- swabs_FUN_obiclean[,which(apply(swabs_FUN_obiclean$obiclean_status,
+                                                MARGIN = 2,
+                                                FUN=function(x) any(x!='i',na.rm = TRUE)))]
+```
+
+```{r}
+tibble(read_per_pcr = rowSums(swabs_FUN_head@reads),
+      motus_per_pcr = rowSums(swabs_FUN_head@reads > 0),
+      category = swabs_FUN_head@samples$category) %>%
+  ggplot(aes(x=read_per_pcr,y=motus_per_pcr,col=category)) +
+  geom_point() +
+  scale_x_log10() +
+  scale_y_log10()
+```
+```{r}
+swabs_FUN_head$relfreq <- decostand(swabs_FUN_head@reads,method = "total")
+swabs_FUN_head$hellinger <- decostand(swabs_FUN_head@reads,method = "hellinger")
+
+swabs_FUN_head@samples$hill_q1 <- apply(swabs_FUN_head$relfreq,MARGIN = 1,function(x) exp(-sum(x * ifelse(x==0,0,log(x)))))
+
+tibble(read_per_pcr = rowSums(swabs_FUN_head@reads),
+      hill_q1_per_pcr = swabs_FUN_head@samples$hill_q1,
+      category = swabs_FUN_head@samples$category) %>%
+  ggplot(aes(x=read_per_pcr,y=hill_q1_per_pcr,col=category)) +
+  geom_point() +
+  scale_x_log10() +
+  scale_y_log10()
+
+```
+```{r}
+max_relfreq <- apply(swabs_FUN_head$relfreq,MARGIN = 2,max)
+hist(log10(max_relfreq))
+```
+```{r}
+swabs_FUN_norare <- swabs_FUN_head[,which(max_relfreq >= 0.01)]
+dim(swabs_FUN_norare)
+```
+
+```{r}
+swabs_FUN_norare$relfreq <- decostand(swabs_FUN_norare@reads,method = "total")
+swabs_FUN_norare$hellinger <- decostand(swabs_FUN_norare@reads,method = "hellinger")
+
+swabs_FUN_norare@samples$hill_q1 <- apply(swabs_FUN_norare$relfreq,MARGIN = 1,function(x) exp(-sum(x * ifelse(x==0,0,log(x)))))
+
+tibble(read_per_pcr = rowSums(swabs_FUN_norare@reads),
+      hill_q1_per_pcr = swabs_FUN_norare@samples$hill_q1,
+      category = swabs_FUN_norare@samples$category) %>%
+  ggplot(aes(x=read_per_pcr,y=hill_q1_per_pcr,col=category)) +
+  geom_point() +
+  scale_x_log10() +
+  scale_y_log10() +
+  geom_vline(xintercept = 1000)
+```
+
+
+
+```{r}
+table(swabs_FUN_norare@motus$scientific_name)
+```
+
+```{r}
+Lecanoromycetidae = swabs_FUN_norare$relfreq[,which(swabs_FUN_norare@motus$scientific_name=="Lecanoromycetidae")]
+
+Lecanoromycetidae[Lecanoromycetidae>0]
+```
+
