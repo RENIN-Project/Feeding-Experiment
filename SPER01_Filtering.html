@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.256">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Stefaniya Kamenova">
+<meta name="author" content="Pernille Meyer">
+<meta name="author" content="Anne Krag Brysting">
+<meta name="author" content="Leo Rescia">
+<meta name="author" content="Lars P. Folkow">
+<meta name="author" content="Galina Gusarova">
+<meta name="author" content="Eric Coissac">
+
+<title>DNA metabarcoding diet analysis in reindeer is quantitative and integrates feeding over several weeks</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="SPER01_Filtering_files/libs/clipboard/clipboard.min.js"></script>
+<script src="SPER01_Filtering_files/libs/quarto-html/quarto.js"></script>
+<script src="SPER01_Filtering_files/libs/quarto-html/popper.min.js"></script>
+<script src="SPER01_Filtering_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="SPER01_Filtering_files/libs/quarto-html/anchor.min.js"></script>
+<link href="SPER01_Filtering_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="SPER01_Filtering_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="SPER01_Filtering_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="SPER01_Filtering_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="SPER01_Filtering_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><p>DNA metabarcoding diet analysis in reindeer is quantitative and integrates feeding over several weeks</p></h1>
+</div>
+
+
+<div class="quarto-title-meta-author">
+  <div class="quarto-title-meta-heading">Authors</div>
+  <div class="quarto-title-meta-heading">Affiliations</div>
+  
+    <div class="quarto-title-meta-contents">
+    Stefaniya Kamenova <a href="https://orcid.org/0000-0002-7241-0506" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a>
+  </div>
+    <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            </p><p>Centre for Ecological and Evolutionary Synthesis, University of Oslo</p>
+          <p></p>
+        <p class="affiliation">
+            </p><p>Departments of Ecology and Natural Resource Management, Norwegian University of Life Sciences</p>
+          <p></p>
+        <p class="affiliation">
+            </p><p>National Museum of Natural History, Bulgarian Academy of Sciences</p>
+          <p></p>
+      </div>
+      <div class="quarto-title-meta-contents">
+    Pernille Meyer 
+  </div>
+    <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            </p><p>Centre for Ecological and Evolutionary Synthesis, University of Oslo</p>
+          <p></p>
+      </div>
+      <div class="quarto-title-meta-contents">
+    Anne Krag Brysting 
+  </div>
+    <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            </p><p>Centre for Ecological and Evolutionary Synthesis, University of Oslo</p>
+          <p></p>
+      </div>
+      <div class="quarto-title-meta-contents">
+    Leo Rescia 
+  </div>
+    <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            </p><p>Department of Arctic and Marine Biology, The Arctic University of Norway</p>
+          <p></p>
+      </div>
+      <div class="quarto-title-meta-contents">
+    Lars P. Folkow 
+  </div>
+    <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            </p><p>Department of Arctic and Marine Biology, The Arctic University of Norway</p>
+          <p></p>
+      </div>
+      <div class="quarto-title-meta-contents">
+    Galina Gusarova 
+  </div>
+    <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            </p><p>Centre for Ecological and Evolutionary Synthesis, University of Oslo</p>
+          <p></p>
+        <p class="affiliation">
+            </p><p>Department of Arctic and Marine Biology, The Arctic University of Norway</p>
+          <p></p>
+        <p class="affiliation">
+            </p><p>The Arctic University Museum of Norway, The Arctic University of Norway</p>
+          <p></p>
+        <p class="affiliation">
+            </p><p>Department of Botany, St Petersburg State University</p>
+          <p></p>
+      </div>
+      <div class="quarto-title-meta-contents">
+    Eric Coissac <a href="https://orcid.org/0000-0001-7507-6729" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a>
+  </div>
+    <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            </p><p>Laboratoire d’Ecologie Alpine, CNRS, Universit� Grenoble Alpes</p>
+          <p></p>
+      </div>
+    </div>
+
+<div class="quarto-title-meta">
+
+      
+  
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="abstract-title">Abstract</div>
+    <p>Filtering of the SPER01 DNA metabarcoding raw data.</p>
+  </div>
+</div>
+
+</header>
+
+<section id="setting-up-the-r-environment" class="level1">
+<h1>Setting up the R environment</h1>
+<section id="install-missing-packages" class="level2">
+<h2 class="anchored" data-anchor-id="install-missing-packages">Install missing packages</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>packages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"igraph"</span>, <span class="st">"tidyverse"</span>, <span class="st">"devtools"</span>,<span class="st">"R.utils"</span>,<span class="st">"vegan"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">setdiff</span>(packages,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                         <span class="fu">rownames</span>(<span class="fu">installed.packages</span>())),</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">dependencies =</span> <span class="cn">TRUE</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="loading-of-the-r-libraries" class="level2">
+<h2 class="anchored" data-anchor-id="loading-of-the-r-libraries">Loading of the R libraries</h2>
+<ul>
+<li><p><code>ROBITools</code> package is used to read result files produced by OBITools.</p></li>
+<li><p><code>ROBITaxonomy</code> package provides function allowing to query OBITools formated taxonomy.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="st">"ROBITools"</span> <span class="sc">%in%</span> <span class="fu">rownames</span>(<span class="fu">installed.packages</span>())) {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ROBITools are not available on CRAN and have to be installed</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># from http://git.metabarcoding.org using devtools</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  metabarcoding_git <span class="ot">&lt;-</span> <span class="st">"https://git.metabarcoding.org/obitools"</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  devtools<span class="sc">::</span><span class="fu">install_git</span>(<span class="fu">paste</span>(metabarcoding_git,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"ROBIUtils.git"</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                              <span class="at">sep=</span><span class="st">"/"</span>))</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  devtools<span class="sc">::</span><span class="fu">install_git</span>(<span class="fu">paste</span>(metabarcoding_git,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"ROBITaxonomy.git"</span>,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>                              <span class="at">sep=</span><span class="st">"/"</span>))</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  devtools<span class="sc">::</span><span class="fu">install_git</span>(<span class="fu">paste</span>(metabarcoding_git,</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"ROBITools.git"</span>,</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>                              <span class="at">sep=</span><span class="st">"/"</span>))</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ROBITools)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ROBITaxonomy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><code>tidyverse</code> <span class="citation" data-cites="Wickham2019-ra">(<a href="#ref-Wickham2019-ra" role="doc-biblioref">Wickham et al., 2019</a>)</span> provides various method for efficient data manipulation and plotting via <code>ggplot2</code> <span class="citation" data-cites="Wickham2016-vl">(<a href="#ref-Wickham2016-vl" role="doc-biblioref">Wickham, 2016</a>)</span></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(R.utils)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vegan)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span> <span class="fu">file.exists</span>(<span class="st">"Data/ncbi20210212.adx"</span>)) {</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gunzip</span>(<span class="st">"Data/ncbi20210212.adx.gz"</span>,<span class="at">remove=</span><span class="cn">FALSE</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gunzip</span>(<span class="st">"Data/ncbi20210212.ndx.gz"</span>,<span class="at">remove=</span><span class="cn">FALSE</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gunzip</span>(<span class="st">"Data/ncbi20210212.rdx.gz"</span>,<span class="at">remove=</span><span class="cn">FALSE</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gunzip</span>(<span class="st">"Data/ncbi20210212.tdx.gz"</span>,<span class="at">remove=</span><span class="cn">FALSE</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="loading-the-data" class="level1">
+<h1>Loading the data</h1>
+<section id="load-the-ncbi-taxonomy" class="level2">
+<h2 class="anchored" data-anchor-id="load-the-ncbi-taxonomy">Load the NCBI taxonomy</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>taxo <span class="ot">&lt;-</span> <span class="fu">read.taxonomy</span>(<span class="st">"Data/ncbi20210212"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="loading-the-metabarcoding-data" class="level2">
+<h2 class="anchored" data-anchor-id="loading-the-metabarcoding-data">Loading the metabarcoding data</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span> <span class="fu">file.exists</span>(<span class="st">"Data/Rawdata/SPER01_all_paired.ali.assigned.ann.diag.uniq.ann.c1.l10.clean.EMBL.tag.ann.sort.uniq.nosingleton.tab"</span>))</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">gunzip</span>(<span class="st">"Data/Rawdata/SPER01_all_paired.ali.assigned.ann.diag.uniq.ann.c1.l10.clean.EMBL.tag.ann.sort.uniq.nosingleton.tab.gz"</span>,<span class="at">remove=</span><span class="cn">FALSE</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>SPER01.raw <span class="ot">=</span> <span class="fu">import.metabarcoding.data</span>(<span class="st">"Data/Rawdata/SPER01_all_paired.ali.assigned.ann.diag.uniq.ann.c1.l10.clean.EMBL.tag.ann.sort.uniq.nosingleton.tab.gz"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="loading-the-metadata" class="level2">
+<h2 class="anchored" data-anchor-id="loading-the-metadata">Loading the metadata</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>samples.metadata <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">"Data/Faeces/sampling_dates.csv"</span>, </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="sample-description" class="level1">
+<h1>Sample description</h1>
+<p>Normalisation of samples names</p>
+<p>Extract information relative to PCR replicates and sample names.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>sample_names_split <span class="ot">=</span> <span class="fu">strsplit</span>(<span class="fu">as.character</span>(sample_names), <span class="st">"_R"</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>replicate <span class="ot">=</span> <span class="fu">sapply</span>(sample_names_split, <span class="cf">function</span>(x) x[<span class="fu">length</span>(x)])</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>sample_id <span class="ot">=</span> <span class="fu">sapply</span>(sample_names_split, <span class="cf">function</span>(x) x[<span class="dv">1</span>])</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>samples_desc <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">name =</span> <span class="fu">samples</span>(SPER01.raw)<span class="sc">$</span>sample, <span class="at">replicate =</span> replicate, <span class="at">sample_id =</span> sample_id)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>SPER01.raw<span class="sc">@</span>samples <span class="ot">=</span> samples_desc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="categorize-motus" class="level2">
+<h2 class="anchored" data-anchor-id="categorize-motus">Categorize MOTUs</h2>
+<p>DNA Sequence of the 6 synthetic sequence used as SPER01 positive controls.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>Standard1 <span class="ot">=</span> <span class="st">"taagtctcgcactagttgtgacctaacgaatagagaattctataagacgtgttgtcccat"</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>Standard2   <span class="ot">=</span> <span class="st">"gtgtatggtatatttgaataatattaaatagaatttaatcaatctttacatcgcttaata"</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>Standard3   <span class="ot">=</span> <span class="st">"cacaatgctcggtaactagaagcatttgta"</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>Standard4   <span class="ot">=</span> <span class="st">"attgaatgaaaagattattcgatatagaat"</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>Standard5   <span class="ot">=</span> <span class="st">"agaacgctagaatctaagatggggggggggatgagtaagatatttatcagtaacatatga"</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>Standard6   <span class="ot">=</span> <span class="st">"atttttgtaactcattaacaattttttttttgatgtatcataagtactaaactagttact"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Identify which MOTUs are corresponding to these positive control sequences and associated them to their corresponding category.</li>
+<li>All the MOTUs exhibiting a similarity with one of the reference SPER01 database greater than 95% is tagged as <code>SPER01</code></li>
+<li>The remaining sequences are tagged as <code>Unknown</code></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>sequence_type <span class="ot">=</span> <span class="fu">rep</span>(<span class="st">"Unknown"</span>, <span class="fu">nrow</span>(<span class="fu">motus</span>(SPER01.raw)))</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>sequence_type[<span class="fu">which</span>(<span class="fu">motus</span>(SPER01.raw)<span class="sc">$</span><span class="st">`</span><span class="at">best_identity:db_GH</span><span class="st">`</span><span class="sc">&gt;</span> <span class="fl">0.95</span>)] <span class="ot">=</span> <span class="st">"SPER01"</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>sequence_type[<span class="fu">which</span>(<span class="fu">motus</span>(SPER01.raw)<span class="sc">$</span>sequence <span class="sc">==</span> Standard1)] <span class="ot">=</span> <span class="st">"standard1"</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>sequence_type[<span class="fu">which</span>(<span class="fu">motus</span>(SPER01.raw)<span class="sc">$</span>sequence <span class="sc">==</span> Standard2)] <span class="ot">=</span> <span class="st">"standard2"</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>sequence_type[<span class="fu">which</span>(<span class="fu">motus</span>(SPER01.raw)<span class="sc">$</span>sequence <span class="sc">==</span> Standard3)] <span class="ot">=</span> <span class="st">"standard3"</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>sequence_type[<span class="fu">which</span>(<span class="fu">motus</span>(SPER01.raw)<span class="sc">$</span>sequence <span class="sc">==</span> Standard4)] <span class="ot">=</span> <span class="st">"standard4"</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>sequence_type[<span class="fu">which</span>(<span class="fu">motus</span>(SPER01.raw)<span class="sc">$</span>sequence <span class="sc">==</span> Standard5)] <span class="ot">=</span> <span class="st">"standard5"</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>sequence_type[<span class="fu">which</span>(<span class="fu">motus</span>(SPER01.raw)<span class="sc">$</span>sequence <span class="sc">==</span> Standard6)] <span class="ot">=</span> <span class="st">"standard6"</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>SPER01.raw<span class="sc">@</span>motus<span class="sc">$</span>sequence_type <span class="ot">=</span> <span class="fu">as.factor</span>(sequence_type)</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(SPER01.raw<span class="sc">@</span>motus<span class="sc">$</span>sequence_type)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+   SPER01 standard1 standard2 standard3 standard4 standard5 standard6   Unknown 
+    44125         1         1         1         1         1         1     36419 </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="curation-procedure" class="level1">
+<h1>Curation procedure</h1>
+<section id="select-motus-occuring-at-least-at-1-in-at-least-one-pcr" class="level2">
+<h2 class="anchored" data-anchor-id="select-motus-occuring-at-least-at-1-in-at-least-one-pcr">Select motus occuring at least at 1% in at least one PCR</h2>
+<p>Only MOTUs occurring at least at one percent in at least one PCR are conserved. The others are discarded and correspond to few rare taxa, and many spurious MOTUs generated by PCR artefacts.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>norare <span class="ot">=</span> <span class="fu">apply</span>(<span class="fu">decostand</span>(<span class="fu">reads</span>(SPER01.raw),<span class="at">method =</span> <span class="st">"total"</span>),</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">MARGIN =</span> <span class="dv">2</span>,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">FUN =</span> max) <span class="sc">&gt;=</span> <span class="fl">0.01</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(norare)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>norare
+FALSE  TRUE 
+80356   194 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>SPER01.norare <span class="ot">&lt;-</span> SPER01.raw[,<span class="fu">which</span>(norare)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>SPER01.norare.reads_per_motu <span class="ot">=</span> <span class="fu">colSums</span>(<span class="fu">reads</span>(SPER01.norare))</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(SPER01.norare.reads_per_motu,<span class="at">log=</span><span class="st">"y"</span>,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">cex=</span><span class="fl">0.1</span> <span class="sc">+</span> <span class="fl">0.5</span> <span class="sc">*</span> (SPER01.norare<span class="sc">@</span>motus<span class="sc">$</span>sequence_type<span class="sc">!=</span><span class="st">"SPER01"</span>),</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="fu">as.integer</span>(SPER01.norare<span class="sc">@</span>motus<span class="sc">$</span>sequence_type), <span class="at">pch=</span><span class="dv">16</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="SPER01_Filtering_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="analysis-of-the-pcr-positive-controls" class="level2">
+<h2 class="anchored" data-anchor-id="analysis-of-the-pcr-positive-controls">Analysis of the PCR Positive controls</h2>
+<p>Synthetic MOTUs are extracted from the data set and their relative read abundances (RRA) is plotted as a function of their theoretical abundances to check the quality of the PCR.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>rp <span class="ot">&lt;-</span> SPER01.norare.reads_per_motu[<span class="sc">!</span> SPER01.norare<span class="sc">@</span>motus<span class="sc">$</span>sequence_type  <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"SPER01"</span>,<span class="st">"Unknown"</span>)]</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>rp<span class="sc">/</span><span class="fu">sum</span>(rp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>GHP2_00000016 GHP3_00000014 GHP3_00000156 GHP2_00000010 GHP3_00000144 
+   0.35574603    0.25211192    0.18491040    0.07594321    0.06826363 
+GHP2_00000144 
+   0.06302481 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>expectedRRA <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span><span class="sc">^</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>observedRRA <span class="ot">&lt;-</span> rp<span class="sc">/</span><span class="fu">sum</span>(rp)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(expectedRRA,observedRRA, </span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">"expected RRA"</span>, </span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab=</span><span class="st">"observed RRA"</span>)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="fu">lm</span>(observedRRA <span class="sc">~</span> expectedRRA), </span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="SPER01_Filtering_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="filtering-for-pcr-outliers" class="level2">
+<h2 class="anchored" data-anchor-id="filtering-for-pcr-outliers">Filtering for PCR outliers</h2>
+<p>Only library 1 and 2 have individualy tagged PCR replicates.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>library_3.ids <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">"Data/samples_library_3.txt"</span>,</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">header =</span> <span class="cn">FALSE</span>)[,<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>library3.keep <span class="ot">=</span> <span class="fu">gsub</span>(<span class="st">"_R.?$"</span>,<span class="st">"_R"</span>,<span class="fu">rownames</span>(SPER01.norare)) <span class="sc">%in%</span> library_3.ids</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>SPER01.lib3 <span class="ot">=</span> SPER01.norare[library3.keep,]</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>SPER01.lib12<span class="ot">=</span> SPER01.norare[<span class="sc">!</span>library3.keep,]</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(SPER01.lib3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  65 194</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(SPER01.lib12)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 541 194</code></pre>
+</div>
+</div>
+<p>Load the script containing the selection procedure implemented in function <code>tag_bad_pcr</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"select_pcr.R"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="first-selection-round" class="level3">
+<h3 class="anchored" data-anchor-id="first-selection-round">First selection round</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>keep1 <span class="ot">=</span> <span class="fu">tag_bad_pcr</span>(<span class="at">samples =</span> <span class="fu">samples</span>(SPER01.lib12)<span class="sc">$</span>sample_id, </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">counts =</span> <span class="fu">reads</span>(SPER01.lib12),</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">plot =</span> <span class="cn">TRUE</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>                  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="SPER01_Filtering_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Histogram shows the empirical distribution of the PCR replicate distances. The red vertical dashed line indicates the threshold used to discard outlier PCRs. The green vertical dashed line indicates the mode of the observed distribution.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(keep1<span class="sc">$</span>keep)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+FALSE  TRUE 
+   44   497 </code></pre>
+</div>
+</div>
+<p><code>FALSE</code>is the count of PCR to discard, <code>TRUE</code> the count of PCR conserved at the end of this selection round.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">samples</span>(SPER01.lib12)<span class="sc">$</span>name[<span class="sc">!</span>keep1<span class="sc">$</span>keep]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "DNANC12_R3"  "DNANC14_R3"  "DNANC15_R3"  "DNANC_10_R2" "DNANC_11_R3"
+ [6] "DNANC_13_R3" "DNANC_14_R3" "DNANC_15_R3" "DNANC_7_R2"  "DNANC_8_R2" 
+[11] "DNANC_9_R2"  "PCRNC_3_R3"  "PCRNC_6_R3"  "PCRPOS_3_R3" "PCRPOS_4_R2"
+[16] "PCRPOS_5_R3" "PCRPOS_6_R3" "X_29_R1"     "X_38_R3"     "X_50_R2"    
+[21] "X_64_R1"     "X_66_R1"     "Y_24_R2"     "Y_28_R2"     "Y_2_R1"     
+[26] "Y_33_R2"     "Y_36_R2"     "Y_44_R1"     "Y_45_R1"     "Y_46_R3"    
+[31] "Y_47_R1"     "Y_48_R1"     "Y_48_R2"     "Y_49_R2"     "Y_51_R2"    
+[36] "Y_52_R1"     "Y_56_R3"     "Z_20_R1"     "Z_30_R1"     "Z_36_R1"    
+[41] "Z_45_R2"     "Z_53_R1"     "Z_5_R1"      "Z_61_R3"    </code></pre>
+</div>
+</div>
+<p>Above is the list of the ids of the discarded PCRs.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>SPER01.lib12.k1 <span class="ot">=</span> SPER01.lib12[keep1<span class="sc">$</span>keep,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="second-selection-round" class="level3">
+<h3 class="anchored" data-anchor-id="second-selection-round">Second selection round</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>keep2 <span class="ot">=</span> <span class="fu">tag_bad_pcr</span>(<span class="at">samples =</span> <span class="fu">samples</span>(SPER01.lib12.k1)<span class="sc">$</span>sample_id, </span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">counts =</span> <span class="fu">reads</span>(SPER01.lib12.k1),</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">plot =</span> <span class="cn">TRUE</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>                  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="SPER01_Filtering_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(keep2<span class="sc">$</span>keep)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+FALSE  TRUE 
+   24   473 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">samples</span>(SPER01.lib12.k1)<span class="sc">$</span>name[<span class="sc">!</span>keep2<span class="sc">$</span>keep]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "PCRPOS_3_R2" "X_50_R1"     "X_50_R3"     "Y_18_R1"     "Y_2_R2"     
+ [6] "Y_2_R3"      "Y_31_R1"     "Y_44_R2"     "Y_46_R1"     "Y_46_R2"    
+[11] "Y_47_R2"     "Y_49_R1"     "Y_49_R3"     "Y_56_R1"     "Y_56_R2"    
+[16] "Y_71_R1"     "Z_30_R2"     "Z_30_R3"     "Z_45_R1"     "Z_49_R1"    
+[21] "Z_53_R2"     "Z_53_R3"     "Z_61_R1"     "Z_61_R2"    </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>SPER01.lib12.k2 <span class="ot">=</span> SPER01.lib12.k1[keep2<span class="sc">$</span>keep,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="third-selection-round" class="level3">
+<h3 class="anchored" data-anchor-id="third-selection-round">Third selection round</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>keep3 <span class="ot">=</span> <span class="fu">tag_bad_pcr</span>(<span class="at">samples =</span> <span class="fu">samples</span>(SPER01.lib12.k2)<span class="sc">$</span>sample_id, </span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">counts =</span> <span class="fu">reads</span>(SPER01.lib12.k2),</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">plot =</span> <span class="cn">TRUE</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>                  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="SPER01_Filtering_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(keep3<span class="sc">$</span>keep)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+FALSE  TRUE 
+    7   466 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>keep3[<span class="sc">!</span>keep3<span class="sc">$</span>keep,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        samples  distance   maximum repeats  keep
+X_14_R3    X_14 0.2982691 0.2982691       3 FALSE
+Y_44_R3    Y_44 0.0000000 0.0000000       1 FALSE
+Y_47_R3    Y_47 0.0000000 0.0000000       1 FALSE
+Y_50_R3    Y_50 0.2986271 0.2986271       3 FALSE
+Y_52_R3    Y_52 0.3004914 0.3004914       2 FALSE
+Z_45_R3    Z_45 0.0000000 0.0000000       1 FALSE
+Z_55_R3    Z_55 0.3004595 0.3004595       3 FALSE</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>SPER01.lib12.k3 <span class="ot">=</span> SPER01.lib12.k2[keep3<span class="sc">$</span>keep,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="merge-remaining-pcr-replicates" class="level3">
+<h3 class="anchored" data-anchor-id="merge-remaining-pcr-replicates">Merge remaining PCR replicates</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>freq <span class="ot">=</span> <span class="fu">decostand</span>(<span class="fu">reads</span>(SPER01.lib12.k3),</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">method =</span> <span class="st">"total"</span>)</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>SPER01.lib12.k3<span class="sc">$</span>count <span class="ot">=</span> <span class="fu">reads</span>(SPER01.lib12.k3)</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>SPER01.lib12.k3<span class="sc">@</span>reads <span class="ot">=</span> freq</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>SPER01.merged <span class="ot">=</span> <span class="fu">aggregate</span>(SPER01.lib12.k3, <span class="at">MARGIN =</span> <span class="dv">1</span>, <span class="at">by =</span> <span class="fu">list</span>(<span class="at">sample_id=</span><span class="fu">samples</span>(SPER01.lib12.k3)<span class="sc">$</span>sample_id), <span class="at">FUN =</span> mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Look for controls left in library 1 and 2</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(SPER01.merged)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] "X_10" "X_11" "X_12" "X_14" "X_15" "X_16" "X_17" "X_18" "X_19" "X_2" 
+ [11] "X_20" "X_21" "X_22" "X_23" "X_24" "X_25" "X_26" "X_27" "X_28" "X_29"
+ [21] "X_3"  "X_30" "X_31" "X_33" "X_34" "X_35" "X_36" "X_37" "X_38" "X_39"
+ [31] "X_4"  "X_41" "X_42" "X_44" "X_51" "X_53" "X_54" "X_56" "X_57" "X_59"
+ [41] "X_60" "X_63" "X_64" "X_65" "X_66" "X_68" "X_70" "X_74" "X_75" "X_76"
+ [51] "X_77" "X_78" "X_79" "X_80" "X_9"  "Y_1"  "Y_11" "Y_13" "Y_14" "Y_18"
+ [61] "Y_21" "Y_23" "Y_24" "Y_25" "Y_26" "Y_28" "Y_29" "Y_3"  "Y_31" "Y_32"
+ [71] "Y_33" "Y_34" "Y_36" "Y_38" "Y_39" "Y_4"  "Y_40" "Y_41" "Y_42" "Y_43"
+ [81] "Y_45" "Y_5"  "Y_50" "Y_51" "Y_52" "Y_53" "Y_57" "Y_58" "Y_59" "Y_6" 
+ [91] "Y_61" "Y_69" "Y_7"  "Y_70" "Y_71" "Y_72" "Y_74" "Y_8"  "Y_9"  "Z_1" 
+[101] "Z_10" "Z_11" "Z_12" "Z_13" "Z_14" "Z_15" "Z_16" "Z_17" "Z_18" "Z_19"
+[111] "Z_21" "Z_22" "Z_23" "Z_24" "Z_25" "Z_27" "Z_28" "Z_3"  "Z_31" "Z_32"
+[121] "Z_33" "Z_34" "Z_35" "Z_36" "Z_37" "Z_38" "Z_4"  "Z_40" "Z_42" "Z_43"
+[131] "Z_44" "Z_46" "Z_48" "Z_49" "Z_5"  "Z_51" "Z_52" "Z_54" "Z_55" "Z_56"
+[141] "Z_59" "Z_6"  "Z_60" "Z_62" "Z_63" "Z_65" "Z_66" "Z_67" "Z_68" "Z_69"
+[151] "Z_7"  "Z_70" "Z_71" "Z_72" "Z_73" "Z_74" "Z_75" "Z_76" "Z_77" "Z_78"
+[161] "Z_79" "Z_8"  "Z_80"</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="merge-lib-12-and-3" class="level2">
+<h2 class="anchored" data-anchor-id="merge-lib-12-and-3">Merge lib 1,2 and 3</h2>
+<section id="remove-controls-in-library-3" class="level3">
+<h3 class="anchored" data-anchor-id="remove-controls-in-library-3">Remove controls in library 3</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(SPER01.lib3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "DNANC_3_R1"  "DNANC_4_R1"  "DNANC_5_R1"  "DNANC_6_R1"  "DNANC_6_R2" 
+ [6] "PCRNC_1_R1"  "PCRNC_2_R1"  "PCRNC_2_R2"  "PCRPOS_1_R1" "PCRPOS_2_R1"
+[11] "PCRPOS_2_R2" "X_1_R1"      "X_32_R1"     "X_40_R1"     "X_43_R1"    
+[16] "X_45_R1"     "X_46_R1"     "X_47_R1"     "X_48_R1"     "X_49_R1"    
+[21] "X_52_R1"     "X_55_R1"     "X_58_R1"     "X_5_R1"      "X_62_R1"    
+[26] "X_67_R1"     "X_69_R1"     "X_6_R1"      "X_71_R1"     "X_72_R1"    
+[31] "X_73_R1"     "X_7_R1"      "X_8_R1"      "Y_10_R1"     "Y_12_R1"    
+[36] "Y_15_R1"     "Y_16_R1"     "Y_17_R1"     "Y_19_R1"     "Y_20_R1"    
+[41] "Y_22_R1"     "Y_27_R1"     "Y_30_R1"     "Y_35_R1"     "Y_37_R1"    
+[46] "Y_54_R1"     "Y_55_R1"     "Y_60_R1"     "Y_62_R1"     "Y_63_R1"    
+[51] "Y_64_R1"     "Y_65_R1"     "Y_66_R1"     "Y_67_R1"     "Y_68_R1"    
+[56] "Y_73_R1"     "Z_26_R1"     "Z_29_R1"     "Z_2_R1"      "Z_41_R1"    
+[61] "Z_47_R1"     "Z_50_R1"     "Z_57_R1"     "Z_58_R1"     "Z_9_R1"     </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>SPER01.lib3.samples <span class="ot">=</span> SPER01.lib3[<span class="sc">-</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">11</span>),]</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(SPER01.lib3.samples<span class="sc">@</span>reads) <span class="ot">=</span> <span class="fu">sub</span>(<span class="st">"_R.?$"</span>,<span class="st">""</span>,<span class="fu">rownames</span>(SPER01.lib3.samples))</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(SPER01.lib3.samples)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "X_1"  "X_32" "X_40" "X_43" "X_45" "X_46" "X_47" "X_48" "X_49" "X_52"
+[11] "X_55" "X_58" "X_5"  "X_62" "X_67" "X_69" "X_6"  "X_71" "X_72" "X_73"
+[21] "X_7"  "X_8"  "Y_10" "Y_12" "Y_15" "Y_16" "Y_17" "Y_19" "Y_20" "Y_22"
+[31] "Y_27" "Y_30" "Y_35" "Y_37" "Y_54" "Y_55" "Y_60" "Y_62" "Y_63" "Y_64"
+[41] "Y_65" "Y_66" "Y_67" "Y_68" "Y_73" "Z_26" "Z_29" "Z_2"  "Z_41" "Z_47"
+[51] "Z_50" "Z_57" "Z_58" "Z_9" </code></pre>
+</div>
+</div>
+</section>
+<section id="merge-library-1-2-and-3" class="level3">
+<h3 class="anchored" data-anchor-id="merge-library-1-2-and-3">Merge library 1, 2 and 3</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>SPER01.lib123.reads <span class="ot">=</span> <span class="fu">rbind</span>(SPER01.merged<span class="sc">@</span>reads,</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">decostand</span>(SPER01.lib3.samples<span class="sc">@</span>reads,<span class="at">method =</span> <span class="st">"total"</span>))</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>common <span class="ot">=</span> <span class="fu">intersect</span>(<span class="fu">names</span>(SPER01.merged<span class="sc">@</span>samples),</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">names</span>(SPER01.lib3.samples<span class="sc">@</span>samples))</span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>SPER01.lib123.samples <span class="ot">=</span> <span class="fu">rbind</span>(SPER01.merged<span class="sc">@</span>samples[,common],</span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>                          SPER01.lib3.samples<span class="sc">@</span>samples[,common])</span>
+<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a>SPER01.lib123 <span class="ot">=</span> <span class="fu">metabarcoding.data</span>(<span class="at">reads =</span> <span class="fu">decostand</span>(SPER01.lib123.reads,<span class="at">method =</span> <span class="st">"total"</span>),</span>
+<span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a>                               <span class="at">samples =</span> SPER01.lib123.samples,</span>
+<span id="cb52-12"><a href="#cb52-12" aria-hidden="true" tabindex="-1"></a>                               <span class="at">motus =</span> SPER01.merged<span class="sc">@</span>motus)</span>
+<span id="cb52-13"><a href="#cb52-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-14"><a href="#cb52-14" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(SPER01.lib123)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 217 194</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>SPER01.lib123<span class="sc">@</span>samples<span class="sc">$</span>animal_id <span class="ot">=</span> <span class="fu">sapply</span>(SPER01.lib123<span class="sc">@</span>samples<span class="sc">$</span>sample_id, </span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>                                                <span class="cf">function</span>(x) <span class="fu">strsplit</span>(<span class="fu">as.character</span>(x),<span class="st">"_"</span>)[[<span class="dv">1</span>]][<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="check-for-empty-motus" class="level3">
+<h3 class="anchored" data-anchor-id="check-for-empty-motus">Check for empty MOTUs</h3>
+<p>Look at MOTUs still present in the data matrix, but represented by no more reads because of the filtering procedure.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>zero <span class="ot">=</span> <span class="fu">colSums</span>(<span class="fu">reads</span>(SPER01.lib123)) <span class="sc">==</span> <span class="dv">0</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(zero)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>zero
+FALSE  TRUE 
+  184    10 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>SPER01.nozero <span class="ot">=</span> SPER01.lib123[,<span class="sc">!</span>zero]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(SPER01.nozero<span class="sc">@</span>motus<span class="sc">$</span>sequence_type)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+   SPER01 standard1 standard2 standard3 standard4 standard5 standard6   Unknown 
+      164         1         0         1         1         0         1        16 </code></pre>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="filter-out-rare-species" class="level1">
+<h1>Filter out rare species</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(SPER01.nozero<span class="sc">@</span>motus<span class="sc">$</span><span class="st">`</span><span class="at">best_identity:db_GH</span><span class="st">`</span>,</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>     <span class="fu">apply</span>(<span class="fu">reads</span>(SPER01.nozero),<span class="dv">2</span>,max),</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">col=</span><span class="fu">as.factor</span>(SPER01.nozero<span class="sc">@</span>motus<span class="sc">$</span>sequence_type),</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">log=</span><span class="st">"y"</span>,</span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab=</span><span class="st">"max read fequency in a sample"</span>,</span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">"best identity with the reference database"</span>)</span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="fl">0.01</span>,<span class="at">col=</span><span class="st">"red"</span>,<span class="at">lty=</span><span class="dv">2</span>)</span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span><span class="fl">0.95</span>,<span class="at">col=</span><span class="st">"red"</span>,<span class="at">lty=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="SPER01_Filtering_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>SPER01.merged3 <span class="ot">=</span> SPER01.lib123[, <span class="fu">apply</span>(<span class="fu">reads</span>(SPER01.lib123),<span class="dv">2</span>,max) <span class="sc">&gt;</span> <span class="fl">0.01</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(SPER01.merged3<span class="sc">$</span>motus<span class="sc">$</span><span class="st">`</span><span class="at">best_identity:db_GH</span><span class="st">`</span>,</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>     <span class="fu">apply</span>(<span class="fu">reads</span>(SPER01.merged3),<span class="dv">2</span>,max),</span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">col=</span><span class="fu">as.factor</span>(SPER01.merged3<span class="sc">$</span>motus<span class="sc">$</span>sequence_type),</span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">log=</span><span class="st">"y"</span>,</span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab=</span><span class="st">"max read fequency in a sample"</span>,</span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">"best identity with the reference database"</span>)</span>
+<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="fl">0.01</span>,<span class="at">col=</span><span class="st">"red"</span>,<span class="at">lty=</span><span class="dv">2</span>)</span>
+<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span><span class="fl">0.95</span>,<span class="at">col=</span><span class="st">"red"</span>,<span class="at">lty=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="SPER01_Filtering_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span>(SPER01.merged3<span class="sc">@</span>motus<span class="sc">$</span>sequence_type <span class="sc">==</span> <span class="st">"Unknown"</span> <span class="sc">&amp;</span> <span class="fu">apply</span>(<span class="fu">reads</span>(SPER01.merged3),<span class="dv">2</span>,max) <span class="sc">&gt;</span> <span class="fl">0.4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>GHP3_00000038 
+           21 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>SPER01.merged3<span class="sc">@</span>motus[<span class="dv">21</span>,<span class="st">"sequence"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "tatagggttttcttggtgtatttcacaccgaaccaggatgggcatgcaaaacaggttggtctcggtagttcagccctcgccatcggcaggggattttctacggctacatacatcgcctgggcattcaggcatttcatgaaaaactctcgtgcaagtagcattttctcatatcgctcttgattgatctctcctttctgtaccatccacaccgatgatactttgcata"</code></pre>
+</div>
+</div>
+<p>Looks like nothing at embl by blast</p>
+<section id="keep-only-motus-strictly-identical-to-one-of-the-reference-sequence" class="level2">
+<h2 class="anchored" data-anchor-id="keep-only-motus-strictly-identical-to-one-of-the-reference-sequence">Keep only MOTUs Strictly identical to one of the reference sequence</h2>
+<section id="first-level-stringency-filter-95-identity" class="level3">
+<h3 class="anchored" data-anchor-id="first-level-stringency-filter-95-identity">First level stringency filter (95% identity)</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>SPER01.merged4 <span class="ot">=</span> SPER01.merged3[,SPER01.merged3<span class="sc">@</span>motus<span class="sc">$</span><span class="st">`</span><span class="at">best_identity:db_GH</span><span class="st">`</span> <span class="sc">&gt;</span> <span class="fl">0.95</span>]</span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>SPER01.merged4<span class="sc">@</span>reads <span class="ot">=</span> <span class="fu">decostand</span>(SPER01.merged4<span class="sc">@</span>reads,<span class="at">method =</span> <span class="st">"total"</span>)</span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>SPER01.merged4<span class="sc">@</span>motus <span class="ot">&lt;-</span> SPER01.merged4<span class="sc">@</span>motus <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span><span class="fu">starts_with</span>(<span class="st">"obiclean_status:"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(SPER01.merged4<span class="sc">$</span>motus<span class="sc">$</span><span class="st">`</span><span class="at">best_identity:db_GH</span><span class="st">`</span>,</span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>     <span class="fu">apply</span>(<span class="fu">reads</span>(SPER01.merged4),<span class="dv">2</span>,max),</span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">col=</span><span class="fu">as.factor</span>(SPER01.merged4<span class="sc">$</span>motus<span class="sc">$</span>sequence_type),</span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">log=</span><span class="st">"y"</span>,</span>
+<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab=</span><span class="st">"max read fequency in a sample"</span>,</span>
+<span id="cb68-6"><a href="#cb68-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">"best identity with the reference database"</span>)</span>
+<span id="cb68-7"><a href="#cb68-7" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="fl">0.01</span>,<span class="at">col=</span><span class="st">"red"</span>,<span class="at">lty=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="SPER01_Filtering_files/figure-html/unnamed-chunk-43-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="high-stringency-filtering-100-identity" class="level3">
+<h3 class="anchored" data-anchor-id="high-stringency-filtering-100-identity">High stringency filtering (100% identity)</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>spermatophyta.taxid <span class="ot">&lt;-</span> <span class="fu">ecofind</span>(taxo,<span class="at">patterns =</span> <span class="st">"^Spermatophyta$"</span>)</span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>SPER01.merged4<span class="sc">@</span>motus<span class="sc">$</span>is_spermatophyta <span class="ot">&lt;-</span> <span class="fu">is.subcladeof</span>(taxo,SPER01.merged4<span class="sc">@</span>motus<span class="sc">$</span>taxid,spermatophyta.taxid)</span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(SPER01.merged4<span class="sc">@</span>motus<span class="sc">$</span>is_spermatophyta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+FALSE  TRUE 
+    6    60 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>SPER01.merged4<span class="sc">@</span>motus <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span>is_spermatophyta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                         id best_identity:db_GH best_match:db_GH  count  family
+GHP1_00000082 GHP1_00000082                   1         KY427333 137903 1203520
+GHP1_00000361 GHP1_00000361                   1         AF515231  49169 1203520
+GHP3_00000569 GHP3_00000569                   1         AF192562  56685   13803
+GHP3_00000419 GHP3_00000419                   1         HE993635  22646 1203500
+GHP1_00000874 GHP1_00000874                   1         AJ133265  13008    3250
+GHP1_00008815 GHP1_00008815                   1         AF023727   2987   52989
+                   family_name genus   genus_name match_count:db_GH      rank
+GHP1_00000082      Athyriaceae 32109     Athyrium                 1   species
+GHP1_00000361      Athyriaceae 32109     Athyrium                 1     genus
+GHP3_00000569      Sphagnaceae 13804     Sphagnum                 1     genus
+GHP3_00000419 Cystopteridaceae 32115 Gymnocarpium                 1   species
+GHP1_00000874    Lycopodiaceae    NA         &lt;NA&gt;                 1 subfamily
+GHP1_00008815  Orthotrichaceae    NA         &lt;NA&gt;                 1    family
+                      scientific_name species          species_list:db_GH
+GHP1_00000082        Athyrium sinense  672195        ['Athyrium sinense']
+GHP1_00000361                Athyrium      NA                          []
+GHP3_00000569                Sphagnum      NA                          []
+GHP3_00000419 Gymnocarpium dryopteris   32116 ['Gymnocarpium dryopteris']
+GHP1_00000874          Lycopodioideae      NA                          []
+GHP1_00008815         Orthotrichaceae      NA                          []
+                         species_name   taxid
+GHP1_00000082        Athyrium sinense  672195
+GHP1_00000361                    &lt;NA&gt;   32109
+GHP3_00000569                    &lt;NA&gt;   13804
+GHP3_00000419 Gymnocarpium dryopteris   32116
+GHP1_00000874                    &lt;NA&gt; 1965347
+GHP1_00008815                    &lt;NA&gt;   52989
+                                             sequence sequence_type
+GHP1_00000082 atcttgtattattcggatgaatttcgggcgatgaggcga        SPER01
+GHP1_00000361 atcttgtattattcagatgaatttcgggcgatgaggcga        SPER01
+GHP3_00000569                atcttgttttcataacataaatgg        SPER01
+GHP3_00000419 atcttgtattactcaaatgaatttcgggcaatgaggcaa        SPER01
+GHP1_00000874                   atcctgtttagcaaatggcgg        SPER01
+GHP1_00008815                  atattattttatttaaaaataa        SPER01
+              is_spermatophyta
+GHP1_00000082            FALSE
+GHP1_00000361            FALSE
+GHP3_00000569            FALSE
+GHP3_00000419            FALSE
+GHP1_00000874            FALSE
+GHP1_00008815            FALSE</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>musaceae.taxid <span class="ot">&lt;-</span> <span class="fu">ecofind</span>(taxo,<span class="at">patterns =</span> <span class="st">"^Musaceae$"</span>)</span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>to_keep <span class="ot">&lt;-</span> <span class="sc">!</span> (<span class="fu">is.subcladeof</span>(taxo,SPER01.merged4<span class="sc">@</span>motus<span class="sc">$</span>taxid,musaceae.taxid) <span class="sc">|</span> SPER01.merged4<span class="sc">@</span>motus<span class="sc">$</span>taxid<span class="sc">==</span>musaceae.taxid ) <span class="sc">&amp;</span></span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>             <span class="fu">is.subcladeof</span>(taxo,SPER01.merged4<span class="sc">@</span>motus<span class="sc">$</span>taxid,spermatophyta.taxid) <span class="sc">&amp;</span></span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a>             SPER01.merged4<span class="sc">@</span>motus<span class="sc">$</span><span class="st">`</span><span class="at">best_identity:db_GH</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span></span>
+<span id="cb73-5"><a href="#cb73-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(to_keep)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>to_keep
+FALSE  TRUE 
+   22    45 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>SPER01.merged4<span class="sc">@</span>motus <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span>to_keep)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                         id best_identity:db_GH best_match:db_GH   count
+GHP2_00000044 GHP2_00000044           0.9803922         AB817362 2080755
+GHP2_00000355 GHP2_00000355           0.9807692         AF098856  303606
+GHP2_00000136 GHP2_00000136           0.9767442         DQ359689  261620
+GHP1_00000082 GHP1_00000082           1.0000000         KY427333  137903
+GHP2_00000549 GHP2_00000549           0.9830508         KX872610  135866
+GHP1_00000014 GHP1_00000014           0.9803922         AB817372   52144
+GHP2_00000171 GHP2_00000171           0.9743590         AC183493   90296
+GHP2_00000260 GHP2_00000260           0.9777778         EF440558   51279
+GHP2_00000820 GHP2_00000820           0.9772727         AJ505541   61937
+GHP1_00000361 GHP1_00000361           1.0000000         AF515231   49169
+GHP2_00000554 GHP2_00000554           0.9782609         AJ430966   62557
+GHP3_00000569 GHP3_00000569           1.0000000         AF192562   56685
+GHP1_00000681 GHP1_00000681           0.9836066         AB979732   24268
+GHP3_00000153 GHP3_00000153           0.9836066         AB979732   19101
+GHP1_00003018 GHP1_00003018           0.9836066         AB979732   10572
+GHP1_00000030 GHP1_00000030           0.9836066         AB979732   25179
+GHP3_00000419 GHP3_00000419           1.0000000         HE993635   22646
+GHP1_00000874 GHP1_00000874           1.0000000         AJ133265   13008
+GHP2_00008966 GHP2_00008966           0.9661017         KX872610    7043
+GHP2_00009529 GHP2_00009529           0.9800000         AY344156    6375
+GHP1_00008815 GHP1_00008815           1.0000000         AF023727    2987
+GHP3_00027523 GHP3_00027523           1.0000000         AB817687    2256
+               family      family_name genus   genus_name match_count:db_GH
+GHP2_00000044      NA             &lt;NA&gt;    NA         &lt;NA&gt;                33
+GHP2_00000355    4210       Asteraceae    NA         &lt;NA&gt;                 6
+GHP2_00000136    3440    Ranunculaceae  3445   Ranunculus                 1
+GHP1_00000082 1203520      Athyriaceae 32109     Athyrium                 1
+GHP2_00000549    4479          Poaceae    NA         &lt;NA&gt;                NA
+GHP1_00000014    3745         Rosaceae    NA         &lt;NA&gt;                14
+GHP2_00000171    3700     Brassicaceae    NA         &lt;NA&gt;                 1
+GHP2_00000260    3318         Pinaceae  3337        Pinus                 2
+GHP2_00000820    4136        Lamiaceae    NA         &lt;NA&gt;                 2
+GHP1_00000361 1203520      Athyriaceae 32109     Athyrium                 1
+GHP2_00000554      NA             &lt;NA&gt;    NA         &lt;NA&gt;                15
+GHP3_00000569   13803      Sphagnaceae 13804     Sphagnum                 1
+GHP1_00000681    3514       Betulaceae    NA         &lt;NA&gt;                 1
+GHP3_00000153    3514       Betulaceae    NA         &lt;NA&gt;                 1
+GHP1_00003018    3514       Betulaceae    NA         &lt;NA&gt;                 1
+GHP1_00000030    3514       Betulaceae    NA         &lt;NA&gt;                 1
+GHP3_00000419 1203500 Cystopteridaceae 32115 Gymnocarpium                 1
+GHP1_00000874    3250    Lycopodiaceae    NA         &lt;NA&gt;                 1
+GHP2_00008966    4479          Poaceae    NA         &lt;NA&gt;                11
+GHP2_00009529   14101        Juncaceae 13578       Juncus                 2
+GHP1_00008815   52989  Orthotrichaceae    NA         &lt;NA&gt;                 1
+GHP3_00027523    4637         Musaceae    NA         &lt;NA&gt;                 1
+                   rank                          scientific_name species
+GHP2_00000044     order                                Asterales      NA
+GHP2_00000355 subfamily                              Asteroideae      NA
+GHP2_00000136     genus                               Ranunculus      NA
+GHP1_00000082   species                         Athyrium sinense  672195
+GHP2_00000549      &lt;NA&gt;                                     &lt;NA&gt;      NA
+GHP1_00000014     tribe                                   Maleae      NA
+GHP2_00000171     tribe                               Brassiceae      NA
+GHP2_00000260  subgenus                                    Pinus      NA
+GHP2_00000820     tribe                                 Mentheae      NA
+GHP1_00000361     genus                                 Athyrium      NA
+GHP2_00000554     order                                Asterales      NA
+GHP3_00000569     genus                                 Sphagnum      NA
+GHP1_00000681    family                               Betulaceae      NA
+GHP3_00000153    family                               Betulaceae      NA
+GHP1_00003018    family                               Betulaceae      NA
+GHP1_00000030    family                               Betulaceae      NA
+GHP3_00000419   species                  Gymnocarpium dryopteris   32116
+GHP1_00000874 subfamily                           Lycopodioideae      NA
+GHP2_00008966   no rank Poeae Chloroplast Group 1 (Aveneae type)      NA
+GHP2_00009529     genus                                   Juncus      NA
+GHP1_00008815    family                          Orthotrichaceae      NA
+GHP3_00027523    family                                 Musaceae      NA
+                                                                                                                                                                                                                      species_list:db_GH
+GHP2_00000044                                                                                                                                                                                                                         []
+GHP2_00000355                                                                                                                                                                       ['Lasthenia californica', 'Achillea pseudoaleppica']
+GHP2_00000136                                                                                                                                                                                                                         []
+GHP1_00000082                                                                                                                                                                                                       ['Athyrium sinense']
+GHP2_00000549                                                                                                                                                                                                    ['Agrostis tolucensis']
+GHP1_00000014                                                        ['Photinia loriformis', 'Docynia delavayi', 'Crataegus monogyna', 'Photinia benthamiana', 'Dichotomanthes tristaniicarpa', 'Chaenomeles sinensis', 'Malus doumeri']
+GHP2_00000171                                                                                                                                                                                                                         []
+GHP2_00000260                                                                                                                                                                                                         ['Pinus resinosa']
+GHP2_00000820                                                                                                                                                                                                                         []
+GHP1_00000361                                                                                                                                                                                                                         []
+GHP2_00000554 ['Cymbonotus lawsonianus', 'Saussurea nematolepis', 'Helichrysum glumaceum', 'Villarsia sp. Fay s.n.', 'Argophyllum sp. Telford 5462', 'Dimorphotheca sinuata', 'Anisopappus corymbosus', 'Chaetanthera sp. Moreira 1736']
+GHP3_00000569                                                                                                                                                                                                                         []
+GHP1_00000681                                                                                                                                                                                                                         []
+GHP3_00000153                                                                                                                                                                                                                         []
+GHP1_00003018                                                                                                                                                                                                                         []
+GHP1_00000030                                                                                                                                                                                                                         []
+GHP3_00000419                                                                                                                                                                                                ['Gymnocarpium dryopteris']
+GHP1_00000874                                                                                                                                                                                                                         []
+GHP2_00008966                                                             ['Chascolytrum itatiaiae', 'Briza macrostachya', 'Chascolytrum monandrum', 'Chascolytrum paleapiliferum', 'Agrostis tolucensis', 'Calamagrostis angustifolia']
+GHP2_00009529                                                                                                                                                                                                          ['Juncus parryi']
+GHP1_00008815                                                                                                                                                                                                                         []
+GHP3_00027523                                                                                                                                                                                                                         []
+                         species_name   taxid
+GHP2_00000044                    &lt;NA&gt;    4209
+GHP2_00000355                    &lt;NA&gt;  102804
+GHP2_00000136                    &lt;NA&gt;    3445
+GHP1_00000082        Athyrium sinense  672195
+GHP2_00000549                    &lt;NA&gt;      NA
+GHP1_00000014                    &lt;NA&gt;  721813
+GHP2_00000171                    &lt;NA&gt;  981071
+GHP2_00000260                    &lt;NA&gt;  139271
+GHP2_00000820                    &lt;NA&gt;  216718
+GHP1_00000361                    &lt;NA&gt;   32109
+GHP2_00000554                    &lt;NA&gt;    4209
+GHP3_00000569                    &lt;NA&gt;   13804
+GHP1_00000681                    &lt;NA&gt;    3514
+GHP3_00000153                    &lt;NA&gt;    3514
+GHP1_00003018                    &lt;NA&gt;    3514
+GHP1_00000030                    &lt;NA&gt;    3514
+GHP3_00000419 Gymnocarpium dryopteris   32116
+GHP1_00000874                    &lt;NA&gt; 1965347
+GHP2_00008966                    &lt;NA&gt; 1652080
+GHP2_00009529                    &lt;NA&gt;   13578
+GHP1_00008815                    &lt;NA&gt;   52989
+GHP3_00027523                    &lt;NA&gt;    4637
+                                                                   sequence
+GHP2_00000044            atcacgttttccgaaaacaaacaaaggttcagaaagcgaaaataaaaaag
+GHP2_00000355           atcacgttttccgaaaacaaacaaaggttcagaaagcgaaaagaaaaaaaa
+GHP2_00000136                   atcctgctttcagaaaacaaaaagagggttcagaaagcaaagg
+GHP1_00000082                       atcttgtattattcggatgaatttcgggcgatgaggcga
+GHP2_00000549    atccgtgttttgagaaaacaaaggggttctcgaatcgaactataatacaaaggaaaag
+GHP1_00000014           atcctgttttatgaaaataaacaagggtttcataaaccgaaaataaaaaag
+GHP2_00000171                       atcatgggttacgcgaacaaaccaaagtttagaaagcgg
+GHP2_00000260                 atccggttcatgaagacaatgtttcttctcctaagataggaaggg
+GHP2_00000820                   atcctgttttcccaaaacaaaggtttcaaaaaacgaaaaaaag
+GHP1_00000361                       atcttgtattattcagatgaatttcgggcgatgaggcga
+GHP2_00000554                atcacgttttccgaaaacaaaggttcagaaagcgaaaatcaaaaag
+GHP3_00000569                                      atcttgttttcataacataaatgg
+GHP1_00000681 gtcctgttttccgaaaacaaataaaacaaatttaagggttcataaagtgagaataaaaaag
+GHP3_00000153 ctcctgttttccgaaaacaaataaaacaaatttaagggttcataaagtgagaataaaaaag
+GHP1_00003018 ttcctgttttccgaaaacaaataaaacaaatttaagggttcataaagtgagaataaaaaag
+GHP1_00000030  tcctgttttccgaaaacaaataaaacaaatttaagggttcataaagtgagaataaaaaag
+GHP3_00000419                       atcttgtattactcaaatgaatttcgggcaatgaggcaa
+GHP1_00000874                                         atcctgtttagcaaatggcgg
+GHP2_00008966    atccgtgttttgagaaaacaaaggggttctcaaatcgaactataatacaaaggaaaag
+GHP2_00009529            gtctttattttgataaaatttgtttttatagaaaaattcaaatcaaaaaa
+GHP1_00008815                                        atattattttatttaaaaataa
+GHP3_00027523               atccttattttgagaaaacaaaggtttataaaactagaatttaaaag
+              sequence_type is_spermatophyta
+GHP2_00000044        SPER01             TRUE
+GHP2_00000355        SPER01             TRUE
+GHP2_00000136        SPER01             TRUE
+GHP1_00000082        SPER01            FALSE
+GHP2_00000549        SPER01               NA
+GHP1_00000014        SPER01             TRUE
+GHP2_00000171        SPER01             TRUE
+GHP2_00000260        SPER01             TRUE
+GHP2_00000820        SPER01             TRUE
+GHP1_00000361        SPER01            FALSE
+GHP2_00000554        SPER01             TRUE
+GHP3_00000569        SPER01            FALSE
+GHP1_00000681        SPER01             TRUE
+GHP3_00000153        SPER01             TRUE
+GHP1_00003018        SPER01             TRUE
+GHP1_00000030        SPER01             TRUE
+GHP3_00000419        SPER01            FALSE
+GHP1_00000874        SPER01            FALSE
+GHP2_00008966        SPER01             TRUE
+GHP2_00009529        SPER01             TRUE
+GHP1_00008815        SPER01            FALSE
+GHP3_00027523        SPER01             TRUE</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>SPER01.final <span class="ot">&lt;-</span> SPER01.merged4[,<span class="fu">which</span>(to_keep)]</span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>SPER01.final<span class="sc">@</span>reads <span class="ot">&lt;-</span> <span class="fu">decostand</span>(SPER01.final<span class="sc">@</span>reads,<span class="at">method =</span> <span class="st">"total"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="saving-the-filtered-dataset" class="level1">
+<h1>Saving the filtered dataset</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(<span class="fu">motus</span>(SPER01.final), </span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">file =</span> <span class="st">"Data/Faeces/FE.Spermatophyta.samples.motus.csv"</span>)</span>
+<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(<span class="fu">samples</span>(SPER01.final), </span>
+<span id="cb78-4"><a href="#cb78-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">file =</span> <span class="st">"Data/Faeces/FE.Spermatophyta.samples.samples.csv"</span>)</span>
+<span id="cb78-5"><a href="#cb78-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(<span class="fu">reads</span>(SPER01.final), </span>
+<span id="cb78-6"><a href="#cb78-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">file =</span> <span class="st">"Data/Faeces/FE.Spermatophyta.samples.reads.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-Wickham2016-vl" class="csl-entry" role="doc-biblioentry">
+Wickham, H., 2016. <a href="https://ggplot2.tidyverse.org"><span class="nocase">ggplot2: Elegant Graphics for Data Analysis</span></a>. Springer-Verlag New York.
+</div>
+<div id="ref-Wickham2019-ra" class="csl-entry" role="doc-biblioentry">
+Wickham, H., Averick, M., Bryan, J., Chang, W., McGowan, L., François, R., Grolemund, G., Hayes, A., Henry, L., Hester, J., Kuhn, M., Pedersen, T., Miller, E., Bache, S., Müller, K., Ooms, J., Robinson, D., Seidel, D., Spinu, V., Takahashi, K., Vaughan, D., Wilke, C., Woo, K., Yutani, H., 2019. <span class="nocase">Welcome to the tidyverse</span>. Journal of open source software 4, 1686. <a href="https://doi.org/10.21105/joss.01686">https://doi.org/10.21105/joss.01686</a>
+</div>
+</div></section></div></main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

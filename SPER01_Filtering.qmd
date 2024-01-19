@@ -1,0 +1,600 @@
+---
+format: 
+  elsevier-html: default
+  elsevier-pdf:
+    keep-tex: true
+    journal:
+      name: Journal Name
+      formatting: preprint
+      model: 3p
+      cite-style: super
+
+editor: visual
+title: |
+  DNA metabarcoding diet analysis in reindeer is quantitative 
+  and integrates feeding over several weeks
+
+# if short-title is defined, then it's used
+short-title: Ouups
+bibliography: bibliography/bibliography.bib
+copyright: 
+  holder: Reinin project
+  year: 2024
+author:
+  - name: Stefaniya Kamenova
+    email: stefaniya.kamenova@gmail.com
+    attributes:
+      corresponding: true
+    orcid: 0000-0002-7241-0506
+    affiliations:
+      - ref: cees
+      - ref: denrm
+      - ref: nmhmsofia
+  - name: Pernille Meyer
+    affiliations:
+      - ref: cees
+  - name: Anne Krag Brysting
+    affiliations:
+      - ref: cees
+  - name: Leo Rescia
+    affiliations:
+      - ref: damb
+  - name: Lars P. Folkow
+    affiliations:
+      - ref: damb
+  - name: Galina Gusarova
+    email: galina.gusarova@uit.no
+    role: "Equal contribution"
+    affiliations:
+      - ref: cees
+      - ref: damb
+      - ref: aumn
+      - ref: dbsp
+  - name: Eric Coissac
+    email: eric.coissac@metabarcoding.org
+    role: "Equal contribution"
+    orcid: 0000-0001-7507-6729
+    affiliations:
+      - ref: leca
+
+affiliations:
+  - id: cees
+    name: |
+      Centre for Ecological and Evolutionary Synthesis, 
+      University of Oslo
+    city: Oslo
+    country: Norway
+  - id: denrm
+    name: |
+      Departments of Ecology and Natural Resource Management, 
+      Norwegian University of Life Sciences
+    city: Ås
+    state: Norway
+  - id: nmhmsofia
+    name: |
+      National Museum of Natural History,
+      Bulgarian Academy of Sciences
+    city: Sofia
+    state: Bulgaria
+  - id: damb
+    name: |
+      Department of Arctic and Marine Biology, 
+      The Arctic University of Norway
+    city: Tromsø
+    state: Norway
+  - id: aumn
+    name: |
+      The Arctic University Museum of Norway, 
+      The Arctic University of Norway
+    city: Tromsø
+    state: Norway
+  - id: dbsp
+    name: |
+      Department of Botany, 
+      St Petersburg State University
+    city: St Petersburg
+    state: Russia
+  - id: leca
+    name: |
+      Laboratoire d'Ecologie Alpine, 
+      CNRS, Université Grenoble Alpes
+    city: Grenoble
+    state: France
+    
+abstract: |
+  Filtering of the SPER01 DNA metabarcoding raw data.
+---
+
+# Setting up the R environment
+
+## Install missing packages
+
+```{r}
+packages <- c("igraph", "tidyverse", "devtools","R.utils","vegan")
+install.packages(setdiff(packages,
+                         rownames(installed.packages())),
+                 dependencies = TRUE
+                )
+```
+
+
+## Loading of the R libraries
+
+- `ROBITools` package is used to read result files produced by OBITools.
+
+- `ROBITaxonomy` package provides function allowing to query OBITools formated taxonomy.
+
+```{r loads_robitools, warning=FALSE, message=FALSE}
+if (!"ROBITools" %in% rownames(installed.packages())) {
+  # ROBITools are not available on CRAN and have to be installed
+  # from http://git.metabarcoding.org using devtools
+
+  metabarcoding_git <- "https://git.metabarcoding.org/obitools"
+
+  devtools::install_git(paste(metabarcoding_git,
+                              "ROBIUtils.git",
+                              sep="/"))
+
+  devtools::install_git(paste(metabarcoding_git,
+                              "ROBITaxonomy.git",
+                              sep="/"))
+  devtools::install_git(paste(metabarcoding_git,
+                              "ROBITools.git",
+                              sep="/"))
+}
+
+library(ROBITools)
+library(ROBITaxonomy)
+```
+
+
+- `tidyverse` [@Wickham2019-ra] provides various method for efficient data manipulation and plotting via `ggplot2` [@Wickham2016-vl]
+
+```{r loads_tidyverse, warning=FALSE, message=FALSE}
+library(tidyverse)
+```
+
+```{r Rutils, warning=FALSE, message=FALSE}
+library(R.utils)
+```
+
+```{r Vegan, warning=FALSE, message=FALSE}
+library(vegan)
+```
+
+```{r}
+if (! file.exists("Data/ncbi20210212.adx")) {
+  gunzip("Data/ncbi20210212.adx.gz",remove=FALSE)
+  gunzip("Data/ncbi20210212.ndx.gz",remove=FALSE)
+  gunzip("Data/ncbi20210212.rdx.gz",remove=FALSE)
+  gunzip("Data/ncbi20210212.tdx.gz",remove=FALSE)
+}
+```
+
+
+# Loading the data
+
+## Load the NCBI taxonomy
+
+```{r}
+taxo <- read.taxonomy("Data/ncbi20210212")
+```
+
+
+
+## Loading the metabarcoding data
+
+```{r}
+if (! file.exists("Data/Rawdata/SPER01_all_paired.ali.assigned.ann.diag.uniq.ann.c1.l10.clean.EMBL.tag.ann.sort.uniq.nosingleton.tab"))
+    gunzip("Data/Rawdata/SPER01_all_paired.ali.assigned.ann.diag.uniq.ann.c1.l10.clean.EMBL.tag.ann.sort.uniq.nosingleton.tab.gz",remove=FALSE)
+
+
+SPER01.raw = import.metabarcoding.data("Data/Rawdata/SPER01_all_paired.ali.assigned.ann.diag.uniq.ann.c1.l10.clean.EMBL.tag.ann.sort.uniq.nosingleton.tab.gz")
+```
+
+## Loading the metadata
+
+```{r}
+samples.metadata = read_csv("Data/Faeces/sampling_dates.csv", 
+                            show_col_types = FALSE)
+```
+
+# Sample description
+
+Normalisation of samples names
+
+```{r include=FALSE}
+sample_names = sub("PCR_NC", "PCRNC", samples(SPER01.raw)$sample)
+sample_names = sub("PCR_POS", "PCRPOS", sample_names)
+sample_names = sub("DNANC1", "DNANC_1", sample_names)
+
+samples(SPER01.raw)$sample
+```
+
+
+Extract information relative to PCR replicates and sample names.
+
+```{r}
+sample_names_split = strsplit(as.character(sample_names), "_R")
+
+replicate = sapply(sample_names_split, function(x) x[length(x)])
+sample_id = sapply(sample_names_split, function(x) x[1])
+
+samples_desc = data.frame(name = samples(SPER01.raw)$sample, replicate = replicate, sample_id = sample_id)
+
+SPER01.raw@samples = samples_desc
+```
+
+
+## Categorize MOTUs
+
+DNA Sequence of the 6 synthetic sequence used as SPER01 positive controls.
+
+```{r}
+Standard1 = "taagtctcgcactagttgtgacctaacgaatagagaattctataagacgtgttgtcccat"
+Standard2   = "gtgtatggtatatttgaataatattaaatagaatttaatcaatctttacatcgcttaata"
+Standard3   = "cacaatgctcggtaactagaagcatttgta"
+Standard4   = "attgaatgaaaagattattcgatatagaat"
+Standard5   = "agaacgctagaatctaagatggggggggggatgagtaagatatttatcagtaacatatga"
+Standard6   = "atttttgtaactcattaacaattttttttttgatgtatcataagtactaaactagttact"
+```
+
+ - Identify which MOTUs are corresponding to these positive control sequences 
+   and associated them to their corresponding category.
+ - All the MOTUs exhibiting a similarity with one of the reference SPER01
+   database greater than 95% is tagged as `SPER01`
+ - The remaining sequences are tagged as `Unknown`
+
+```{r}
+sequence_type = rep("Unknown", nrow(motus(SPER01.raw)))
+sequence_type[which(motus(SPER01.raw)$`best_identity:db_GH`> 0.95)] = "SPER01"
+sequence_type[which(motus(SPER01.raw)$sequence == Standard1)] = "standard1"
+sequence_type[which(motus(SPER01.raw)$sequence == Standard2)] = "standard2"
+sequence_type[which(motus(SPER01.raw)$sequence == Standard3)] = "standard3"
+sequence_type[which(motus(SPER01.raw)$sequence == Standard4)] = "standard4"
+sequence_type[which(motus(SPER01.raw)$sequence == Standard5)] = "standard5"
+sequence_type[which(motus(SPER01.raw)$sequence == Standard6)] = "standard6"
+
+SPER01.raw@motus$sequence_type = as.factor(sequence_type)
+table(SPER01.raw@motus$sequence_type)
+```
+
+# Curation procedure
+
+## Select motus occuring at least at 1% in at least one PCR
+
+Only MOTUs occurring at least at one percent in at least one PCR are conserved.
+The others are discarded and correspond to few rare taxa, and many spurious MOTUs
+generated by PCR artefacts.
+
+```{r}
+norare = apply(decostand(reads(SPER01.raw),method = "total"),
+               MARGIN = 2,
+               FUN = max) >= 0.01
+table(norare)
+```
+
+```{r}
+SPER01.norare <- SPER01.raw[,which(norare)]
+```
+
+
+```{r}
+SPER01.norare.reads_per_motu = colSums(reads(SPER01.norare))
+plot(SPER01.norare.reads_per_motu,log="y",
+     cex=0.1 + 0.5 * (SPER01.norare@motus$sequence_type!="SPER01"),
+     col = as.integer(SPER01.norare@motus$sequence_type), pch=16)
+```
+
+## Analysis of the PCR Positive controls
+
+Synthetic MOTUs are extracted from the data set and their relative read abundances (RRA)
+is plotted as a function of their theoretical abundances to check the quality of the PCR.
+
+```{r}
+rp <- SPER01.norare.reads_per_motu[! SPER01.norare@motus$sequence_type  %in% c("SPER01","Unknown")]
+rp/sum(rp)
+
+expectedRRA <- 1/2^(1:6)
+observedRRA <- rp/sum(rp)
+
+plot(expectedRRA,observedRRA, 
+     xlab="expected RRA", 
+     ylab="observed RRA")
+abline(lm(observedRRA ~ expectedRRA), 
+       col = "blue", lty = 2)
+
+```
+
+
+## Filtering for PCR outliers
+
+
+Only library 1 and 2 have individualy tagged PCR replicates. 
+
+```{r}
+library_3.ids = read.csv("Data/samples_library_3.txt",
+                         stringsAsFactors = FALSE,
+                         header = FALSE)[,1]
+```
+
+```{r}
+library3.keep = gsub("_R.?$","_R",rownames(SPER01.norare)) %in% library_3.ids
+SPER01.lib3 = SPER01.norare[library3.keep,]
+SPER01.lib12= SPER01.norare[!library3.keep,]
+
+dim(SPER01.lib3)
+dim(SPER01.lib12)
+
+```
+
+Load the script containing the selection procedure implemented in function 
+`tag_bad_pcr`.
+
+```{r}
+source("select_pcr.R")
+```
+
+### First selection round
+
+```{r}
+keep1 = tag_bad_pcr(samples = samples(SPER01.lib12)$sample_id, 
+                   counts = reads(SPER01.lib12),
+                   plot = TRUE
+                  )
+```
+
+Histogram shows the empirical distribution of the PCR replicate distances. The red vertical dashed line indicates the threshold used to discard outlier PCRs. The green vertical dashed line indicates the mode of the observed distribution.
+
+```{r}
+table(keep1$keep)
+```
+
+`FALSE`is the count of PCR to discard, `TRUE` the count of PCR conserved at the end of this selection round.
+
+```{r}
+samples(SPER01.lib12)$name[!keep1$keep]
+```
+
+Above is the list of the ids of the discarded PCRs.
+
+```{r}
+SPER01.lib12.k1 = SPER01.lib12[keep1$keep,]
+```
+
+### Second selection round
+
+```{r}
+keep2 = tag_bad_pcr(samples = samples(SPER01.lib12.k1)$sample_id, 
+                   counts = reads(SPER01.lib12.k1),
+                   plot = TRUE
+                  )
+
+```
+
+```{r}
+table(keep2$keep)
+```
+
+```{r}
+samples(SPER01.lib12.k1)$name[!keep2$keep]
+```
+
+
+```{r}
+SPER01.lib12.k2 = SPER01.lib12.k1[keep2$keep,]
+```
+
+### Third selection round
+
+```{r}
+keep3 = tag_bad_pcr(samples = samples(SPER01.lib12.k2)$sample_id, 
+                   counts = reads(SPER01.lib12.k2),
+                   plot = TRUE
+                  )
+
+```
+
+```{r}
+table(keep3$keep)
+keep3[!keep3$keep,]
+```
+
+
+```{r}
+SPER01.lib12.k3 = SPER01.lib12.k2[keep3$keep,]
+```
+
+
+### Merge remaining PCR replicates
+
+```{r}
+freq = decostand(reads(SPER01.lib12.k3),
+                 method = "total")
+SPER01.lib12.k3$count = reads(SPER01.lib12.k3)
+SPER01.lib12.k3@reads = freq
+
+SPER01.merged = aggregate(SPER01.lib12.k3, MARGIN = 1, by = list(sample_id=samples(SPER01.lib12.k3)$sample_id), FUN = mean)
+```
+
+Look for controls left in library 1 and 2
+
+```{r}
+rownames(SPER01.merged)
+```
+
+## Merge lib 1,2 and 3
+
+
+
+### Remove controls in library 3
+
+```{r}
+rownames(SPER01.lib3)
+```
+
+```{r}
+SPER01.lib3.samples = SPER01.lib3[-(1:11),]
+rownames(SPER01.lib3.samples@reads) = sub("_R.?$","",rownames(SPER01.lib3.samples))
+rownames(SPER01.lib3.samples)
+```
+
+### Merge library 1, 2 and 3
+
+```{r}
+
+SPER01.lib123.reads = rbind(SPER01.merged@reads,
+                            decostand(SPER01.lib3.samples@reads,method = "total"))
+
+common = intersect(names(SPER01.merged@samples),
+                   names(SPER01.lib3.samples@samples))
+
+SPER01.lib123.samples = rbind(SPER01.merged@samples[,common],
+                          SPER01.lib3.samples@samples[,common])
+
+SPER01.lib123 = metabarcoding.data(reads = decostand(SPER01.lib123.reads,method = "total"),
+                               samples = SPER01.lib123.samples,
+                               motus = SPER01.merged@motus)
+
+dim(SPER01.lib123)
+```
+
+
+
+```{r}
+SPER01.lib123@samples$animal_id = sapply(SPER01.lib123@samples$sample_id, 
+                                                function(x) strsplit(as.character(x),"_")[[1]][1])
+```
+
+### Check for empty MOTUs
+
+Look at MOTUs still present in the data matrix, but represented by no more reads
+because of the filtering procedure.
+
+```{r}
+zero = colSums(reads(SPER01.lib123)) == 0
+table(zero)
+```
+
+```{r}
+SPER01.nozero = SPER01.lib123[,!zero]
+```
+
+```{r}
+table(SPER01.nozero@motus$sequence_type)
+```
+
+# Filter out rare species
+
+```{r}
+plot(SPER01.nozero@motus$`best_identity:db_GH`,
+     apply(reads(SPER01.nozero),2,max),
+     col=as.factor(SPER01.nozero@motus$sequence_type),
+     log="y",
+     ylab="max read fequency in a sample",
+     xlab="best identity with the reference database")
+abline(h=0.01,col="red",lty=2)
+abline(v=0.95,col="red",lty=2)
+```
+  
+
+```{r}
+SPER01.merged3 = SPER01.lib123[, apply(reads(SPER01.lib123),2,max) > 0.01]
+```
+
+
+```{r}
+plot(SPER01.merged3$motus$`best_identity:db_GH`,
+     apply(reads(SPER01.merged3),2,max),
+     col=as.factor(SPER01.merged3$motus$sequence_type),
+     log="y",
+     ylab="max read fequency in a sample",
+     xlab="best identity with the reference database")
+abline(h=0.01,col="red",lty=2)
+abline(v=0.95,col="red",lty=2)
+```
+
+
+```{r}
+which(SPER01.merged3@motus$sequence_type == "Unknown" & apply(reads(SPER01.merged3),2,max) > 0.4)
+```
+
+```{r}
+SPER01.merged3@motus[21,"sequence"]
+```
+
+Looks like nothing at embl by blast
+
+## Keep only MOTUs Strictly identical to one of the reference sequence
+
+### First level stringency filter (95% identity)
+```{r}
+SPER01.merged4 = SPER01.merged3[,SPER01.merged3@motus$`best_identity:db_GH` > 0.95]
+SPER01.merged4@reads = decostand(SPER01.merged4@reads,method = "total")
+SPER01.merged4@motus <- SPER01.merged4@motus %>% select(-starts_with("obiclean_status:"))
+```
+
+```{r}
+plot(SPER01.merged4$motus$`best_identity:db_GH`,
+     apply(reads(SPER01.merged4),2,max),
+     col=as.factor(SPER01.merged4$motus$sequence_type),
+     log="y",
+     ylab="max read fequency in a sample",
+     xlab="best identity with the reference database")
+abline(h=0.01,col="red",lty=2)
+```
+
+### High stringency filtering (100% identity)
+
+```{r}
+spermatophyta.taxid <- ecofind(taxo,patterns = "^Spermatophyta$")
+SPER01.merged4@motus$is_spermatophyta <- is.subcladeof(taxo,SPER01.merged4@motus$taxid,spermatophyta.taxid)
+table(SPER01.merged4@motus$is_spermatophyta)
+SPER01.merged4@motus %>% filter(!is_spermatophyta)
+```
+
+
+```{r}
+musaceae.taxid <- ecofind(taxo,patterns = "^Musaceae$")
+to_keep <- ! (is.subcladeof(taxo,SPER01.merged4@motus$taxid,musaceae.taxid) | SPER01.merged4@motus$taxid==musaceae.taxid ) &
+             is.subcladeof(taxo,SPER01.merged4@motus$taxid,spermatophyta.taxid) &
+             SPER01.merged4@motus$`best_identity:db_GH` == 1
+table(to_keep)
+SPER01.merged4@motus %>% filter(!to_keep)
+```
+
+```{r}
+SPER01.final <- SPER01.merged4[,which(to_keep)]
+SPER01.final@reads <- decostand(SPER01.final@reads,method = "total")
+```
+
+
+# Saving the filtered dataset
+
+```{r}
+write.csv(motus(SPER01.final), 
+          file = "Data/Faeces/FE.Spermatophyta.samples.motus.csv")
+write.csv(samples(SPER01.final), 
+          file = "Data/Faeces/FE.Spermatophyta.samples.samples.csv")
+write.csv(reads(SPER01.final), 
+          file = "Data/Faeces/FE.Spermatophyta.samples.reads.csv")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -12,7 +12,7 @@ mode <- function(x) {
 }
 
 #' @export
-tag_bad_pcr = function(samples,counts,plot = TRUE) {
+tag_bad_pcr = function(samples,counts,plot = TRUE,threshold = NA) {
   counts = decostand(counts,method = "hellinger")
   
   bc = aggregate(counts,
@@ -47,7 +47,10 @@ tag_bad_pcr = function(samples,counts,plot = TRUE) {
   names(d.len) = d.len.names
   d.len = d.len[as.character(samples)]
   
-  keep = ((d < d.m + (d.sd*2)) | d!=d.max) & d.len > 1
+  if (is.na(threshold))
+    threshold = d.m + (d.sd*2)
+  
+  keep = ((d < threshold) | d!=d.max) & d.len > 1
   
   selection = data.frame(samples = as.character(samples),
                          distance= d,
@@ -63,7 +66,7 @@ tag_bad_pcr = function(samples,counts,plot = TRUE) {
   if (plot) {
     hist(d, breaks = 20)
     abline(v=d.m,lty=2,col="green")
-    abline(v=d.m + (d.sd*2),lty=2,col="red")
+    abline(v=threshold,lty=2,col="red")
   }
   
   return(selection)

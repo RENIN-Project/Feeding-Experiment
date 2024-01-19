@@ -143,7 +143,7 @@ ul.task-list li input[type="checkbox"] {
 <div>
   <div class="abstract">
     <div class="abstract-title">Abstract</div>
-    <p>Filtering of the SPER01 DNA metabarcoding raw data.</p>
+    <p>Dietary DNA metabarcoding is an established method, especially useful for resolving the diverse diets of large mammalian herbivores (LMH). However, despite longstanding research interest on the topic, we still lack unequivocal evidence on the potential of DNA metabarcoding to reflect proportions of ingested dietary plants in LMH. One major aspect to consider is the time window during which ingested diet remains detectable in faecal samples. This parameter is currently unknown for LMH, thus potentially hindering the scope of ecological conclusions. Another unknown factor is quantitative performance, i.e.&nbsp;the extent to which the amount of ingested biomass can be assessed based on sequence reads abundances. We assessed DNA metabarcoding, quantitative performance and DNA half-life detectability for plants with different digestibilities in a controlled feeding experiment with three female Eurasian tundra reindeer (Rangifer tarandus tarandus). Reindeer were fed birch twigs (Betula pubescens) and increasing biomass of lichen (mainly Cladonia stellaris). Relative reads abundance positively correlated with ingested lichen biomass, suggesting potential for deriving dietary proportions in free-ranging reindeer on natural pasture. Dietary DNA was consistently detected within a few hours upon ingestion, with a mean half-life detectability of 25 and 16 hours for birch and lichen, respectively. However, dietary DNA remained detectable in faeces for at least 26 days post-feeding, indicating that a single faecal sample can provide an unsuspectedly integrative estimate of diet in ruminants. Together, our findings provide novel empirical validation of DNA metabarcoding as a tool for diet analysis in LMH.</p>
   </div>
 </div>
 
@@ -166,9 +166,8 @@ ul.task-list li input[type="checkbox"] {
 <section id="filtering-of-the-data" class="level1">
 <h1>Filtering of the data</h1>
 <ul>
-<li>For the <em>Eukaryota</em> <a href="filtering_euka03.html"><code>Euka03</code></a> marker</li>
-<li>For the <em>Chlorophyta</em> <a href="filtering_chlo01.html"><code>Chlo01</code></a> marker</li>
-<li>For the <em>Chlorophyceae</em> <a href="filtering_chlo02.html"><code>Chlo02</code></a> marker</li>
+<li>For the <em>Spermatophyta</em> <a href="SPER01_filtering.html"><code>Sper01</code></a> marker</li>
+<li>For the <em>Eukaryota</em> <a href="EUKA02_filtering.html"><code>Euka02</code></a> marker</li>
 </ul>
 </section>
 <section id="ecological-analysis" class="level1">
@@ -179,23 +178,17 @@ ul.task-list li input[type="checkbox"] {
 <h1>Processed data sets and results</h1>
 <p>Each processed dataset is composed of three coma separated values files (<code>.csv</code> files).</p>
 <ul>
-<li>For the <em>Eukaryota</em> <code>Euka03</code> marker
+<li>For the <em>Spermatophyta</em> <code>Sper01</code> marker
+<ul>
+<li>The MOTUs description file : <a href="Data/Faeces/FE.Spermatophyta.samples.motus.csv"><code>FE.Spermatophyta.samples.motus.csv</code></a></li>
+<li>The samples description file : <a href="Data/Faeces/FE.Spermatophyta.samples.samples.csv"><code>FE.Spermatophyta.samples.samples.csv</code></a></li>
+<li>The reads contengency table : <a href="Data/Faeces/FE.Spermatophyta.samples.reads.csv"><code>FE.Spermatophyta.samples.reads.csv</code></a></li>
+</ul></li>
+<li>For the <em>Eukaryota</em> <code>Euka02</code> marker
 <ul>
 <li>The MOTUs description file : <a href="cleaned_datasets/Euka03.cleaned.motus.csv"><code>Euka03.cleaned.motus.csv</code></a></li>
 <li>The samples description file : <a href="cleaned_datasets/Euka03.cleaned.samples.csv"><code>Euka03.cleaned.samples.csv</code></a></li>
 <li>The reads contengency table : <a href="cleaned_datasets/Euka03.cleaned.reads.csv"><code>Euka03.cleaned.reads.csv</code></a></li>
-</ul></li>
-<li>For the <em>Chlorophyta</em> <code>Chlo01</code> marker
-<ul>
-<li>The MOTUs description file : <a href="cleaned_datasets/Chlo01.cleaned.motus.csv"><code>Chlo01.cleaned.motus.csv</code></a></li>
-<li>The samples description file : <a href="cleaned_datasets/Chlo01.cleaned.samples.csv"><code>Chlo01.cleaned.samples.csv</code></a></li>
-<li>The reads contengency table : <a href="cleaned_datasets/Chlo01.cleaned.reads.csv"><code>Chlo01.cleaned.reads.csv</code></a></li>
-</ul></li>
-<li>For the <em>Chlorophyceae</em> <code>Chlo02</code> marker
-<ul>
-<li>The MOTUs description file : <a href="cleaned_datasets/Chlo02.cleaned.motus.csv"><code>Chlo02.cleaned.motus.csv</code></a></li>
-<li>The samples description file : <a href="cleaned_datasets/Chlo02.cleaned.samples.csv"><code>Chlo02.cleaned.samples.csv</code></a></li>
-<li>The reads contengency table : <a href="cleaned_datasets/Chlo02.cleaned.reads.csv"><code>Chlo02.cleaned.reads.csv</code></a></li>
 </ul></li>
 </ul>
 </section>
