@@ -162,6 +162,19 @@ library(R.utils)
 library(vegan)
 ```
 
+```{r magrittr, warning=FALSE, message=FALSE}
+library(magrittr)
+```
+
+
+```{r}
+source("methods.R")
+```
+
+# Loading the data
+
+## Load the NCBI taxonomy
+
 ```{r}
 if (! file.exists("Data/ncbi20210212.adx")) {
   gunzip("Data/ncbi20210212.adx.gz",remove=FALSE)
@@ -170,11 +183,6 @@ if (! file.exists("Data/ncbi20210212.adx")) {
   gunzip("Data/ncbi20210212.tdx.gz",remove=FALSE)
 }
 ```
-
-
-# Loading the data
-
-## Load the NCBI taxonomy
 
 ```{r}
 taxo <- read.taxonomy("Data/ncbi20210212")
@@ -252,16 +260,18 @@ table(EUKA02.raw@motus$sequence_type)
 
 ```{r}
 spermatophyta.taxid <- ecofind(taxo,patterns = "^Spermatophyta$")
-fungi.taxid <- ecofind(taxo,patterns = "^Fungi$")
+lecanoromycetidae.taxid = ecofind(taxo,"^Lecanoromycetidae$")
 
-to_keep = (is.subcladeof(taxo,EUKA02.raw@motus$taxid,spermatophyta.taxid) | EUKA02.raw@motus$taxid == spermatophyta.taxid) |
-           (is.subcladeof(taxo,EUKA02.raw@motus$taxid,fungi.taxid) | EUKA02.raw@motus$taxid == fungi.taxid)
+to_keep = (is.subcladeof(taxo,EUKA02.raw@motus$taxid,spermatophyta.taxid) | 
+             EUKA02.raw@motus$taxid == spermatophyta.taxid) |
+           (is.subcladeof(taxo,EUKA02.raw@motus$taxid,lecanoromycetidae.taxid) | 
+              EUKA02.raw@motus$taxid == lecanoromycetidae.taxid)
 
 table(to_keep)
 ```
 
 ```{r}
-EUKA02.plant_fungi <- EUKA02.raw[,which(to_keep)]
+EUKA02.plant_lichen <- EUKA02.raw[,which(to_keep)]
 ```
 
 
@@ -270,14 +280,14 @@ EUKA02.plant_fungi <- EUKA02.raw[,which(to_keep)]
 ## Select motus occuring at least at 1% in at least one PCR
 
 ```{r}
-norare = apply(decostand(reads(EUKA02.plant_fungi),method = "total"),
+norare = apply(decostand(reads(EUKA02.plant_lichen),method = "total"),
                MARGIN = 2,
                FUN = max) >= 0.01
 table(norare)
 ```
 
 ```{r}
-EUKA02.norare <- EUKA02.plant_fungi[,which(norare)]
+EUKA02.norare <- EUKA02.plant_lichen[,which(norare)]
 
 ```
 
@@ -532,12 +542,83 @@ EUKA02.final@reads <- decostand(EUKA02.final@reads,method = "total")
 
 # Saving the filtered dataset
 
+
+## Updating the sample metadata
+
+### Adding samples metadata
+
 ```{r}
-write.csv(motus(EUKA02.final), 
-          file = "Data/Faeces/FE.Eukaryota.samples.motus.csv")
-write.csv(samples(EUKA02.final), 
+metadata <- read_csv("Data/Faeces/metadata.csv",
+                     show_col_types = FALSE)
+```
+
+
+```{r}
+EUKA02.final@samples %<>%
+  select(sample_id,animal_id) %>%
+  left_join(metadata,by = "sample_id") %>%
+  mutate(id = sample_id) %>%
+  column_to_rownames("id") %>%
+  select(sample_id,animal_id,Sample_number,Date,Sample_time,times_from_birch, Fed_biomass)
+```
+
+### Homogenize time from burch
+
+Adds :
+  - 6 hours to animal X,
+  - 3 hours to animal Y,
+  - 4 hours to animal 2
+
+```{r}
+EUKA02.final@samples %<>% 
+  mutate(times_from_birch = times_from_birch + 
+           ifelse(animal_id == "X",6,
+         ifelse(animal_id == "Y",3,4)))
+```
+
+```{r}
+EUKA02.final@samples %<>%
+  mutate(Animal_id = ifelse(animal_id == "X","9/10",
+         ifelse(animal_id == "Y","10/10","12/10")))
+```
+
+## Add MOTUs Metadata 
+
+```{r}
+EUKA02.final@motus %<>%
+  mutate(category = ifelse(is.subcladeof(taxo,taxid,spermatophyta.taxid),
+                           "Plant",
+                           "Lichen"))
+```
+
+## Only keep samples
+
+```{r}
+EUKA02.final <- EUKA02.final[which(str_detect(EUKA02.final@samples$sample_id,"^[XYZ]")),]
+```
+
+## Updating count statistics
+
+```{r}
+EUKA02.final %<>% 
+  update_motus_count() %>%
+  update_samples_count() %>%
+  clean_empty()
+```
+
+
+## Write CSV files
+
+
+```{r}
+write_csv(EUKA02.final@samples,
           file = "Data/Faeces/FE.Eukaryota.samples.samples.csv")
-write.csv(reads(EUKA02.final), 
+write_csv(EUKA02.final@motus,
+          file = "Data/Faeces/FE.Eukaryota.samples.motus.csv")
+write_csv(EUKA02.final@reads %>%
+            decostand(method = "total") %>%
+            as.data.frame()%>%
+            rownames_to_column("id"),
           file = "Data/Faeces/FE.Eukaryota.samples.reads.csv")
 ```
 

@@ -1,46 +1,46 @@
-"","id","best_identity:db_GH","best_match:db_GH","count","family","family_name","genus","genus_name","match_count:db_GH","rank","scientific_name","species","species_list:db_GH","species_name","taxid","sequence","sequence_type","is_spermatophyta"
-"GHP1_00000007","GHP1_00000007",1,"AB979732",11366380,3514,"Betulaceae",NA,NA,1,"family","Betulaceae",NA,"[]",NA,3514,"atcctgttttccgaaaacaaataaaacaaatttaagggttcataaagtgagaataaaaaag","SPER01",TRUE
-"GHP2_00000006","GHP2_00000006",1,"AJ583845",3034744,3615,"Polygonaceae",NA,NA,1,"tribe","Polygoneae",NA,"[]",NA,1110385,"ctccttctttccaaaaggaagacaaaag","SPER01",TRUE
-"GHP2_00000009","GHP2_00000009",1,"AY344156",3546139,14101,"Juncaceae",13578,"Juncus",1,"genus","Juncus",NA,"[]",NA,13578,"atctttattttgataaaatttgtttttatagaaaaattcaaatcaaaaaa","SPER01",TRUE
-"GHP2_00000029","GHP2_00000029",1,"DQ131554",1746452,3803,"Fabaceae",3877,"Medicago",1,"genus","Medicago",NA,"[]",NA,3877,"atccttctttccgaaaacaaataaataaaagttcagaaagttaaaatcaaaaaag","SPER01",TRUE
-"GHP2_00000039","GHP2_00000039",1,"DQ311726",1372067,3803,"Fabaceae",3898,"Trifolium",1,"genus","Trifolium",NA,"[]",NA,3898,"atccttctttccgaaaacaaaataaaagttcagaaagttaaaataaaaaagg","SPER01",TRUE
-"GHP2_00000038","GHP2_00000038",1,"AB213008",1260157,3700,"Brassicaceae",NA,NA,1,"family","Brassicaceae",NA,"[]",NA,3700,"atcctgggttacgcgaacaaaccagagtttagaaagcgg","SPER01",TRUE
-"GHP2_00000020","GHP2_00000020",1,"EF653787",944202,3615,"Polygonaceae",46786,"Polygonum",1,"genus","Polygonum",NA,"[]",NA,46786,"ctccttctttccaaaaggaagaaaaag","SPER01",TRUE
-"GHP2_00000090","GHP2_00000090",1,"AB546802",802155,3803,"Fabaceae",3887,"Pisum",1,"genus","Pisum",NA,"[]",NA,3887,"atccttctttctgaaaacaaataaaagttcagaaagtgaaaatcaaaaaag","SPER01",TRUE
-"GHP3_00000034","GHP3_00000034",1,"AH015554",702879,4479,"Poaceae",NA,NA,1,"subfamily","Pooideae",NA,"[]",NA,147368,"atccgtgttttgagaaaacaaggaggttctcgaactagaatacaaaggaaaag","SPER01",TRUE
-"GHP2_00000012","GHP2_00000012",1,"AH015556",825544,4479,"Poaceae",NA,NA,1,"tribe","Poeae",NA,"[]",NA,147387,"atccgtgttttgagaaaacaagggggttctcgaactagaatacaaaggaaaag","SPER01",TRUE
-"GHP2_00000028","GHP2_00000028",1,"EF653802",762021,3615,"Polygonaceae",NA,NA,1,"subfamily","Polygonoideae",NA,"[]",NA,1110380,"ctcctgctttcaaaaaggaaagaaaaaagg","SPER01",TRUE
-"GHP2_00000017","GHP2_00000017",1,"AB219660",743066,3615,"Polygonaceae",NA,NA,1,"tribe","Rumiceae",NA,"[]",NA,1110386,"ctcctcctttccaaaaggaagaataaaaaag","SPER01",TRUE
-"GHP2_00000094","GHP2_00000094",1,"AB732934",544732,4479,"Poaceae",NA,NA,1,"subtribe","Hordeinae",NA,"[]",NA,1648017,"atccgtgttttgagaagggattctcgaactagaatacaaaggaaaag","SPER01",TRUE
-"GHP2_00000005","GHP2_00000005",1,"AJ854511",733972,4479,"Poaceae",4496,"Avena",1,"genus","Avena",NA,"[]",NA,4496,"atccgtgttttgagaggggggttctcgaactagaatacaaaggaaaag","SPER01",TRUE
-"GHP2_00000058","GHP2_00000058",1,"AB042240",625185,4479,"Poaceae",NA,NA,1,"subfamily","Pooideae",NA,"[]",NA,147368,"atccgtgttttgagaaaacaaggggttctcgaactagaatacaaaggaaaag","SPER01",TRUE
-"GHP3_00000048","GHP3_00000048",1,"AY177347",536787,4479,"Poaceae",NA,NA,1,"no rank","Poeae Chloroplast Group 1 (Aveneae type)",NA,"[]",NA,1652080,"atccgtgttttgagaaaacaaaggggttctcgaatcgaactagaatacaaaggaaaag","SPER01",TRUE
-"GHP2_00000018","GHP2_00000018",1,"DQ311698",474475,3803,"Fabaceae",NA,NA,1,"tribe","Loteae",NA,"[]",NA,163747,"atcctgctttacgaaaacaagggaaagttcagttaagaaagcgacgagaaaaaagg","SPER01",TRUE
-"GHP2_00000174","GHP2_00000174",1,"EF653804",407019,3615,"Polygonaceae",61508,"Persicaria",1,"genus","Persicaria",NA,"[]",NA,61508,"ctcctgctttcaaaaaggaaagaaaaaggg","SPER01",TRUE
-"GHP2_00000049","GHP2_00000049",1,"HE577546",403478,1804623,"Chenopodiaceae",NA,NA,1,"subfamily","Chenopodioideae",NA,"[]",NA,1307796,"ctccttttgtcaaaagcaaaaaataaagattcagaaagcaacaataaaaaaag","SPER01",TRUE
-"GHP1_00000262","GHP1_00000262",1,"AB685313",167550,3688,"Salicaceae",NA,NA,1,"tribe","Saliceae",NA,"[]",NA,238069,"atcctatttttcgaaaacaaacaaaggttcataaagacagaataagaatacaaaag","SPER01",TRUE
-"GHP3_00000089","GHP3_00000089",1,"AY177346",268396,4479,"Poaceae",4544,"Poa",1,"genus","Poa",NA,"[]",NA,4544,"atccatgttttgagaaaacaagggggttctcgaactagaatacaaaggaaaag","SPER01",TRUE
-"GHP1_00000280","GHP1_00000280",1,"DQ311724",238212,3803,"Fabaceae",3898,"Trifolium",1,"genus","Trifolium",NA,"[]",NA,3898,"atccttctttctgaaaacaaataaaagttcagaaagttaaaatcaaaaagg","SPER01",TRUE
-"GHP2_00000011","GHP2_00000011",1,"GU121984",74071,4668,"Amaryllidaceae",4678,"Allium",1,"genus","Allium",NA,"[]",NA,4678,"atctttcttttttgaaaaacaagggtttaaaaaagagaataaaaaag","SPER01",TRUE
-"GHP2_00000040","GHP2_00000040",1,"EU119366",141283,4479,"Poaceae",37871,"Glyceria",1,"genus","Glyceria",NA,"[]",NA,37871,"atccgtgttttgagaaaacaagtggttctcgagctagaatccaaaggaaaag","SPER01",TRUE
-"GHP3_00000047","GHP3_00000047",1,"AC183493",151712,3700,"Brassicaceae",NA,NA,1,"tribe","Brassiceae",NA,"[]",NA,981071,"atcctgggttacgcgaacaaaccaaagtttagaaagcgg","SPER01",TRUE
-"GHP1_00000004","GHP1_00000004",1,"AJ271687",146094,4479,"Poaceae",NA,NA,1,"no rank","Poeae Chloroplast Group 2 (Poeae type)",NA,"[]",NA,1652081,"atccgtgttttgagaagggggttctcgaactagaatacaaaggaaaag","SPER01",TRUE
-"GHP2_00000263","GHP2_00000263",1,"AY101915",104960,156152,"Plantaginaceae",26867,"Plantago",1,"genus","Plantago",NA,"[]",NA,26867,"atcctgtcttctcaaaataaaggttcataaagcgaaaaggg","SPER01",TRUE
-"GHP2_00000244","GHP2_00000244",1,"AB477113",38627,4668,"Amaryllidaceae",4678,"Allium",1,"genus","Allium",NA,"[]",NA,4678,"atctttattttttgaaaaacaagggtttaaaaaagagaataaaaaag","SPER01",TRUE
-"GHP2_00000111","GHP2_00000111",1,"EF416777",103195,3934,"Onagraceae",13054,"Epilobium",1,"genus","Epilobium",NA,"[]",NA,13054,"atcctattttacgaaaaccagcaccgggggtttagaaagcgataaaaaaaaag","SPER01",TRUE
-"GHP2_00000426","GHP2_00000426",1,"AF055264",93877,3700,"Brassicaceae",NA,NA,1,"tribe","Camelineae",NA,"[]",NA,980083,"atcctggtttacgcgaacaaaccggagtttacaaagcgagaaaaaagg","SPER01",TRUE
-"GHP2_00000026","GHP2_00000026",1,"AY722546",92834,3700,"Brassicaceae",NA,NA,1,"family","Brassicaceae",NA,"[]",NA,3700,"atcctgggttacgcaaacaaaccagagtttagaaagcgg","SPER01",TRUE
-"GHP1_00001700","GHP1_00001700",1,"AY177348",64124,4479,"Poaceae",15560,"Holcus",1,"genus","Holcus",NA,"[]",NA,15560,"atccgtgttttgagaaaacaagggggttttccaactagaatacaaaggaaaag","SPER01",TRUE
-"GHP3_00000244","GHP3_00000244",1,"AM041248",61122,4479,"Poaceae",NA,NA,1,"tribe","Poeae",NA,"[]",NA,147387,"atccatgttttgagaaaacaagggggttctcgaactagaatgcaaaggaaaag","SPER01",TRUE
-"GHP2_00000139","GHP2_00000139",1,"AB894168",50664,3745,"Rosaceae",23204,"Potentilla",1,"genus","Potentilla",NA,"[]",NA,23204,"atcccgttttctgaaaacaaataagggtttcgtttcagaaagcgagaa","SPER01",TRUE
-"GHP2_00000107","GHP2_00000107",1,"EU600022",56004,21571,"Boraginaceae",NA,NA,1,"subfamily","Cynoglossoideae",NA,"[]",NA,1874400,"atccggtttccgaaaacaaacaaaagttgaaaaagaaaaaaggaag","SPER01",TRUE
-"GHP2_00001271","GHP2_00001271",1,"DQ353961",32041,4479,"Poaceae",NA,NA,1,"subtribe","Dactylidinae",NA,"[]",NA,640895,"atccgtgttttgagaaaacaaagaaaggggttctcgaactagaatacaaaggaaaag","SPER01",TRUE
-"GHP3_00000902","GHP3_00000902",1,"DQ353979",41617,4479,"Poaceae",4544,"Poa",1,"genus","Poa",NA,"[]",NA,4544,"atccgtgttttgagaaaataagggggttctcgaactagaatacaaaggaaaag","SPER01",TRUE
-"GHP2_00004393","GHP2_00004393",1,"AY016329",11827,4479,"Poaceae",15745,"Phragmites",1,"species","Phragmites australis",29695,"['Phragmites australis']","Phragmites australis",29695,"atcccttttttgaaaaaacaggtggttctcaaactagaacccaaagggaaag","SPER01",TRUE
-"GHP2_00003910","GHP2_00003910",1,"AB045065",12003,3318,"Pinaceae",3328,"Picea",1,"genus","Picea",NA,"[]",NA,3328,"atccggttcattgagacaatagtttcttcttttcttctcctaagataggaaggg","SPER01",TRUE
-"GHP2_00008629","GHP2_00008629",1,"DQ860641",11597,4345,"Ericaceae",13749,"Vaccinium",1,"species","Vaccinium vitis-idaea",180772,"['Vaccinium vitis-idaea']","Vaccinium vitis-idaea",180772,"atccttttttttttggcaaacaaataaagattccgaaagaaaaaaaaagg","SPER01",TRUE
-"GHP2_00000674","GHP2_00000674",1,"AP002983",7298,3803,"Fabaceae",3867,"Lotus",1,"genus","Lotus",NA,"[]",NA,3867,"atcctgctttacgaaaacaagggaaagttcagttaagaaagcgacgagaaaaatg","SPER01",TRUE
-"GHP1_00000793","GHP1_00000793",1,"DQ860607",4239,3568,"Caryophyllaceae",NA,NA,1,"tribe","Sagineae",NA,"[]",NA,1141483,"ctcctttttttgtctccctttttcaaaagacaaaaaggattcagaaagcaagaataaaacag","SPER01",TRUE
-"GHP2_00001805","GHP2_00001805",1,"AY521321",11962,3568,"Caryophyllaceae",3579,"Cerastium",1,"genus","Cerastium",NA,"[]",NA,3579,"ctccttaattgtctcctaaaaaaaacggattcaaaaagaataaaaaag","SPER01",TRUE
-"GHP3_00005700","GHP3_00005700",1,"AF486400",4156,156152,"Plantaginaceae",4173,"Veronica",1,"subgenus","Beccabunga",NA,"[]",NA,1461652,"atcctgtcttctaaaaacaaagatccagaaagtgaaaaagggg","SPER01",TRUE
-"GHP3_00000619","GHP3_00000619",1,"AF519149",5045,4479,"Poaceae",NA,NA,1,"tribe","Triticeae",NA,"[]",NA,147389,"atccgtgttttgagaaaacaaggggttctcaaactagaatacaaaggaaaag","SPER01",TRUE
+id,best_identity:db_GH,best_match:db_GH,count,family,family_name,genus,genus_name,match_count:db_GH,rank,scientific_name,species,species_list:db_GH,species_name,taxid,sequence,sequence_type,is_spermatophyta,category
+GHP1_00000007,1,AB979732,47.51714124943168,3514,Betulaceae,NA,NA,1,family,Betulaceae,NA,[],NA,3514,atcctgttttccgaaaacaaataaaacaaatttaagggttcataaagtgagaataaaaaag,SPER01,TRUE,Plant
+GHP2_00000006,1,AJ583845,25.747984312537177,3615,Polygonaceae,NA,NA,1,tribe,Polygoneae,NA,[],NA,1110385,ctccttctttccaaaaggaagacaaaag,SPER01,TRUE,Plant
+GHP2_00000009,1,AY344156,27.780889750024578,14101,Juncaceae,13578,Juncus,1,genus,Juncus,NA,[],NA,13578,atctttattttgataaaatttgtttttatagaaaaattcaaatcaaaaaa,SPER01,TRUE,Plant
+GHP2_00000029,1,DQ131554,12.649856789259234,3803,Fabaceae,3877,Medicago,1,genus,Medicago,NA,[],NA,3877,atccttctttccgaaaacaaataaataaaagttcagaaagttaaaatcaaaaaag,SPER01,TRUE,Plant
+GHP2_00000039,1,DQ311726,10.707882647669079,3803,Fabaceae,3898,Trifolium,1,genus,Trifolium,NA,[],NA,3898,atccttctttccgaaaacaaaataaaagttcagaaagttaaaataaaaaagg,SPER01,TRUE,Plant
+GHP2_00000038,1,AB213008,10.369128849637585,3700,Brassicaceae,NA,NA,1,family,Brassicaceae,NA,[],NA,3700,atcctgggttacgcgaacaaaccagagtttagaaagcgg,SPER01,TRUE,Plant
+GHP2_00000020,1,EF653787,7.697969255230126,3615,Polygonaceae,46786,Polygonum,1,genus,Polygonum,NA,[],NA,46786,ctccttctttccaaaaggaagaaaaag,SPER01,TRUE,Plant
+GHP2_00000090,1,AB546802,6.609455443031405,3803,Fabaceae,3887,Pisum,1,genus,Pisum,NA,[],NA,3887,atccttctttctgaaaacaaataaaagttcagaaagtgaaaatcaaaaaag,SPER01,TRUE,Plant
+GHP3_00000034,1,AH015554,5.766177779797445,4479,Poaceae,NA,NA,1,subfamily,Pooideae,NA,[],NA,147368,atccgtgttttgagaaaacaaggaggttctcgaactagaatacaaaggaaaag,SPER01,TRUE,Plant
+GHP2_00000012,1,AH015556,5.535951058631306,4479,Poaceae,NA,NA,1,tribe,Poeae,NA,[],NA,147387,atccgtgttttgagaaaacaagggggttctcgaactagaatacaaaggaaaag,SPER01,TRUE,Plant
+GHP2_00000028,1,EF653802,6.243878410187542,3615,Polygonaceae,NA,NA,1,subfamily,Polygonoideae,NA,[],NA,1110380,ctcctgctttcaaaaaggaaagaaaaaagg,SPER01,TRUE,Plant
+GHP2_00000017,1,AB219660,6.132525411103082,3615,Polygonaceae,NA,NA,1,tribe,Rumiceae,NA,[],NA,1110386,ctcctcctttccaaaaggaagaataaaaaag,SPER01,TRUE,Plant
+GHP2_00000094,1,AB732934,3.5405990747400136,4479,Poaceae,NA,NA,1,subtribe,Hordeinae,NA,[],NA,1648017,atccgtgttttgagaagggattctcgaactagaatacaaaggaaaag,SPER01,TRUE,Plant
+GHP2_00000005,1,AJ854511,5.743465107666941,4479,Poaceae,4496,Avena,1,genus,Avena,NA,[],NA,4496,atccgtgttttgagaggggggttctcgaactagaatacaaaggaaaag,SPER01,TRUE,Plant
+GHP2_00000058,1,AB042240,4.559745097173773,4479,Poaceae,NA,NA,1,subfamily,Pooideae,NA,[],NA,147368,atccgtgttttgagaaaacaaggggttctcgaactagaatacaaaggaaaag,SPER01,TRUE,Plant
+GHP3_00000048,1,AY177347,3.8865073025975994,4479,Poaceae,NA,NA,1,no rank,Poeae Chloroplast Group 1 (Aveneae type),NA,[],NA,1652080,atccgtgttttgagaaaacaaaggggttctcgaatcgaactagaatacaaaggaaaag,SPER01,TRUE,Plant
+GHP2_00000018,1,DQ311698,4.0021085431755425,3803,Fabaceae,NA,NA,1,tribe,Loteae,NA,[],NA,163747,atcctgctttacgaaaacaagggaaagttcagttaagaaagcgacgagaaaaaagg,SPER01,TRUE,Plant
+GHP2_00000174,1,EF653804,3.3560096567743063,3615,Polygonaceae,61508,Persicaria,1,genus,Persicaria,NA,[],NA,61508,ctcctgctttcaaaaaggaaagaaaaaggg,SPER01,TRUE,Plant
+GHP2_00000049,1,HE577546,3.257853536041698,1804623,Chenopodiaceae,NA,NA,1,subfamily,Chenopodioideae,NA,[],NA,1307796,ctccttttgtcaaaagcaaaaaataaagattcagaaagcaacaataaaaaaag,SPER01,TRUE,Plant
+GHP1_00000262,1,AB685313,0.7684239659662642,3688,Salicaceae,NA,NA,1,tribe,Saliceae,NA,[],NA,238069,atcctatttttcgaaaacaaacaaaggttcataaagacagaataagaatacaaaag,SPER01,TRUE,Plant
+GHP3_00000089,1,AY177346,2.2729436123773303,4479,Poaceae,4544,Poa,1,genus,Poa,NA,[],NA,4544,atccatgttttgagaaaacaagggggttctcgaactagaatacaaaggaaaag,SPER01,TRUE,Plant
+GHP1_00000280,1,DQ311724,1.6926550983273896,3803,Fabaceae,3898,Trifolium,1,genus,Trifolium,NA,[],NA,3898,atccttctttctgaaaacaaataaaagttcagaaagttaaaatcaaaaagg,SPER01,TRUE,Plant
+GHP2_00000011,1,GU121984,1.0859024455316895,4668,Amaryllidaceae,4678,Allium,1,genus,Allium,NA,[],NA,4678,atctttcttttttgaaaaacaagggtttaaaaaagagaataaaaaag,SPER01,TRUE,Plant
+GHP2_00000040,1,EU119366,1.1335235096467575,4479,Poaceae,37871,Glyceria,1,genus,Glyceria,NA,[],NA,37871,atccgtgttttgagaaaacaagtggttctcgagctagaatccaaaggaaaag,SPER01,TRUE,Plant
+GHP3_00000047,1,AC183493,1.2133425274082505,3700,Brassicaceae,NA,NA,1,tribe,Brassiceae,NA,[],NA,981071,atcctgggttacgcgaacaaaccaaagtttagaaagcgg,SPER01,TRUE,Plant
+GHP1_00000004,1,AJ271687,1.1067836089839407,4479,Poaceae,NA,NA,1,no rank,Poeae Chloroplast Group 2 (Poeae type),NA,[],NA,1652081,atccgtgttttgagaagggggttctcgaactagaatacaaaggaaaag,SPER01,TRUE,Plant
+GHP2_00000263,1,AY101915,0.8694868864236706,156152,Plantaginaceae,26867,Plantago,1,genus,Plantago,NA,[],NA,26867,atcctgtcttctcaaaataaaggttcataaagcgaaaaggg,SPER01,TRUE,Plant
+GHP2_00000244,1,AB477113,0.22850032205033186,4668,Amaryllidaceae,4678,Allium,1,genus,Allium,NA,[],NA,4678,atctttattttttgaaaaacaagggtttaaaaaagagaataaaaaag,SPER01,TRUE,Plant
+GHP2_00000111,1,EF416777,0.8148050945263867,3934,Onagraceae,13054,Epilobium,1,genus,Epilobium,NA,[],NA,13054,atcctattttacgaaaaccagcaccgggggtttagaaagcgataaaaaaaaag,SPER01,TRUE,Plant
+GHP2_00000426,1,AF055264,0.8533898163774573,3700,Brassicaceae,NA,NA,1,tribe,Camelineae,NA,[],NA,980083,atcctggtttacgcgaacaaaccggagtttacaaagcgagaaaaaagg,SPER01,TRUE,Plant
+GHP2_00000026,1,AY722546,0.8005127599100212,3700,Brassicaceae,NA,NA,1,family,Brassicaceae,NA,[],NA,3700,atcctgggttacgcaaacaaaccagagtttagaaagcgg,SPER01,TRUE,Plant
+GHP1_00001700,1,AY177348,0.5190492280699052,4479,Poaceae,15560,Holcus,1,genus,Holcus,NA,[],NA,15560,atccgtgttttgagaaaacaagggggttttccaactagaatacaaaggaaaag,SPER01,TRUE,Plant
+GHP3_00000244,1,AM041248,0.39730813972825824,4479,Poaceae,NA,NA,1,tribe,Poeae,NA,[],NA,147387,atccatgttttgagaaaacaagggggttctcgaactagaatgcaaaggaaaag,SPER01,TRUE,Plant
+GHP2_00000139,1,AB894168,0.44501353204783844,3745,Rosaceae,23204,Potentilla,1,genus,Potentilla,NA,[],NA,23204,atcccgttttctgaaaacaaataagggtttcgtttcagaaagcgagaa,SPER01,TRUE,Plant
+GHP2_00000107,1,EU600022,0.46012483255966957,21571,Boraginaceae,NA,NA,1,subfamily,Cynoglossoideae,NA,[],NA,1874400,atccggtttccgaaaacaaacaaaagttgaaaaagaaaaaaggaag,SPER01,TRUE,Plant
+GHP2_00001271,1,DQ353961,0.33147952962841487,4479,Poaceae,NA,NA,1,subtribe,Dactylidinae,NA,[],NA,640895,atccgtgttttgagaaaacaaagaaaggggttctcgaactagaatacaaaggaaaag,SPER01,TRUE,Plant
+GHP3_00000902,1,DQ353979,0.3115600774585944,4479,Poaceae,4544,Poa,1,genus,Poa,NA,[],NA,4544,atccgtgttttgagaaaataagggggttctcgaactagaatacaaaggaaaag,SPER01,TRUE,Plant
+GHP2_00004393,1,AY016329,0.1253904817191843,4479,Poaceae,15745,Phragmites,1,species,Phragmites australis,29695,['Phragmites australis'],Phragmites australis,29695,atcccttttttgaaaaaacaggtggttctcaaactagaacccaaagggaaag,SPER01,TRUE,Plant
+GHP2_00003910,1,AB045065,0.08002335243740145,3318,Pinaceae,3328,Picea,1,genus,Picea,NA,[],NA,3328,atccggttcattgagacaatagtttcttcttttcttctcctaagataggaaggg,SPER01,TRUE,Plant
+GHP2_00008629,1,DQ860641,0.10617846611949097,4345,Ericaceae,13749,Vaccinium,1,species,Vaccinium vitis-idaea,180772,['Vaccinium vitis-idaea'],Vaccinium vitis-idaea,180772,atccttttttttttggcaaacaaataaagattccgaaagaaaaaaaaagg,SPER01,TRUE,Plant
+GHP2_00000674,1,AP002983,0.07302509650754285,3803,Fabaceae,3867,Lotus,1,genus,Lotus,NA,[],NA,3867,atcctgctttacgaaaacaagggaaagttcagttaagaaagcgacgagaaaaatg,SPER01,TRUE,Plant
+GHP1_00000793,1,DQ860607,0.033034716791309995,3568,Caryophyllaceae,NA,NA,1,tribe,Sagineae,NA,[],NA,1141483,ctcctttttttgtctccctttttcaaaagacaaaaaggattcagaaagcaagaataaaacag,SPER01,TRUE,Plant
+GHP2_00001805,1,AY521321,0.08801205989912629,3568,Caryophyllaceae,3579,Cerastium,1,genus,Cerastium,NA,[],NA,3579,ctccttaattgtctcctaaaaaaaacggattcaaaaagaataaaaaag,SPER01,TRUE,Plant
+GHP3_00005700,1,AF486400,0.04220208782350578,156152,Plantaginaceae,4173,Veronica,1,subgenus,Beccabunga,NA,[],NA,1461652,atcctgtcttctaaaaacaaagatccagaaagtgaaaaagggg,SPER01,TRUE,Plant
+GHP3_00000619,1,AF519149,0.042199476970186695,4479,Poaceae,NA,NA,1,tribe,Triticeae,NA,[],NA,147389,atccgtgttttgagaaaacaaggggttctcaaactagaatacaaaggaaaag,SPER01,TRUE,Plant
