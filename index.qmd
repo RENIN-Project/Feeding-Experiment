@@ -138,8 +138,8 @@ The [`OBITools`](http://metabarcoding.org/obitools) commands used to preprocess 
 
 # Filtering of the data
 
--   For the *Spermatophyta* [`Sper01`](SPER01_filtering.html) marker
--   For the *Eukaryota* [`Euka02`](EUKA02_filtering.html) marker
+-   For the *Spermatophyta* [`Sper01`](SPER01_Filtering.html) marker
+-   For the *Eukaryota* [`Euka02`](EUKA02_Filtering.html) marker
 
 # Ecological analysis
 
