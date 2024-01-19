@@ -1,0 +1,562 @@
+---
+format: 
+  elsevier-html: default
+  elsevier-pdf:
+    keep-tex: true
+    journal:
+      name: Journal Name
+      formatting: preprint
+      model: 3p
+      cite-style: super
+
+editor: visual
+title: |
+  DNA metabarcoding diet analysis in reindeer is quantitative 
+  and integrates feeding over several weeks
+
+# if short-title is defined, then it's used
+short-title: Ouups
+bibliography: bibliography/bibliography.bib
+copyright: 
+  holder: Reinin project
+  year: 2024
+author:
+  - name: Stefaniya Kamenova
+    email: stefaniya.kamenova@gmail.com
+    attributes:
+      corresponding: true
+    orcid: 0000-0002-7241-0506
+    affiliations:
+      - ref: cees
+      - ref: denrm
+      - ref: nmhmsofia
+  - name: Pernille Meyer
+    affiliations:
+      - ref: cees
+  - name: Anne Krag Brysting
+    affiliations:
+      - ref: cees
+  - name: Leo Rescia
+    affiliations:
+      - ref: damb
+  - name: Lars P. Folkow
+    affiliations:
+      - ref: damb
+  - name: Galina Gusarova
+    email: galina.gusarova@uit.no
+    role: "Equal contribution"
+    affiliations:
+      - ref: cees
+      - ref: damb
+      - ref: aumn
+      - ref: dbsp
+  - name: Eric Coissac
+    email: eric.coissac@metabarcoding.org
+    role: "Equal contribution"
+    orcid: 0000-0001-7507-6729
+    affiliations:
+      - ref: leca
+
+affiliations:
+  - id: cees
+    name: |
+      Centre for Ecological and Evolutionary Synthesis, 
+      University of Oslo
+    city: Oslo
+    country: Norway
+  - id: denrm
+    name: |
+      Departments of Ecology and Natural Resource Management, 
+      Norwegian University of Life Sciences
+    city: Ås
+    state: Norway
+  - id: nmhmsofia
+    name: |
+      National Museum of Natural History,
+      Bulgarian Academy of Sciences
+    city: Sofia
+    state: Bulgaria
+  - id: damb
+    name: |
+      Department of Arctic and Marine Biology, 
+      The Arctic University of Norway
+    city: Tromsø
+    state: Norway
+  - id: aumn
+    name: |
+      The Arctic University Museum of Norway, 
+      The Arctic University of Norway
+    city: Tromsø
+    state: Norway
+  - id: dbsp
+    name: |
+      Department of Botany, 
+      St Petersburg State University
+    city: St Petersburg
+    state: Russia
+  - id: leca
+    name: |
+      Laboratoire d'Ecologie Alpine, 
+      CNRS, Université Grenoble Alpes
+    city: Grenoble
+    state: France
+    
+abstract: |
+  Filtering of the EUKA02 DNA metabarcoding raw data.
+---
+
+# Setting up the R environment
+
+## Install missing packages
+
+```{r}
+packages <- c("igraph", "tidyverse", "devtools","R.utils","vegan")
+install.packages(setdiff(packages,
+                         rownames(installed.packages())),
+                 dependencies = TRUE
+                )
+```
+
+
+## Loading of the R libraries
+
+- `ROBITools` package is used to read result files produced by OBITools.
+
+- `ROBITaxonomy` package provides function allowing to query OBITools formated taxonomy.
+
+```{r loads_robitools, warning=FALSE, message=FALSE}
+if (!"ROBITools" %in% rownames(installed.packages())) {
+  # ROBITools are not available on CRAN and have to be installed
+  # from http://git.metabarcoding.org using devtools
+
+  metabarcoding_git <- "https://git.metabarcoding.org/obitools"
+
+  devtools::install_git(paste(metabarcoding_git,
+                              "ROBIUtils.git",
+                              sep="/"))
+
+  devtools::install_git(paste(metabarcoding_git,
+                              "ROBITaxonomy.git",
+                              sep="/"))
+  devtools::install_git(paste(metabarcoding_git,
+                              "ROBITools.git",
+                              sep="/"))
+}
+
+library(ROBITools)
+library(ROBITaxonomy)
+```
+
+
+- `tidyverse` [@Wickham2019-ra] provides various method for efficient data manipulation and plotting via `ggplot2` [@Wickham2016-vl]
+
+```{r loads_tidyverse, warning=FALSE, message=FALSE}
+library(tidyverse)
+```
+
+```{r Rutils, warning=FALSE, message=FALSE}
+library(R.utils)
+```
+
+```{r Vegan, warning=FALSE, message=FALSE}
+library(vegan)
+```
+
+```{r}
+if (! file.exists("Data/ncbi20210212.adx")) {
+  gunzip("Data/ncbi20210212.adx.gz",remove=FALSE)
+  gunzip("Data/ncbi20210212.ndx.gz",remove=FALSE)
+  gunzip("Data/ncbi20210212.rdx.gz",remove=FALSE)
+  gunzip("Data/ncbi20210212.tdx.gz",remove=FALSE)
+}
+```
+
+
+# Loading the data
+
+## Load the NCBI taxonomy
+
+```{r}
+taxo <- read.taxonomy("Data/ncbi20210212")
+```
+
+
+
+## Loading the metabarcoding data
+
+```{r}
+if (! file.exists("Data/Rawdata/EUKA02_all_paired.ali.assigned.ann.diag.uniq.ann.c1.l10.clean.EMBL.tag.ann.sort.uniq.grep.tab"))
+    gunzip("Data/Rawdata/EUKA02_all_paired.ali.assigned.ann.diag.uniq.ann.c1.l10.clean.EMBL.tag.ann.sort.uniq.grep.tab.gz",remove=FALSE)
+
+
+EUKA02.raw = import.metabarcoding.data("Data/Rawdata/EUKA02_all_paired.ali.assigned.ann.diag.uniq.ann.c1.l10.clean.EMBL.tag.ann.sort.uniq.grep.tab")
+```
+
+## Loading the metadata
+
+```{r}
+samples.metadata = read_csv("Data/Faeces/sampling_dates.csv", 
+                            show_col_types = FALSE)
+```
+
+# Sample description
+
+Normalization of samples names
+
+```{r include=FALSE}
+sample_names = sub("PCR_NC", "PCRNC", samples(EUKA02.raw)$sample)
+sample_names = sub("PCR_POS", "PCRPOS", sample_names)
+sample_names = sub("DNANC1", "DNANC_1", sample_names)
+
+samples(EUKA02.raw)$sample
+```
+
+Extract information relative to PCR replicates and sample names.
+
+```{r}
+sample_names_split = strsplit(as.character(sample_names), "_R")
+
+replicate = sapply(sample_names_split, function(x) x[length(x)])
+sample_id = sapply(sample_names_split, function(x) x[1])
+
+samples_desc = data.frame(name = samples(EUKA02.raw)$sample, replicate = replicate, sample_id = sample_id)
+
+EUKA02.raw@samples = samples_desc
+EUKA02.raw@motus <- EUKA02.raw@motus %>% select(-starts_with("obiclean_status:"))
+```
+
+
+## Categorize MOTUs
+
+DNA Sequence of the synthetic sequence used as EUKA02 positive controls.
+
+```{r}
+Standard1 = "taagtctcgcactagttgtgacctaacgaatagagaattctataagacgtgttgtcccat"
+```
+
+ - Identify which MOTU is corresponding to the positive control sequence 
+   and associated it to category `standard1`.
+ - All the MOTUs exhibiting a similarity with one of the reference SPER01
+   database greater than 80% is tagged as `EUKA02`
+ - The remaining sequences are tagged as `Unknown`
+
+
+```{r}
+sequence_type = rep("Unknown", nrow(motus(EUKA02.raw)))
+sequence_type[which(motus(EUKA02.raw)$`best_identity:db_EUKA`> 0.80)] = "EUKA02"
+sequence_type[which(motus(EUKA02.raw)$sequence == Standard1)] = "standard1"
+
+EUKA02.raw@motus$sequence_type = as.factor(sequence_type)
+table(EUKA02.raw@motus$sequence_type)
+```
+
+```{r}
+spermatophyta.taxid <- ecofind(taxo,patterns = "^Spermatophyta$")
+fungi.taxid <- ecofind(taxo,patterns = "^Fungi$")
+
+to_keep = (is.subcladeof(taxo,EUKA02.raw@motus$taxid,spermatophyta.taxid) | EUKA02.raw@motus$taxid == spermatophyta.taxid) |
+           (is.subcladeof(taxo,EUKA02.raw@motus$taxid,fungi.taxid) | EUKA02.raw@motus$taxid == fungi.taxid)
+
+table(to_keep)
+```
+
+```{r}
+EUKA02.plant_fungi <- EUKA02.raw[,which(to_keep)]
+```
+
+
+# Curation procedure
+
+## Select motus occuring at least at 1% in at least one PCR
+
+```{r}
+norare = apply(decostand(reads(EUKA02.plant_fungi),method = "total"),
+               MARGIN = 2,
+               FUN = max) >= 0.01
+table(norare)
+```
+
+```{r}
+EUKA02.norare <- EUKA02.plant_fungi[,which(norare)]
+
+```
+
+
+## Filtering for PCR outliers
+
+Only library 1 and 2 have individually tagged PCR replicates
+
+```{r}
+library_3.ids = read.csv("Data/samples_library_3.txt",
+                         stringsAsFactors = FALSE,
+                         header = FALSE)[,1]
+```
+
+```{r}
+library3.keep = gsub("_R.?$","_R",rownames(EUKA02.norare)) %in% library_3.ids
+EUKA02.lib3 = EUKA02.norare[library3.keep,]
+EUKA02.lib12= EUKA02.norare[!library3.keep,]
+
+dim(EUKA02.lib3)
+dim(EUKA02.lib12)
+
+```
+
+Load the script containing the selection procedure implemented in function 
+`tag_bad_pcr`.
+
+```{r}
+source("Select_PCR.R")
+```
+
+### First selection round
+
+```{r}
+keep1 = tag_bad_pcr(samples = samples(EUKA02.lib12)$sample_id, 
+                   counts = reads(EUKA02.lib12),
+                   plot = TRUE,
+                   threshold=0.2
+                  )
+```
+Histogram shows the empirical distribution of the PCR replicate distances. The red vertical dashed line indicates the threshold used to discard outlier PCRs. The green vertical dashed line indicates the mode of the observed distribution.
+
+```{r}
+table(keep1$keep)
+```
+
+`FALSE`is the count of PCR to discard, `TRUE` the count of PCR conserved at the end of this selection round.
+
+```{r}
+samples(EUKA02.lib12)$name[!keep1$keep]
+```
+Above is the list of the ids of the discarded PCRs.
+
+
+```{r}
+EUKA02.lib12.k1 = EUKA02.lib12[keep1$keep,]
+```
+
+### Second selection round
+
+```{r}
+keep2 = tag_bad_pcr(samples = samples(EUKA02.lib12.k1)$sample_id, 
+                   counts = reads(EUKA02.lib12.k1),
+                   plot = TRUE,
+                   threshold=0.2
+                  )
+
+```
+
+```{r}
+table(keep2$keep)
+```
+
+```{r}
+samples(EUKA02.lib12.k1)$name[!keep2$keep]
+```
+
+
+```{r}
+EUKA02.lib12.k2 = EUKA02.lib12.k1[keep2$keep,]
+```
+
+### Third selection round
+
+```{r}
+keep3 = tag_bad_pcr(samples = samples(EUKA02.lib12.k2)$sample_id, 
+                   counts = reads(EUKA02.lib12.k2),
+                   plot = TRUE,
+                   threshold=0.2
+                  )
+
+```
+
+```{r}
+table(keep3$keep)
+keep3[!keep3$keep,]
+```
+
+
+```{r}
+EUKA02.lib12.k3 = EUKA02.lib12.k2[keep3$keep,]
+```
+
+
+### Merge remaining PCR replicates
+
+```{r}
+freq = decostand(reads(EUKA02.lib12.k3),
+                 method = "total")
+EUKA02.lib12.k3$count = reads(EUKA02.lib12.k3)
+EUKA02.lib12.k3@reads = freq
+
+EUKA02.merged = aggregate(EUKA02.lib12.k3, MARGIN = 1, by = list(sample_id=samples(EUKA02.lib12.k3)$sample_id), FUN = mean)
+```
+
+## Merge lib 1,2 and 3
+
+
+
+### Remove controls in library 3
+
+Look for controls left in library 1 and 2
+
+```{r}
+rownames(EUKA02.merged)
+```
+
+
+## Remove controls in library 3
+
+```{r}
+rownames(EUKA02.lib3)
+```
+
+```{r}
+EUKA02.lib3.samples = EUKA02.lib3[-(1:10),]
+rownames(EUKA02.lib3.samples@reads) = sub("_R.?$","",rownames(EUKA02.lib3.samples))
+rownames(EUKA02.lib3.samples)
+```
+
+### Merge library 1, 2 and 3
+
+```{r}
+
+EUKA02.lib123.reads = rbind(EUKA02.merged@reads,
+                            decostand(EUKA02.lib3.samples@reads,method = "total"))
+
+common = intersect(names(EUKA02.merged@samples),
+                   names(EUKA02.lib3.samples@samples))
+
+EUKA02.lib123.samples = rbind(EUKA02.merged@samples[,common],
+                          EUKA02.lib3.samples@samples[,common])
+
+EUKA02.lib123 = metabarcoding.data(reads = decostand(EUKA02.lib123.reads,method = "total"),
+                               samples = EUKA02.lib123.samples,
+                               motus = EUKA02.merged@motus)
+
+dim(EUKA02.lib123)
+```
+
+
+
+```{r}
+EUKA02.lib123@samples$animal_id = sapply(EUKA02.lib123@samples$sample_id, 
+                                                function(x) strsplit(as.character(x),"_")[[1]][1])
+```
+
+### Check for empty MOTUs
+
+
+```{r}
+zero = colSums(reads(EUKA02.lib123)) == 0
+table(zero)
+```
+
+```{r}
+EUKA02.nozero = EUKA02.lib123[,!zero]
+```
+
+
+# Filter out rare species
+
+```{r}
+plot(EUKA02.nozero@motus$`best_identity:db_EUKA`,
+     apply(reads(EUKA02.nozero),2,max),
+     col=as.factor(EUKA02.nozero@motus$sequence_type),
+     log="y",
+     ylab="max read fequency in a sample",
+     xlab="best identity with the reference database")
+abline(h=0.01,col="red",lty=2)
+abline(v=0.95,col="red",lty=2)
+```
+  
+
+```{r}
+EUKA02.merged3 = EUKA02.lib123[, apply(reads(EUKA02.lib123),2,max) > 0.01]
+```
+
+
+```{r}
+plot(EUKA02.merged3$motus$`best_identity:db_EUKA`,
+     apply(reads(EUKA02.merged3),2,max),
+     col=as.factor(EUKA02.merged3$motus$sequence_type),
+     log="y",
+     ylab="max read fequency in a sample",
+     xlab="best identity with the reference database")
+abline(h=0.01,col="red",lty=2)
+abline(v=0.95,col="red",lty=2)
+```
+
+## Keep only MOTUs Strictly identical to one of the reference sequence
+
+### First level stringency filter (95% identity)
+
+```{r}
+EUKA02.merged4 = EUKA02.merged3[,EUKA02.merged3@motus$`best_identity:db_EUKA` > 0.95]
+EUKA02.merged4@reads = decostand(EUKA02.merged4@reads,method = "total")
+EUKA02.merged4@motus <- EUKA02.merged4@motus %>% select(-starts_with("obiclean_status:"))
+```
+
+```{r}
+plot(EUKA02.merged4$motus$`best_identity:db_EUKA`,
+     apply(reads(EUKA02.merged4),2,max),
+     col=as.factor(EUKA02.merged4$motus$sequence_type),
+     log="y",
+     ylab="max read fequency in a sample",
+     xlab="best identity with the reference database")
+abline(h=0.01,col="red",lty=2)
+```
+
+### High stringency filtering
+
+```{r}
+spermatophyta.taxid <- ecofind(taxo,patterns = "^Spermatophyta$")
+EUKA02.merged4@motus$is_spermatophyta <- is.subcladeof(taxo,EUKA02.merged4@motus$taxid,spermatophyta.taxid)
+table(EUKA02.merged4@motus$is_spermatophyta)
+EUKA02.merged4@motus %>% filter(!is_spermatophyta)
+```
+
+
+```{r}
+to_keep <- EUKA02.merged4@motus$`best_identity:db_EUKA` > 0.95
+table(to_keep)
+EUKA02.merged4@motus %>% filter(!to_keep)
+```
+
+```{r}
+EUKA02.final <- EUKA02.merged4[,which(to_keep)]
+EUKA02.final@reads <- decostand(EUKA02.final@reads,method = "total")
+```
+
+
+# Saving the filtered dataset
+
+```{r}
+write.csv(motus(EUKA02.final), 
+          file = "Data/Faeces/FE.Eukaryota.samples.motus.csv")
+write.csv(samples(EUKA02.final), 
+          file = "Data/Faeces/FE.Eukaryota.samples.samples.csv")
+write.csv(reads(EUKA02.final), 
+          file = "Data/Faeces/FE.Eukaryota.samples.reads.csv")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

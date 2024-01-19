@@ -68,7 +68,7 @@ affiliations:
     name: |
       Departments of Ecology and Natural Resource Management, 
       Norwegian University of Life Sciences
-    city: Ås
+    city: Ã…s
     state: Norway
   - id: nmhmsofia
     name: |
@@ -80,13 +80,13 @@ affiliations:
     name: |
       Department of Arctic and Marine Biology, 
       The Arctic University of Norway
-    city: Tromsø
+    city: TromsÃ¸
     state: Norway
   - id: aumn
     name: |
       The Arctic University Museum of Norway, 
       The Arctic University of Norway
-    city: Tromsø
+    city: TromsÃ¸
     state: Norway
   - id: dbsp
     name: |
@@ -97,7 +97,7 @@ affiliations:
   - id: leca
     name: |
       Laboratoire d'Ecologie Alpine, 
-      CNRS, Université Grenoble Alpes
+      CNRS, UniversitÃ© Grenoble Alpes
     city: Grenoble
     state: France
     
@@ -201,7 +201,7 @@ samples.metadata = read_csv("Data/Faeces/sampling_dates.csv",
 
 # Sample description
 
-Normalisation of samples names
+Normalization of samples names
 
 ```{r include=FALSE}
 sample_names = sub("PCR_NC", "PCRNC", samples(SPER01.raw)$sample)
@@ -228,7 +228,7 @@ SPER01.raw@samples = samples_desc
 
 ## Categorize MOTUs
 
-DNA Sequence of the 6 synthetic sequence used as SPER01 positive controls.
+DNA Sequence of the 6 synthetic sequences used as SPER01 positive controls.
 
 ```{r}
 Standard1 = "taagtctcgcactagttgtgacctaacgaatagagaattctataagacgtgttgtcccat"
@@ -310,7 +310,7 @@ abline(lm(observedRRA ~ expectedRRA),
 ## Filtering for PCR outliers
 
 
-Only library 1 and 2 have individualy tagged PCR replicates. 
+Only library 1 and 2 have individually tagged PCR replicates. 
 
 ```{r}
 library_3.ids = read.csv("Data/samples_library_3.txt",
@@ -528,6 +528,7 @@ Looks like nothing at embl by blast
 ## Keep only MOTUs Strictly identical to one of the reference sequence
 
 ### First level stringency filter (95% identity)
+
 ```{r}
 SPER01.merged4 = SPER01.merged3[,SPER01.merged3@motus$`best_identity:db_GH` > 0.95]
 SPER01.merged4@reads = decostand(SPER01.merged4@reads,method = "total")

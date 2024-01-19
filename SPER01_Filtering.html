@@ -210,7 +210,7 @@ div.csl-indent {
   </div>
     <div class="quarto-title-meta-contents">
         <p class="affiliation">
-            </p><p>Laboratoire d’Ecologie Alpine, CNRS, Universit� Grenoble Alpes</p>
+            </p><p>Laboratoire d’Ecologie Alpine, CNRS, Université Grenoble Alpes</p>
           <p></p>
       </div>
     </div>
@@ -321,7 +321,7 @@ div.csl-indent {
 </section>
 <section id="sample-description" class="level1">
 <h1>Sample description</h1>
-<p>Normalisation of samples names</p>
+<p>Normalization of samples names</p>
 <p>Extract information relative to PCR replicates and sample names.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>sample_names_split <span class="ot">=</span> <span class="fu">strsplit</span>(<span class="fu">as.character</span>(sample_names), <span class="st">"_R"</span>)</span>
@@ -335,7 +335,7 @@ div.csl-indent {
 </div>
 <section id="categorize-motus" class="level2">
 <h2 class="anchored" data-anchor-id="categorize-motus">Categorize MOTUs</h2>
-<p>DNA Sequence of the 6 synthetic sequence used as SPER01 positive controls.</p>
+<p>DNA Sequence of the 6 synthetic sequences used as SPER01 positive controls.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>Standard1 <span class="ot">=</span> <span class="st">"taagtctcgcactagttgtgacctaacgaatagagaattctataagacgtgttgtcccat"</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>Standard2   <span class="ot">=</span> <span class="st">"gtgtatggtatatttgaataatattaaatagaatttaatcaatctttacatcgcttaata"</span></span>
@@ -425,7 +425,7 @@ GHP2_00000144
 </section>
 <section id="filtering-for-pcr-outliers" class="level2">
 <h2 class="anchored" data-anchor-id="filtering-for-pcr-outliers">Filtering for PCR outliers</h2>
-<p>Only library 1 and 2 have individualy tagged PCR replicates.</p>
+<p>Only library 1 and 2 have individually tagged PCR replicates.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>library_3.ids <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">"Data/samples_library_3.txt"</span>,</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>,</span>
