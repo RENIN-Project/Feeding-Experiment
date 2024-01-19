@@ -154,6 +154,6 @@ Each processed dataset is composed of three coma separated values files (`.csv` 
     -   The samples description file : [`FE.Spermatophyta.samples.samples.csv`](Data/Faeces/FE.Spermatophyta.samples.samples.csv)
     -   The reads contengency table : [`FE.Spermatophyta.samples.reads.csv`](Data/Faeces/FE.Spermatophyta.samples.reads.csv)
 -   For the *Eukaryota* `Euka02` marker
-    -   The MOTUs description file : [`Euka03.cleaned.motus.csv`](cleaned_datasets/Euka03.cleaned.motus.csv)
-    -   The samples description file : [`Euka03.cleaned.samples.csv`](cleaned_datasets/Euka03.cleaned.samples.csv)
-    -   The reads contengency table : [`Euka03.cleaned.reads.csv`](cleaned_datasets/Euka03.cleaned.reads.csv)
+    -   The MOTUs description file : [`FE.Eukaryota.samples.motus.csv`](Data/Faeces/FE.Eukaryota.samples.motus.csv)
+    -   The samples description file : [`FE.Eukaryota.samples.samples.csv`](Data/Faeces/FE.Eukaryota.samples.samples.csv)
+    -   The reads contengency table : [`FE.Eukaryota.samples.reads.csv`](Data/Faeces/FE.Eukaryota.samples.reads.csv)
