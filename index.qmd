@@ -1,0 +1,145 @@
+---
+format: 
+  elsevier-html: default
+  elsevier-pdf:
+    keep-tex: true
+    journal:
+      name: Journal Name
+      formatting: preprint
+      model: 3p
+      cite-style: super
+
+editor: visual
+title: |
+  DNA metabarcoding diet analysis in reindeer is quantitative 
+  and integrates feeding over several weeks
+
+# if short-title is defined, then it's used
+short-title: Ouups
+bibliography: bibliography/bibliography.bib
+copyright: 
+  holder: Reinin project
+  year: 2024
+author:
+  - name: Stefaniya Kamenova
+    email: stefaniya.kamenova@gmail.com
+    attributes:
+      corresponding: true
+    orcid: 0000-0002-7241-0506
+    affiliations:
+      - ref: cees
+      - ref: denrm
+      - ref: nmhmsofia
+  - name: Pernille Meyer
+    affiliations:
+      - ref: cees
+  - name: Anne Krag Brysting
+    affiliations:
+      - ref: cees
+  - name: Leo Rescia
+    affiliations:
+      - ref: damb
+  - name: Lars P. Folkow
+    affiliations:
+      - ref: damb
+  - name: Galina Gusarova
+    email: galina.gusarova@uit.no
+    role: "Equal contribution"
+    affiliations:
+      - ref: cees
+      - ref: damb
+      - ref: aumn
+      - ref: dbsp
+  - name: Eric Coissac
+    email: eric.coissac@metabarcoding.org
+    role: "Equal contribution"
+    orcid: 0000-0001-7507-6729
+    affiliations:
+      - ref: leca
+
+affiliations:
+  - id: cees
+    name: |
+      Centre for Ecological and Evolutionary Synthesis, 
+      University of Oslo
+    city: Oslo
+    country: Norway
+  - id: denrm
+    name: |
+      Departments of Ecology and Natural Resource Management, 
+      Norwegian University of Life Sciences
+    city: Ås
+    state: Norway
+  - id: nmhmsofia
+    name: |
+      National Museum of Natural History,
+      Bulgarian Academy of Sciences
+    city: Sofia
+    state: Bulgaria
+  - id: damb
+    name: |
+      Department of Arctic and Marine Biology, 
+      The Arctic University of Norway
+    city: Tromsø
+    state: Norway
+  - id: aumn
+    name: |
+      The Arctic University Museum of Norway, 
+      The Arctic University of Norway
+    city: Tromsø
+    state: Norway
+  - id: dbsp
+    name: |
+      Department of Botany, 
+      St Petersburg State University
+    city: St Petersburg
+    state: Russia
+  - id: leca
+    name: |
+      Laboratoire d'Ecologie Alpine, 
+      CNRS, Université Grenoble Alpes
+    city: Grenoble
+    state: France
+    
+abstract: |
+  Filtering of the SPER01 DNA metabarcoding raw data.
+---
+
+# Github project
+
+Every script and processed data are available from the RENIN-Project/Feeding-Experiment github project.
+
+-   <https://github.com/RENIN-Project/Feeding-Experiment>
+
+# Preprocessing of the raw data
+
+The [`OBITools`](http://metabarcoding.org/obitools) commands used to preprocess the data from the raw FASTQ files are described in the following bash script.
+
+-   [Bash script for the preprocessing of the raw data](obitools_processing.sh)
+
+# Filtering of the data
+
+-   For the *Eukaryota* [`Euka03`](filtering_euka03.html) marker
+-   For the *Chlorophyta* [`Chlo01`](filtering_chlo01.html) marker
+-   For the *Chlorophyceae* [`Chlo02`](filtering_chlo02.html) marker
+
+# Ecological analysis
+
+Every code producing the presented results including the production of the figures is available [here](alpin_algeaes.html)
+
+# Processed data sets and results
+
+Each processed dataset is composed of three coma separated values files (`.csv` files).
+
+-   For the *Eukaryota* `Euka03` marker
+    -   The MOTUs description file : [`Euka03.cleaned.motus.csv`](cleaned_datasets/Euka03.cleaned.motus.csv)
+    -   The samples description file : [`Euka03.cleaned.samples.csv`](cleaned_datasets/Euka03.cleaned.samples.csv)
+    -   The reads contengency table : [`Euka03.cleaned.reads.csv`](cleaned_datasets/Euka03.cleaned.reads.csv)
+-   For the *Chlorophyta* `Chlo01` marker
+    -   The MOTUs description file : [`Chlo01.cleaned.motus.csv`](cleaned_datasets/Chlo01.cleaned.motus.csv)
+    -   The samples description file : [`Chlo01.cleaned.samples.csv`](cleaned_datasets/Chlo01.cleaned.samples.csv)
+    -   The reads contengency table : [`Chlo01.cleaned.reads.csv`](cleaned_datasets/Chlo01.cleaned.reads.csv)
+-   For the *Chlorophyceae* `Chlo02` marker
+    -   The MOTUs description file : [`Chlo02.cleaned.motus.csv`](cleaned_datasets/Chlo02.cleaned.motus.csv)
+    -   The samples description file : [`Chlo02.cleaned.samples.csv`](cleaned_datasets/Chlo02.cleaned.samples.csv)
+    -   The reads contengency table : [`Chlo02.cleaned.reads.csv`](cleaned_datasets/Chlo02.cleaned.reads.csv)
