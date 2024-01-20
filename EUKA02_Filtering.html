@@ -833,43 +833,65 @@ TRUE
 <span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a>         <span class="fu">ifelse</span>(animal_id <span class="sc">==</span> <span class="st">"Y"</span>,<span class="st">"10/10"</span>,<span class="st">"12/10"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
+<section id="adds-pellets-consumption-data" class="level3">
+<h3 class="anchored" data-anchor-id="adds-pellets-consumption-data">Adds pellets consumption data</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>pellets <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(<span class="st">"Data/pellet_weigth.txt"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>           <span class="fu">mutate</span>(<span class="at">Date =</span> <span class="fu">str_replace</span>(Date,<span class="st">"2018"</span>,<span class="st">"18"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a>           <span class="fu">separate</span>(Date, <span class="fu">c</span>(<span class="st">"d"</span>,<span class="st">"m"</span>,<span class="st">"y"</span>),<span class="at">sep =</span> <span class="st">"/"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a>           <span class="fu">mutate</span>(<span class="at">d =</span> <span class="fu">as.integer</span>(d)<span class="sc">+</span><span class="dv">1</span>,</span>
+<span id="cb82-5"><a href="#cb82-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">m =</span> <span class="fu">as.integer</span>(m),</span>
+<span id="cb82-6"><a href="#cb82-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">m =</span> <span class="fu">ifelse</span>(d<span class="sc">==</span><span class="dv">32</span>,m<span class="sc">+</span><span class="dv">1</span>,m),</span>
+<span id="cb82-7"><a href="#cb82-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">d =</span> <span class="fu">ifelse</span>(d<span class="sc">==</span><span class="dv">32</span>,<span class="dv">1</span>,d),</span>
+<span id="cb82-8"><a href="#cb82-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">d =</span> <span class="fu">sprintf</span>(<span class="st">"%02d"</span>,d),</span>
+<span id="cb82-9"><a href="#cb82-9" aria-hidden="true" tabindex="-1"></a>                  <span class="at">m =</span> <span class="fu">sprintf</span>(<span class="st">"%02d"</span>,m)) <span class="sc">%&gt;%</span></span>
+<span id="cb82-10"><a href="#cb82-10" aria-hidden="true" tabindex="-1"></a>           <span class="fu">unite</span>(<span class="at">col=</span><span class="st">"Date"</span>,d,m,y,<span class="at">sep=</span><span class="st">"/"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb82-11"><a href="#cb82-11" aria-hidden="true" tabindex="-1"></a>           <span class="fu">pivot_longer</span>(<span class="sc">-</span>Date,<span class="at">names_to =</span> <span class="st">"Animal_id"</span>,<span class="at">values_to =</span> <span class="st">"pellets"</span>)</span>
+<span id="cb82-12"><a href="#cb82-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb82-13"><a href="#cb82-13" aria-hidden="true" tabindex="-1"></a>EUKA02.final<span class="sc">@</span>samples <span class="sc">%&lt;&gt;%</span></span>
+<span id="cb82-14"><a href="#cb82-14" aria-hidden="true" tabindex="-1"></a>   <span class="fu">left_join</span>(pellets) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining with `by = join_by(Date, Animal_id)`</code></pre>
+</div>
+</div>
+</section>
 </section>
 <section id="add-motus-metadata" class="level2">
 <h2 class="anchored" data-anchor-id="add-motus-metadata">Add MOTUs Metadata</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>EUKA02.final<span class="sc">@</span>motus <span class="sc">%&lt;&gt;%</span></span>
-<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">category =</span> <span class="fu">ifelse</span>(<span class="fu">is.subcladeof</span>(taxo,taxid,spermatophyta.taxid),</span>
-<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"Plant"</span>,</span>
-<span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"Lichen"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>EUKA02.final<span class="sc">@</span>motus <span class="sc">%&lt;&gt;%</span></span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">category =</span> <span class="fu">ifelse</span>(<span class="fu">is.subcladeof</span>(taxo,taxid,spermatophyta.taxid),</span>
+<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"Plant"</span>,</span>
+<span id="cb84-4"><a href="#cb84-4" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"Lichen"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="only-keep-samples" class="level2">
 <h2 class="anchored" data-anchor-id="only-keep-samples">Only keep samples</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>EUKA02.final <span class="ot">&lt;-</span> EUKA02.final[<span class="fu">which</span>(<span class="fu">str_detect</span>(EUKA02.final<span class="sc">@</span>samples<span class="sc">$</span>sample_id,<span class="st">"^[XYZ]"</span>)),]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>EUKA02.final <span class="ot">&lt;-</span> EUKA02.final[<span class="fu">which</span>(<span class="fu">str_detect</span>(EUKA02.final<span class="sc">@</span>samples<span class="sc">$</span>sample_id,<span class="st">"^[XYZ]"</span>)),]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="updating-count-statistics" class="level2">
 <h2 class="anchored" data-anchor-id="updating-count-statistics">Updating count statistics</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>EUKA02.final <span class="sc">%&lt;&gt;%</span> </span>
-<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">update_motus_count</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">update_samples_count</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb84-4"><a href="#cb84-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_empty</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>EUKA02.final <span class="sc">%&lt;&gt;%</span> </span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">update_motus_count</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">update_samples_count</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb86-4"><a href="#cb86-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_empty</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="write-csv-files" class="level2">
 <h2 class="anchored" data-anchor-id="write-csv-files">Write CSV files</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(EUKA02.final<span class="sc">@</span>samples,</span>
-<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">file =</span> <span class="st">"Data/Faeces/FE.Eukaryota.samples.samples.csv"</span>)</span>
-<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(EUKA02.final<span class="sc">@</span>motus,</span>
-<span id="cb85-4"><a href="#cb85-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">file =</span> <span class="st">"Data/Faeces/FE.Eukaryota.samples.motus.csv"</span>)</span>
-<span id="cb85-5"><a href="#cb85-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(EUKA02.final<span class="sc">@</span>reads <span class="sc">%&gt;%</span></span>
-<span id="cb85-6"><a href="#cb85-6" aria-hidden="true" tabindex="-1"></a>            <span class="fu">decostand</span>(<span class="at">method =</span> <span class="st">"total"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb85-7"><a href="#cb85-7" aria-hidden="true" tabindex="-1"></a>            <span class="fu">as.data.frame</span>()<span class="sc">%&gt;%</span></span>
-<span id="cb85-8"><a href="#cb85-8" aria-hidden="true" tabindex="-1"></a>            <span class="fu">rownames_to_column</span>(<span class="st">"id"</span>),</span>
-<span id="cb85-9"><a href="#cb85-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">file =</span> <span class="st">"Data/Faeces/FE.Eukaryota.samples.reads.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(EUKA02.final<span class="sc">@</span>samples,</span>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">file =</span> <span class="st">"Data/Faeces/FE.Eukaryota.samples.samples.csv"</span>)</span>
+<span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(EUKA02.final<span class="sc">@</span>motus,</span>
+<span id="cb87-4"><a href="#cb87-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">file =</span> <span class="st">"Data/Faeces/FE.Eukaryota.samples.motus.csv"</span>)</span>
+<span id="cb87-5"><a href="#cb87-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(EUKA02.final<span class="sc">@</span>reads <span class="sc">%&gt;%</span></span>
+<span id="cb87-6"><a href="#cb87-6" aria-hidden="true" tabindex="-1"></a>            <span class="fu">decostand</span>(<span class="at">method =</span> <span class="st">"total"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb87-7"><a href="#cb87-7" aria-hidden="true" tabindex="-1"></a>            <span class="fu">as.data.frame</span>()<span class="sc">%&gt;%</span></span>
+<span id="cb87-8"><a href="#cb87-8" aria-hidden="true" tabindex="-1"></a>            <span class="fu">rownames_to_column</span>(<span class="st">"id"</span>),</span>
+<span id="cb87-9"><a href="#cb87-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">file =</span> <span class="st">"Data/Faeces/FE.Eukaryota.samples.reads.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 </section>

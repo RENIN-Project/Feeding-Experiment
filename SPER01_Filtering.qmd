@@ -621,6 +621,25 @@ SPER01.final@samples %<>%
          ifelse(animal_id == "Y","10/10","12/10")))
 ```
 
+### Adds pellets consumption data
+
+```{r}
+pellets <- read_tsv("Data/pellet_weigth.txt", show_col_types = FALSE) %>%
+           mutate(Date = str_replace(Date,"2018","18")) %>%
+           separate(Date, c("d","m","y"),sep = "/") %>%
+           mutate(d = as.integer(d)+1,
+                  m = as.integer(m),
+                  m = ifelse(d==32,m+1,m),
+                  d = ifelse(d==32,1,d),
+                  d = sprintf("%02d",d),
+                  m = sprintf("%02d",m)) %>%
+           unite(col="Date",d,m,y,sep="/") %>%
+           pivot_longer(-Date,names_to = "Animal_id",values_to = "pellets")
+
+SPER01.final@samples %<>%
+   left_join(pellets) 
+```
+
 ## Only keep samples
 
 ```{r}
