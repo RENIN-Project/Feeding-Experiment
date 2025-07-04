@@ -623,7 +623,6 @@ Sper01_food$dna_amount <- sweep(Sper01_food@reads,
                                  )
 ```
 
-
 ```{r }
 Euka02_food$dna_amount %>%
   as.data.frame() %>%
@@ -977,7 +976,6 @@ Euka02_food$dna_amount %>%
     pivot_wider(names_from = Animal_id,values_from = amount)
 ```
 
-
 ```{r}
 food_dna_relation %>%
   ggplot(aes(x=Fed_biomass,y=amount)) +
@@ -993,9 +991,8 @@ food_dna_relation %>%
 
 ```{r}
 food_dna_relation %>%
-  lm(amount ~ Fed_biomass:Animal_id + 1, data=.) -> dna_rra_lm
+  lm(amount ~ Fed_biomass + 1, data=.) -> dna_rra_lm
 
   summary(dna_rra_lm)
   shapiro.test(residuals(dna_rra_lm))
 ```
-

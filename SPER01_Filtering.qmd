@@ -265,6 +265,7 @@ sequence_type[which(motus(SPER01.raw)$sequence == Standard4)] = "standard4"
 sequence_type[which(motus(SPER01.raw)$sequence == Standard5)] = "standard5"
 sequence_type[which(motus(SPER01.raw)$sequence == Standard6)] = "standard6"
 
+
 SPER01.raw@motus$sequence_type = as.factor(sequence_type)
 table(SPER01.raw@motus$sequence_type)
 ```
